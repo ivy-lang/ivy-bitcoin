@@ -54,11 +54,6 @@ export interface Contract {
   clauseSelector?: string
 }
 
-export interface Preapproval {
-  clause: Clause
-  target: Output
-}
-
 export interface Clause {
   type: "clause"
   location: Location
@@ -66,7 +61,6 @@ export interface Clause {
   parameters: Parameter[]
   statements: Statement[]
   referenceCounts?: Map<string, number>
-  preapproval?: Preapproval
 }
 
 export interface Assertion {
@@ -81,14 +75,7 @@ export interface Unlock {
   value: Variable
 }
 
-export interface Output {
-  type: "output"
-  location: Location
-  contractVariable: Variable
-  args: Expression[]
-}
-
-export type Statement = Assertion | Unlock | Output
+export type Statement = Assertion | Unlock
 
 export function statementToString(statement: Statement) {
   switch (statement.type) {
@@ -345,13 +332,6 @@ export function mapOverAST(func: (Node) => ASTNode, node: ASTNode): ASTNode {
       return func({
         ...node,
         value: func(node.value)
-      })
-    }
-    case "output": {
-      return func({
-        ...node,
-        contractVariable: func(node.contractVariable),
-        args: node.args.map(arg => mapOverAST(func, arg))
       })
     }
   }

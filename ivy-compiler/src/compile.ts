@@ -22,32 +22,7 @@ export function compileTemplate(
   try {
     const rawAst = parser.parse(source) as RawContract
     const referenceChecked = referenceCheck(rawAst)
-    const imports = rawAst.imports.map(imp => {
-      const name = imp.name
-      if (importable[name] === undefined) {
-        throw new NameError("could not find contract: " + name)
-      }
-      const compiled = compileTemplate(importable[name])
-      if (compiled.type === "compilerError") {
-        throw new Error(
-          "error in importable contract " + name + ": " + compiled.message
-        )
-      }
-      if (compiled.name !== name) {
-        throw new NameError(
-          "name of importable contract " +
-            name +
-            " does not match declared name " +
-            compiled.name
-        )
-      }
-      return compiled
-    })
-    const importMap = {}
-    for (const imp of imports) {
-      importMap[imp.name] = imp
-    }
-    const ast = typeCheckContract(referenceChecked, importMap)
+    const ast = typeCheckContract(referenceChecked)
     const templateClauses = ast.clauses.map(toTemplateClause)
     const operations = compileStackOps(
       compileContractToIntermediate(desugarContract(ast))

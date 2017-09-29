@@ -229,9 +229,6 @@ function compileToIntermediate(
     case "unlock": {
       return node
     }
-    case "output": {
-      return node
-    }
     case "listLiteral": {
       throw new BugError(
         "list literal should have been desugared before compileToIntermediate"

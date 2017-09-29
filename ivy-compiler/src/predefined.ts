@@ -120,23 +120,6 @@ export const DEMO_CONTRACTS = {
     verify checkSig(hotKey, sig)
     unlock val
   }
-}`,
-  VaultLock: `import VaultSpend
-
-contract VaultLock(
-  hotKey: PublicKey,
-  coldKey: PublicKey,
-  delay: Duration,
-  val: Value
-) {
-  clause coldWithdraw(sig: Signature) {
-    verify checkSig(coldKey, sig)
-    unlock val
-  }
-  clause hotWithdraw(sig: Signature) {
-    verify checkSig(hotKey, sig)
-    output VaultSpend(hotKey, coldKey, delay, val)
-  }
 }`
 }
 

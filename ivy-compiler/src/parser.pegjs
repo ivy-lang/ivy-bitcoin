@@ -23,25 +23,19 @@ function trimText(text) {
 }
 
 Contract
-  = imports:Import* __ "contract" _ name:Identifier "(" parameters:Parameters ")" __ "{" __ clauses:Clause+ "}" __ { return { type: "rawcontract", location: location(), name: name, parameters: parameters, clauses: clauses, imports: imports } }
-
-Import
-  = __ "import" _ name:Identifier { return { type: "import", name: name } }
+  = __ "contract" _ name:Identifier "(" parameters:Parameters ")" __ "{" __ clauses:Clause+ "}" __ { return { type: "rawcontract", location: location(), name: name, parameters: parameters, clauses: clauses, imports: imports } }
 
 Clause
   = "clause" _ name:Identifier "(" parameters:Parameters ")" __ "{" __ statements:Statement+ "}" __ { return { type: "clause", location: location(), name: name, parameters: parameters, statements: statements} }
 
 Statement
-  = Assertion / Unlock / Output
+  = Assertion / Unlock
 
 Assertion
   = "verify" _ exp:Expression1 __ { return { type: "assertion", location: location(), expression: exp} }
 
 Unlock
   = "unlock" _ value:VariableExpression __ { return { type: "unlock", location: location(), value: value } }
-
-Output
-  = "output" _ contractVariable:VariableExpression "(" args:Expressions ")" __ { return { type: "output", location: location(), contractVariable: contractVariable, args: args } }
 
 // need to handle precedence
 

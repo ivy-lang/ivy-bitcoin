@@ -94,18 +94,6 @@ export function compileStackOps(ops: Operation[]): FinalOperation[] {
           .map(param => param.name)
           .reverse()
         stack = [...clauseParameterNames, ...defaultStack]
-        if (op.clause.preapproval !== undefined) {
-          // reduce reference counts, since they don't actually get used
-          for (const arg of op.clause.preapproval.target.args) {
-            if (arg.type === "variable" && arg.itemType !== "Value") {
-              const currentCount = counts.get(arg.name)
-              if (currentCount === undefined) {
-                throw new Error("undefined variable: " + arg.name)
-              }
-              counts.set(arg.name, currentCount - 1)
-            }
-          }
-        }
         // empty the stack of parameters that aren't used in this clause
         counts.forEach((value, key) => {
           if (value === 0) {

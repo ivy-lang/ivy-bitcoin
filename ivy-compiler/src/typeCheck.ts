@@ -23,7 +23,6 @@ import {
   Import,
   ListLiteral,
   mapOverAST,
-  Output,
   Parameter,
   RawContract,
   scopedName,
@@ -237,7 +236,7 @@ export function typeCheckExpression(expression: Expression): Type {
   }
 }
 
-export function typeCheckStatement(statement: Statement, importMap: ImportMap) {
+export function typeCheckStatement(statement: Statement) {
   switch (statement.type) {
     case "assertion": {
       const expressionType = typeCheckExpression(statement.expression)
@@ -259,48 +258,12 @@ export function typeCheckStatement(statement: Statement, importMap: ImportMap) {
       }
       return
     }
-    case "output": {
-      const expressionType = typeCheckExpression(statement.contractVariable)
-      if (expressionType !== "Contract") {
-        throw new IvyTypeError(
-          "output statement expects a Contract, got " +
-            typeToString(expressionType)
-        )
-      }
-      const contract = importMap[statement.contractVariable.name]
-      if (contract === undefined) {
-        throw new BugError("imported contract unexpectedly undefined")
-      }
-      if (statement.args.length !== contract.params.length) {
-        throw new IvyTypeError(
-          contract.name +
-            " expected " +
-            contract.params.length +
-            " arguments, got " +
-            statement.args.length
-        )
-      }
-      statement.args.map((arg, i) => {
-        const argType = typeCheckExpression(arg)
-        const parameterType = contract.params[i].valueType
-        if (argType !== parameterType) {
-          throw new IvyTypeError(
-            "in arguments to " +
-              contract.name +
-              ": got " +
-              argType +
-              ", expected " +
-              parameterType
-          )
-        }
-      })
-    }
   }
 }
 
-export function typeCheckClause(clause: Clause, importMap: ImportMap) {
+export function typeCheckClause(clause: Clause) {
   for (const statement of clause.statements) {
-    typeCheckStatement(statement, importMap)
+    typeCheckStatement(statement)
   }
 }
 
@@ -367,52 +330,11 @@ function checkValueFlow(rawContract: RawContract): RawContract {
   return mapOverAST((node: ASTNode) => {
     switch (node.type) {
       case "clause": {
-        const outputs = node.statements.filter(
-          statement => statement.type === "output"
-        )
-        if (outputs.length > 0) {
-          if (sigCheckClause === undefined) {
-            throw new IvyTypeError(
-              "cannot use output statement unless there is another clause with only signature checks"
-            )
-          }
-          const targets = node.statements.filter(
-            statement => statement.type === "output"
-          ) as Output[]
-          if (targets.length !== 1) {
-            throw new Error("expected there to only be one output statement")
-          }
-          const target = targets[0]
-
-          // check args
-          for (const arg of target.args) {
-            if (arg.type !== "variable" && arg.type !== "literal") {
-              throw new IvyTypeError(
-                "arguments to contracts being output must be either contract arguments or literals"
-              )
-            } else if (arg.type === "variable" && arg.scope !== undefined) {
-              throw new IvyTypeError(
-                "clause arguments cannot be passed as arguments to contracts being output"
-              )
-            }
-          }
-
-          return {
-            ...node,
-            statements: [
-              ...node.statements.filter(
-                statement => statement.type === "assertion"
-              )
-            ],
-            preapproval: { clause: sigCheckClause, target }
-          }
-        } else {
-          return {
-            ...node,
-            statements: node.statements.filter(
-              statement => statement.type === "assertion"
-            )
-          }
+        return {
+          ...node,
+          statements: node.statements.filter(
+            statement => statement.type === "assertion"
+          )
         }
       }
       default:
@@ -421,10 +343,7 @@ function checkValueFlow(rawContract: RawContract): RawContract {
   }, rawContract) as RawContract
 }
 
-export function typeCheckContract(
-  rawContract: RawContract,
-  importMap: ImportMap
-): RawContract {
+export function typeCheckContract(rawContract: RawContract): RawContract {
   checkUniqueClauseNames(rawContract.clauses)
 
   const numValues = rawContract.parameters.filter(
@@ -455,7 +374,7 @@ export function typeCheckContract(
   }
 
   for (const clause of rawContract.clauses) {
-    typeCheckClause(clause, importMap)
+    typeCheckClause(clause)
   }
 
   checkMultiSigArgumentCounts(rawContract)
