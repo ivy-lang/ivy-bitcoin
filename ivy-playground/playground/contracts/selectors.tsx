@@ -235,23 +235,17 @@ export const getNumberOfClauses = createSelector(
 )
 
 export const getSpendClauseArgument = createSelector(
-  getNumberOfClauses,
-  getSelectedClauseIndex,
-  (numberOfClauses, spendClauseIndex) => {
-    if (numberOfClauses === 1) {
-      return undefined
-    } else {
-      return spendClauseIndex
-    }
+  getSelectedClause,
+  selectedClause => {
+    return selectedClause.name
   }
 )
 
 export const getSpendInputValues = createSelector(
   getClauseParameterIds,
   getSpendInputMap,
-  getSpendClauseArgument,
   getSpendTransactionSigHash,
-  (clauseParameterIds, spendInputMap, spendClauseArg, sigHash) => {
+  (clauseParameterIds, spendInputMap, sigHash) => {
     try {
       const spendInputValues = clauseParameterIds.map(id =>
         getData(id, spendInputMap, sigHash)
@@ -259,9 +253,7 @@ export const getSpendInputValues = createSelector(
       if (!spendInputValues.every(el => el !== undefined)) {
         return undefined
       }
-      return spendClauseArg !== undefined
-        ? [spendClauseArg, ...spendInputValues]
-        : spendInputValues
+      return spendInputValues
     } catch (e) {
       // console.log(e)
       return undefined
@@ -302,7 +294,13 @@ export const getFulfilledSpendTransaction = createSelector(
   getInstantiated,
   getSpendTransaction,
   getSpendInputValues,
-  (instantiated, unfulfilledSpendTransaction, witnessArgs) => {
+  getSpendClauseArgument,
+  (
+    instantiated,
+    unfulfilledSpendTransaction,
+    witnessArgs,
+    spendClauseArgument
+  ) => {
     if (
       instantiated === undefined ||
       unfulfilledSpendTransaction === undefined ||
@@ -313,7 +311,8 @@ export const getFulfilledSpendTransaction = createSelector(
     const spendTransaction = fulfill(
       instantiated,
       unfulfilledSpendTransaction,
-      witnessArgs
+      witnessArgs,
+      spendClauseArgument
     )
     return spendTransaction
   }

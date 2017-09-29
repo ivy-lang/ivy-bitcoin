@@ -27,7 +27,11 @@ import {
   UPDATE_ERROR
 } from "./actions"
 
-import { Instantiated, TemplateClause, Transaction } from "ivy-compiler"
+import {
+  Contract as IvyContract,
+  TemplateClause,
+  Transaction
+} from "ivy-compiler"
 
 export const INITIAL_STATE: ContractsState = {
   contractMap: {},
@@ -104,7 +108,7 @@ export default function reducer(
       }
     }
     case CREATE_CONTRACT: {
-      const instantiated: Instantiated = action.instantiated
+      const instantiated: IvyContract = action.instantiated
       const template: Template = action.template
       const spendInputMap = generateSpendInputMap(template)
       const clauseNames = template.clauses.map(clause => clause.name)

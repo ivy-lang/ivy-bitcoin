@@ -20,7 +20,7 @@ const LockButton = (props: {
       disabled={!props.createability.createable}
       onClick={props.create}
     >
-      Lock Value
+      Create
     </button>
   )
   if (props.createability.createable) {

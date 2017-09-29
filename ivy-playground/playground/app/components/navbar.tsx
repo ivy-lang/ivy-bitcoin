@@ -39,10 +39,10 @@ const Navbar = (props: { path: string }) => {
         />
         <ul className="nav navbar-nav navbar-right">
           <li>
-            <Link to="/">Lock Value</Link>
+            <Link to="/">Create Contract</Link>
           </li>
           <li>
-            <Link to="/unlock">Unlock Value</Link>
+            <Link to="/spend">Spend Contract</Link>
           </li>
           <Reset />
         </ul>

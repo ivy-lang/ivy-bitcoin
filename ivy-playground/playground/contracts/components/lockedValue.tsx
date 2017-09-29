@@ -41,14 +41,14 @@ export default connect(state => ({
 
 const UnlockButton = (props: { contractId: string }) => {
   return (
-    <Link to={"/unlock/" + props.contractId}>
+    <Link to={"/spend/" + props.contractId}>
       <button className="btn btn-primary">Unlock</button>
     </Link>
   )
 }
 
 function LockedValue(props: { contractIds: string[] }) {
-  let content = <div className="table-placeholder">No Locked Value</div>
+  let content = <div className="table-placeholder">No Contracts</div>
   if (props.contractIds.length > 0) {
     content = (
       <table className="table contracts-table">
@@ -68,7 +68,7 @@ function LockedValue(props: { contractIds: string[] }) {
       </table>
     )
   }
-  return <Section name="Locked Value">{content}</Section>
+  return <Section name="Unspent Contracts">{content}</Section>
 }
 
 const LockedValueRowUnconnected = (props: {

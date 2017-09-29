@@ -2,7 +2,7 @@ import { Input, InputMap } from "../inputs/types"
 
 import { Template, TemplateClause } from "../templates/types"
 
-import { Instantiated } from "ivy-compiler"
+import { Contract as IvyContract } from "ivy-compiler"
 
 export interface Contract {
   // lock tx id
@@ -31,7 +31,7 @@ export interface Contract {
     [s: string]: TemplateClause
   }
   publicKey?: string
-  instantiated: Instantiated
+  instantiated: IvyContract
 }
 
 export interface ContractMap {

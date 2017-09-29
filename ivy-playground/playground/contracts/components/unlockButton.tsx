@@ -19,7 +19,7 @@ const UnlockButton = (props: {
       disabled={!props.enabled}
       onClick={props.handleSpendClick}
     >
-      Unlock Value
+      Unlock
     </button>
   )
 }
