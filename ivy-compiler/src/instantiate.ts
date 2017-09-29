@@ -25,6 +25,7 @@ export interface Contract {
   publicKey?: string
   fundingTransaction: TransactionJSON
   amount: number
+  template: Template
 }
 
 export interface Output {
@@ -149,7 +150,8 @@ export function instantiate(
       ? (args[0] as Buffer).toString("hex")
       : undefined,
     fundingTransaction: tx,
-    amount: valueArgs.reduce((a, b) => a + b, 0)
+    amount: valueArgs.reduce((a, b) => a + b, 0),
+    template
   }
   return instantiated
 }

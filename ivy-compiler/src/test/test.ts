@@ -14,6 +14,7 @@ import {
   TEST_CASES,
   TEST_CONTRACT_AGES,
   TEST_CONTRACT_ARGS,
+  TEST_CONTRACT_CLAUSE_NAMES,
   TEST_CONTRACT_TIMES,
   TEST_SPEND_ARGUMENTS
 } from "../predefined"
@@ -87,7 +88,12 @@ describe("fulfill", () => {
         TEST_CONTRACT_TIMES[id] || 0,
         { sequence: TEST_CONTRACT_AGES[id] || 0, seconds: false }
       )
-      const fulfilled = fulfill(instantiated, spendTx, TEST_SPEND_ARGUMENTS[id])
+      const fulfilled = fulfill(
+        instantiated,
+        spendTx,
+        TEST_SPEND_ARGUMENTS[id],
+        TEST_CONTRACT_CLAUSE_NAMES[id]
+      )
       fulfilled.check()
     })
   })

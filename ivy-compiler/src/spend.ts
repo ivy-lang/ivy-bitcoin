@@ -67,7 +67,8 @@ export function toBuf(arg: Buffer | number | string) {
 export const fulfill = (
   instantiated: Contract,
   spendTx: any,
-  witnessArgs: any[]
+  witnessArgs: any[],
+  spendClauseName: string
 ) => {
   const spendTransaction = spendTx.clone()
   // deal with a weird bug in the cloning
@@ -76,7 +77,17 @@ export const fulfill = (
   const witnessScript = instantiated.publicKey
     ? Buffer.from(instantiated.publicKey, "hex")
     : Buffer.from(instantiated.witnessScript, "hex")
-  const allWitnessArgs = [...witnessArgs.reverse().map(toBuf), witnessScript]
+  const realClauses = instantiated.template.clauses
+  const spendClauseIndex = realClauses
+    .map(clause => clause.name)
+    .indexOf(spendClauseName)
+  if (spendClauseIndex === -1) {
+    throw new Error("could not find clause: " + spendClauseName)
+  }
+  const numClauses = instantiated.template.clauses.length
+  const generatedArgs = witnessArgs.reverse().map(toBuf)
+  const maybeClauseArg = numClauses > 1 ? [toBuf(spendClauseIndex)] : []
+  const allWitnessArgs = [...generatedArgs, ...maybeClauseArg, witnessScript]
   const witness = Witness.fromArray(allWitnessArgs)
   spendTransaction.inputs[0].script = Script.fromRaw(
     Buffer.from(scriptSig, "hex")

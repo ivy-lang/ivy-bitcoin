@@ -11,6 +11,7 @@ export interface Template {
   source: string
   name: string
   clauses: TemplateClause[]
+  clauseNames: string[]
   instructions: string[]
   params: ContractParameter[]
 }

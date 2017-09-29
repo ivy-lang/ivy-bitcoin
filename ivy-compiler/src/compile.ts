@@ -21,7 +21,6 @@ export function compileTemplate(
 ): Template | CompilerError {
   try {
     const rawAst = parser.parse(source) as RawContract
-    console.log("raw ast", rawAst)
     const referenceChecked = referenceCheck(rawAst)
     const imports = rawAst.imports.map(imp => {
       const name = imp.name
@@ -49,7 +48,6 @@ export function compileTemplate(
       importMap[imp.name] = imp
     }
     const ast = typeCheckContract(referenceChecked, importMap)
-    console.log("ast", ast)
     const templateClauses = ast.clauses.map(toTemplateClause)
     const operations = compileStackOps(
       compileContractToIntermediate(desugarContract(ast))
@@ -61,6 +59,7 @@ export function compileTemplate(
       name: ast.name,
       instructions,
       clauses: templateClauses,
+      clauseNames: templateClauses.map(clause => clause.name),
       params,
       source
     }
