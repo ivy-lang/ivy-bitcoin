@@ -185,7 +185,7 @@ export default function reducer(
       if (path[1] === "ivy") {
         path.shift()
       }
-      if (path.length > 2 && path[1] === "unlock") {
+      if (path.length > 2 && path[1] === "spend") {
         return {
           ...state,
           spendContractId: path[2],

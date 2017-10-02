@@ -4,10 +4,8 @@
   "description": "Sandbox for testing Ivy Bitcoin playground.",
   "main": "playground/entry.js",
   "scripts": {
-    "build":
-      "webpack --config webpack.production.config.js && cp public/playground.bundle.js ../danrobinson.github.io/js/bitcoin-playground.bundle.js",
-    "start":
-      "webpack-dev-server --content-base playground/public --inline --hot",
+    "build": "webpack --config webpack.production.config.js && cp public/playground.bundle.js ../danrobinson.github.io/js/bitcoin-playground.bundle.js",
+    "start": "webpack-dev-server --content-base playground/public --inline --hot",
     "test": ""
   },
   "author": "",
@@ -38,7 +36,6 @@
     "moment": "^2.18.1",
     "pegjs": "^0.10.0",
     "pegjs-loader": "^0.5.1",
-    "react": "15.6.1",
     "react-ace": "5.2.0",
     "react-bootstrap": "^0.31.2",
     "react-bootstrap-tooltip-button": "^1.0.5",
@@ -67,5 +64,8 @@
   "devDependencies": {
     "prettier": "^1.6.1",
     "tslint-config-prettier": "^1.5.0"
+  },
+  "peerDependencies": {
+    "react": "16.0.0"
   }
 }

@@ -13,6 +13,32 @@ module.exports = {
     filename: "playground.bundle.js",
     publicPath: "/ivy/"
   },
+  // externals: [
+  //   {
+  //     react: {
+  //       root: "React",
+  //       commonjs2: "react",
+  //       commonjs: "react",
+  //       amd: "react"
+  //     }
+  //   },
+  //   {
+  //     "react-dom": {
+  //       root: "ReactDOM",
+  //       commonjs2: "react-dom",
+  //       commonjs: "react-dom",
+  //       amd: "react-dom"
+  //     }
+  //   },
+  //   {
+  //     "react-router-dom": {
+  //       root: "react-router-dom",
+  //       commonjs2: "react-router-dom",
+  //       commonjs: ["react-router-dom"],
+  //       amd: "react-router-dom"
+  //     }
+  //   }
+  // ],
   resolve: {
     alias: {
       bcoin: path.resolve(__dirname, "node_modules/bcoin/lib/bcoin-browser.js")
