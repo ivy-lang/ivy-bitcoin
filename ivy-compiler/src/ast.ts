@@ -32,7 +32,6 @@ export interface RawContract {
   parameters: Parameter[]
   clauses: Clause[]
   referenceCounts?: Map<string, number>
-  imports: Import[]
 }
 
 export interface Conditional {

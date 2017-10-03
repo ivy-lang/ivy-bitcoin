@@ -54,6 +54,7 @@ export function compileTemplate(
         e.message
     } else {
       errorMessage = e.toString()
+      throw e
     }
     return {
       type: "compilerError",
