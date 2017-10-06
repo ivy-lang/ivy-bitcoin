@@ -1,6 +1,6 @@
 import { BugError } from "../errors"
 
-export type Type = Primitive | Hash | List | Verifiable | "Contract"
+export type Type = Primitive | Hash | List
 
 export type Primitive =
   | "PublicKey"
@@ -8,13 +8,11 @@ export type Primitive =
   | "Bytes"
   | "Time"
   | "Duration"
-  | "Boolean"
   | "Value"
+  | "Boolean"
   | "Integer" // just for desugared checkMultiSig
 
 export type HashFunction = "sha1" | "sha256" | "ripemd160"
-
-export type Verifiable = "Verifiable" // special type returned by checkSequence and checkLockTime
 
 export interface Hash {
   type: "hashType"
@@ -27,7 +25,7 @@ export interface List {
   elementType: Type
 }
 
-export type TypeClass = "Primitive" | "Hash" | "List" | "VerifiableType"
+export type TypeClass = "Primitive" | "Hash" | "List" | "BooleanType"
 
 export interface TypeSignature {
   type: "typeSignature"
@@ -58,7 +56,7 @@ export function isPrimitive(str: Type | string): str is Primitive {
     case "Time":
     case "Duration":
     case "Boolean":
-    case "Value":
+    case "Value": // note: Integer not allowed. this is maybe a hack, tbd
       return true
     default:
       return false
@@ -84,10 +82,6 @@ export function isList(type: Type): type is List {
   return typeof type === "object" && type.type === "listType"
 }
 
-export function isVerifiable(type: Type): type is Verifiable {
-  return type === "Verifiable"
-}
-
 export function isTypeClass(type: Type | TypeClass): type is TypeClass {
   return (
     type === "Primitive" ||
@@ -104,8 +98,6 @@ export function getTypeClass(type: Type): TypeClass {
     return "Hash"
   } else if (isList(type)) {
     return "List"
-  } else if (isVerifiable(type)) {
-    return "VerifiableType"
   } else {
     throw new BugError("unknown typeclass: " + typeToString(type))
   }

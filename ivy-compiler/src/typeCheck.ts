@@ -202,6 +202,11 @@ export function typeCheckExpression(expression: Expression): Type {
       switch (expression.instruction) {
         case "==":
         case "!=":
+          if (inputTypes[0] === "Boolean" || inputTypes[1] === "Boolean") {
+            throw new IvyTypeError(
+              "cannot pass value of type Boolean to " + expression.instruction
+            )
+          }
           matchTypes(inputTypes[0], inputTypes[1])
           return "Boolean"
         default:
@@ -235,7 +240,7 @@ export function typeCheckStatement(statement: Statement) {
   switch (statement.type) {
     case "assertion": {
       const expressionType = typeCheckExpression(statement.expression)
-      if (expressionType !== "Boolean" && expressionType !== "Verifiable") {
+      if (expressionType !== "Boolean") {
         throw new IvyTypeError(
           "verify statement expects a Boolean, got " +
             typeToString(expressionType)

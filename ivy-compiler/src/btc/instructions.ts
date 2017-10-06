@@ -60,9 +60,9 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
     case "checkSig":
       return createTypeSignature(["PublicKey", "Signature"], "Boolean")
     case "older":
-      return createTypeSignature(["Duration"], "Verifiable")
+      return createTypeSignature(["Duration"], "Boolean")
     case "after":
-      return createTypeSignature(["Time"], "Verifiable") // special-cased
+      return createTypeSignature(["Time"], "Boolean")
     case "checkMultiSig":
       return createTypeSignature(
         [

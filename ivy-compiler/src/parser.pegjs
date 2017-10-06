@@ -72,8 +72,8 @@ Expressions "expressions"
 ListLiteral "listLiteral"
   = "[" values:Expressions "]" { return { type: "listLiteral", location: location(), text: text(), values: values } }
 
-BooleanLiteral "boolean"
-  = ("true" / "false") { return { type: "literal", literalType: "Boolean", location: location(), value: text() } }
+BooleanLiteral "booleanLiteral"
+  = "true" / "false" { return { type: "literal", literalType: "boolean", location: location(), text: text(), value: text() } }
 
 Identifiers "identifiers"
   = first:Identifier "," __ rest:Identifiers { rest.unshift(first); return rest }

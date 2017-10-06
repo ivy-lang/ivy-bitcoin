@@ -15,7 +15,6 @@ export type ContractParameterType =
   | "Bytes"
   | "Time"
   | "Duration"
-  | "Boolean"
   | "Signature"
   | "Value"
   | ContractParameterHash

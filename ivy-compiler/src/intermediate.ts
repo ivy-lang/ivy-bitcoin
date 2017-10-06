@@ -79,7 +79,7 @@ export interface Verify {
 
 export interface Push {
   type: "push"
-  literalType: "Integer" | "Boolean" | "Bytes"
+  literalType: "Integer" | "Boolean"
   value: string
 }
 
@@ -122,9 +122,7 @@ export function operationToString(op: Operation): string {
     case "endClause":
       return "(endClause " + op.clause.name + ")"
     case "push":
-      return op.literalType === "Bytes"
-        ? "(push 0x" + op.value + ")"
-        : "(push " + op.value + ")"
+      return "(push " + op.value + ")"
     case "instructionOp":
       return op.expression.instruction
     case "beginContract":
