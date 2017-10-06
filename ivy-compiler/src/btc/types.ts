@@ -6,11 +6,11 @@ export type Primitive =
   | "PublicKey"
   | "Signature"
   | "Bytes"
-  | "Integer"
   | "Time"
   | "Duration"
   | "Boolean"
   | "Value"
+  | "Integer" // just for desugared checkMultiSig
 
 export type HashFunction = "sha1" | "sha256" | "ripemd160"
 
@@ -55,7 +55,6 @@ export function isPrimitive(str: Type | string): str is Primitive {
     case "PublicKey":
     case "Signature":
     case "Bytes":
-    case "Integer":
     case "Time":
     case "Duration":
     case "Boolean":

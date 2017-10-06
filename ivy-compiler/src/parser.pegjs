@@ -14,7 +14,6 @@ let isHashTypeName = types.isHashTypeName
 let typeNameToHashFunction = types.typeNameToHashFunction
 let isDeclarableUnaryOperator = instructions.isDeclarableUnaryOperator
 let isComparisonOperator = instructions.isComparisonOperator
-let isArithmeticOperator = instructions.isArithmeticOperator
 
 function trimText(text) {
   return text.trim().replace("\n", "").replace(/[\s]+/g, " ")
@@ -44,14 +43,6 @@ Expression1 "expression"
   / Expression2
 
 Expression2
-  = BinaryExpression
-  / Expression3
-
-Expression3
-  = UnaryExpression
-  / Expression4
-
-Expression4
   = CallExpression
   / Literal
   / VariableExpression
@@ -59,7 +50,6 @@ Expression4
 
 Literal
   = ListLiteral
-  / IntegerLiteral
   / BooleanLiteral
 
 ComparisonExpression // not associative
@@ -68,23 +58,8 @@ ComparisonExpression // not associative
 ComparisonOperator
   = (operator:Operator & { return isComparisonOperator(operator) }) { return text() }
 
-BinaryExpression // left associative
-  = partials:PartialBinaryExpression+ right:Expression3 { return createBinaryExpression(partials, right) }
-
-PartialBinaryExpression
-  = left:Expression3 __ operator:BinaryOperator __ { return { type: "partial", location: location(), left: left, operator: operator } }
-
-BinaryOperator
-  = (operator:Operator & { return isArithmeticOperator(operator) }) { return text() }
-
 CallExpression
   = name:FunctionIdentifier "(" args:Expressions ")" { return createInstructionExpression("callExpression", location(), name, args) }
-
-UnaryExpression
-  = operator:Operator arg:Expression4 { return createInstructionExpression("unaryExpression", location(), operator, [arg]) }
-
-UnaryOperator
-  = (operator:Operator & { isDeclarableUnaryOperator(operator) }) { return text() }
 
 VariableExpression
   = identifier:Identifier { return { type: "variable", location: location(), name: identifier} }
@@ -96,9 +71,6 @@ Expressions "expressions"
 
 ListLiteral "listLiteral"
   = "[" values:Expressions "]" { return { type: "listLiteral", location: location(), text: text(), values: values } }
-
-IntegerLiteral "integer"
-  = [-]?[0-9]+ { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
 BooleanLiteral "boolean"
   = ("true" / "false") { return { type: "literal", literalType: "Boolean", location: location(), value: text() } }

@@ -210,12 +210,6 @@ export function typeCheckExpression(expression: Expression): Type {
           return typeSig.output
       }
     case "literal": {
-      if (expression.literalType === "Integer") {
-        const val = parseInt(expression.value, 10)
-        if (val < -2147483647 || val > 2147483647) {
-          throw new IvyTypeError("number literal is outside allowed range")
-        }
-      }
       return expression.literalType
     }
     case "variable":

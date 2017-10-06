@@ -7,10 +7,7 @@ export interface Location {
   end: { column: number; line: number }
 }
 
-export type InstructionExpressionType =
-  | "unaryExpression"
-  | "binaryExpression"
-  | "callExpression"
+export type InstructionExpressionType = "binaryExpression" | "callExpression"
 
 export interface Parameter {
   type: "parameter"
@@ -132,8 +129,7 @@ export function createInstructionExpression(
   name: string,
   args: Expression[]
 ): Expression {
-  const instruction =
-    expressionType === "unaryExpression" && name === "-" ? "negate" : name
+  const instruction = name
   if (!isInstruction(instruction)) {
     throw new NameError("invalid instruction name: " + instruction)
   }
@@ -155,7 +151,7 @@ export interface Variable {
   itemType?: Type
 }
 
-export type LiteralType = "Integer" | "Boolean"
+export type LiteralType = "Boolean" | "Integer" // integer is only for desugared checkMultiSig
 
 export interface ListLiteral {
   type: "listLiteral"
@@ -197,21 +193,11 @@ function clauseToString(clause: Clause) {
 }
 
 function literalToString(literal: ValueLiteral) {
-  switch (literal.literalType) {
-    case "Integer":
-    case "Boolean":
-      return literal.value
-  }
+  return literal.value
 }
 
 function instructionExpressionToString(expression: InstructionExpression) {
   switch (expression.expressionType) {
-    case "unaryExpression":
-      if (expression.instruction === "negate") {
-        return "-" + expressionToString(expression.args[0])
-      } else {
-        return expression.instruction + expressionToString(expression.args[0])
-      }
     case "binaryExpression":
       return (
         "(" +

@@ -173,7 +173,6 @@ export const TEST_CONTRACT_ARGS = {
   LockDelay: [PublicKeys[0], 20, 0],
   TransferWithTimeout: [PublicKeys[0], PublicKeys[1], 20, 0],
   EscrowWithDelay: [...PublicKeys, 20, 0],
-  NumericOperations: [25000, 10000, 0],
   VaultSpend: [PublicKeys[0], PublicKeys[1], 20, 0],
   HashOperations: [Sha256Bytes, Sha1Bytes, Ripemd160Bytes, 0]
 }
@@ -189,7 +188,6 @@ export const TEST_CONTRACT_CLAUSE_NAMES = {
   TransferWithTimeout: "transfer",
   EscrowWithDelay: "timeout",
   VaultSpend: "complete",
-  NumericOperations: "spend",
   HashOperations: "reveal"
 }
 
@@ -236,20 +234,11 @@ export const TEST_SPEND_ARGUMENTS = {
   VaultSpend: [
     "30440220259d47913eb5c5ff625fb29cfe571632e1bd197e53026eb6db3f335b05be6efe022033f59f4f240a098d41304f35870bb54012ff5d29a6f0d9664b23779e295f998001"
   ],
-  NumericOperations: [15000, 5000],
   HashOperations: [Bytes]
 }
 
 export const TEST_CASES = {
   ...DEMO_CONTRACTS,
-  NumericOperations: `contract NumericOperations(a: Integer, b: Integer, val: Value) {
-    clause spend(c: Integer, d: Integer) {
-      verify a - b == 15000
-      verify 10000 == c - d
-      verify a - b + c - d == 25000
-      unlock val
-    }
-  }`,
   HashOperations: `contract HashOperations(
   hash1: Sha256(Bytes),
   hash2: Sha1(Bytes),

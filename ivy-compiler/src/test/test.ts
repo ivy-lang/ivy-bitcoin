@@ -24,7 +24,7 @@ describe("compileTemplate", () => {
     it("should compile " + name, () => {
       const contractSource = TEST_CASES[name]
       const compiled = compileTemplate(contractSource)
-      expect(compiled.type).to.equal("template")
+      expect((compiled as CompilerError).message).to.equal(undefined) // so it prints the error
     })
   })
   Object.keys(ERRORS).forEach(errorName => {

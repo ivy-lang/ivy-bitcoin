@@ -13,7 +13,6 @@ export interface ContractParameterHash {
 export type ContractParameterType =
   | "PublicKey"
   | "Bytes"
-  | "Integer"
   | "Time"
   | "Duration"
   | "Boolean"

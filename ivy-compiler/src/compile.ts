@@ -13,7 +13,7 @@ import { RawContract } from "./ast"
 
 import { DEMO_CONTRACTS } from "./predefined"
 
-const parser = require("./parser")
+const parser = require("../lib/parser")
 
 export function compileTemplate(
   source: string,
