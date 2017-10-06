@@ -26,8 +26,6 @@ export type FunctionName =
   | "ripemd160"
   | "sha1"
   | "sha256"
-  | "hash160"
-  | "hash256"
   | "min"
   | "max"
   | "within"
@@ -62,10 +60,6 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["SHA1"]
     case "sha256":
       return ["SHA256"]
-    case "hash160":
-      return ["HASH160"]
-    case "hash256":
-      return ["HASH256"]
     case "min":
       return ["MIN"]
     case "max":
@@ -146,8 +140,6 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
     case "ripemd160":
     case "sha1":
     case "sha256":
-    case "hash256":
-    case "hash160":
       throw new Error("should not call getTypeSignature on hash function")
   }
 }

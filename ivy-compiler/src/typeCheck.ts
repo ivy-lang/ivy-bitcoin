@@ -141,6 +141,7 @@ export function matchTypes(firstType: Type, secondType: Type) {
             typeToString(secondType)
         )
       }
+      matchTypes(firstType.inputType, secondType.inputType)
       return
     case "List":
       matchTypes(

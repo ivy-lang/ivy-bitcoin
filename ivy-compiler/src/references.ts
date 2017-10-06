@@ -13,14 +13,6 @@ export function referenceCheck(contract: RawContract): RawContract {
 
   const contractCounts = new Map<string, number>()
 
-  for (const imp of contract.imports) {
-    if (contractCounts.has(imp.name)) {
-      throw new NameError("cannot import " + imp.name + " twice")
-    }
-    contractCounts.set(imp.name, 0)
-    types.set(imp.name, "Contract")
-  }
-
   for (const parameter of contract.parameters) {
     if (contractCounts.has(parameter.name)) {
       throw new NameError("parameter " + parameter.name + " is already defined")
@@ -45,10 +37,6 @@ export function referenceCheck(contract: RawContract): RawContract {
 
         for (const parameter of contract.parameters) {
           counts.set(parameter.name, 0)
-        }
-
-        for (const imp of contract.imports) {
-          counts.set(imp.name, 0)
         }
 
         for (const parameter of clauseParameters) {
@@ -118,10 +106,6 @@ export function referenceCheck(contract: RawContract): RawContract {
             }
           }
         }
-        // remove imported contracts from clause counts to avoid weird bugs
-        for (const imp of contract.imports) {
-          counts.delete(imp.name)
-        }
         return {
           ...mappedClause,
           referenceCounts: counts,
@@ -135,11 +119,6 @@ export function referenceCheck(contract: RawContract): RawContract {
   for (const parameter of contract.parameters) {
     if (contractCounts.get(parameter.name) === 0) {
       throw new NameError("unused parameter: " + parameter.name)
-    }
-  }
-  for (const imp of contract.imports) {
-    if (contractCounts.get(imp.name) === 0) {
-      throw new NameError("unused import: " + imp.name)
     }
   }
   return {

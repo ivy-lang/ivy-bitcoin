@@ -12,12 +12,7 @@ export type Primitive =
   | "Boolean"
   | "Value"
 
-export type HashFunction =
-  | "sha1"
-  | "sha256"
-  | "hash160"
-  | "hash256"
-  | "ripemd160"
+export type HashFunction = "sha1" | "sha256" | "ripemd160"
 
 export type Verifiable = "Verifiable" // special type returned by checkSequence and checkLockTime
 
@@ -76,8 +71,6 @@ export function isHashTypeName(str) {
     case "Sha1":
     case "Sha256":
     case "Ripemd160":
-    case "Hash160":
-    case "Hash256":
       return true
     default:
       return false
@@ -124,8 +117,6 @@ export function isHashFunctionName(str: string): str is HashFunction {
     case "sha1":
     case "sha256":
     case "ripemd160":
-    case "hash160":
-    case "hash256":
       return true
     default:
       return false
@@ -140,10 +131,6 @@ export function hashFunctionToTypeName(hash: HashFunction): string {
       return "Sha256"
     case "ripemd160":
       return "Ripemd160"
-    case "hash160":
-      return "Hash160"
-    case "hash256":
-      return "Hash256"
     default:
       throw new Error("unknown hash function")
   }
@@ -157,10 +144,6 @@ export function typeNameToHashFunction(hash: string): HashFunction {
       return "sha256"
     case "Ripemd160":
       return "ripemd160"
-    case "Hash160":
-      return "hash160"
-    case "Hash256":
-      return "hash256"
     default:
       throw new Error("unknown type name")
   }

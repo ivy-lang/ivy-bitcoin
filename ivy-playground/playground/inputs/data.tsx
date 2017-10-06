@@ -129,11 +129,9 @@ export function validateInput(input: Input): boolean {
       }
       switch (input.hashFunction) {
         case "sha256":
-        case "hash256":
           return input.value.length === 64
         case "sha1":
         case "ripemd160":
-        case "hash160":
           return input.value.length === 40
       }
     case "generatePrivateKeyInput":
@@ -317,10 +315,6 @@ export function getData(
           return crypto.sha256(childData)
         case "ripemd160":
           return crypto.ripemd160(childData)
-        case "hash160":
-          return crypto.hash160(childData)
-        case "hash256":
-          return crypto.hash256(childData)
         default:
           throw new Error("unexpected hash function")
       }

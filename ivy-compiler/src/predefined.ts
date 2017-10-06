@@ -12,8 +12,7 @@ export const DEMO_ID_LIST = [
   "LockDelay",
   "TransferWithTimeout",
   "EscrowWithDelay",
-  "VaultSpend",
-  "VaultLock"
+  "VaultSpend"
 ]
 
 export const DEMO_CONTRACTS = {
@@ -133,14 +132,6 @@ const Sha256Bytes = Buffer.from(
   "hex"
 )
 const Sha1Bytes = Buffer.from("a88a129b1afa94547623f27d7c6e566a7d902f7c", "hex")
-const Hash256Bytes = Buffer.from(
-  "fcaa02d1b89feae0d9397ca07182547687bf722336df879f184f2505bce10b9d",
-  "hex"
-)
-const Hash160Bytes = Buffer.from(
-  "02a62c3955b773879132d04996daf039baf5a439",
-  "hex"
-)
 const Ripemd160Bytes = Buffer.from(
   "cbf33f6b1a8ddd0ba7960f639d703653d111b366",
   "hex"
@@ -184,14 +175,7 @@ export const TEST_CONTRACT_ARGS = {
   EscrowWithDelay: [...PublicKeys, 20, 0],
   NumericOperations: [25000, 10000, 0],
   VaultSpend: [PublicKeys[0], PublicKeys[1], 20, 0],
-  HashOperations: [
-    Sha256Bytes,
-    Sha1Bytes,
-    Hash256Bytes,
-    Hash160Bytes,
-    Ripemd160Bytes,
-    0
-  ]
+  HashOperations: [Sha256Bytes, Sha1Bytes, Ripemd160Bytes, 0]
 }
 
 export const TEST_CONTRACT_CLAUSE_NAMES = {
@@ -269,17 +253,13 @@ export const TEST_CASES = {
   HashOperations: `contract HashOperations(
   hash1: Sha256(Bytes),
   hash2: Sha1(Bytes),
-  hash3: Hash256(Bytes),
-  hash4: Hash160(Bytes),
-  hash5: Ripemd160(Bytes),
+  hash3: Ripemd160(Bytes),
   val: Value
 ) {
   clause reveal(preimage: Bytes) {
     verify sha256(preimage) == hash1
     verify sha1(preimage) == hash2
-    verify hash256(preimage) == hash3
-    verify hash160(preimage) == hash4
-    verify ripemd160(preimage) == hash5
+    verify ripemd160(preimage) == hash3
     unlock val
   }
 }`
@@ -377,53 +357,6 @@ export const ERRORS = {
   "does not use one of its clause parameters": `contract LockWithPublicKey(val: Value) {
   clause spend(sig: Signature) {
     unlock val
-  }
-}`,
-  "does not use its import": `import VaultSpend
-
-contract VaultLock(
-  hotKey: PublicKey,
-  coldKey: PublicKey,
-  delay: Duration,
-  val: Value
-) {
-  clause coldWithdraw(sig: Signature) {
-    verify checkSig(coldKey, sig)
-    unlock val
-  }
-  clause hotWithdraw(sig: Signature) {
-    verify checkSig(hotKey, sig)
-    unlock val
-  }
-}`,
-  "does not import its contract": `contract VaultLock(
-  hotKey: PublicKey,
-  coldKey: PublicKey,
-  delay: Duration,
-  val: Value
-) {
-  clause coldWithdraw(sig: Signature) {
-    verify checkSig(coldKey, sig)
-    unlock val
-  }
-  clause hotWithdraw(sig: Signature) {
-    verify checkSig(hotKey, sig)
-    output VaultSpend(hotKey, coldKey, delay, val)
-  }
-}`,
-  "passes arguments of the wrong type to a contract": `contract VaultLock(
-  hotKey: PublicKey,
-  coldKey: PublicKey,
-  delay: Duration,
-  val: Value
-) {
-  clause coldWithdraw(sig: Signature) {
-    verify checkSig(coldKey, sig)
-    unlock val
-  }
-  clause hotWithdraw(sig: Signature) {
-    verify checkSig(hotKey, sig)
-    output VaultSpend(hotKey, coldKey, delay, hotKey, val)
   }
 }`
 }
