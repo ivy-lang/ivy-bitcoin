@@ -21,14 +21,6 @@ import Lock from "./templates/components/lock"
 // Import css
 require("./static/playground.css")
 
-// Set favicon
-const faviconPath = require("!!url-loader?name=favicon.ico!./static/images/favicon.png")
-const favicon = document.createElement("link")
-favicon.type = "image/png"
-favicon.rel = "shortcut icon"
-favicon.href = faviconPath
-document.getElementsByTagName("head")[0].appendChild(favicon)
-
 interface ExtensionWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any
 }

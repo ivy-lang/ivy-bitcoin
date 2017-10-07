@@ -108,15 +108,14 @@ ace.define(
       .TextHighlightRules
     var identifierRe =
       "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*\\b"
-    var typeRe =
-      "PublicKey|Signature|Bytes|Integer|Hash|Time|Duration|Boolean|Value"
+    var typeRe = "PublicKey|Signature|Bytes|Hash|Time|Duration|Boolean|Value"
 
     var IvyHighlightRules = function(options) {
       var keywordMapper = this.createKeywordMapper(
         {
           "variable.language":
-            "checkSig|checkMultiSig|sha256|sha1|ripemd160|min|max|abs|size|older|after",
-          keyword: "contract|clause|verify|unlock|output|import"
+            "checkSig|checkMultiSig|sha256|sha1|ripemd160|older|after",
+          keyword: "contract|clause|verify|unlock"
         },
         "identifier"
       )

@@ -366,8 +366,6 @@ export function getInputType(type: ContractParameterType): PrimaryInputType {
     return "hashInput"
   }
   switch (type) {
-    case "Integer":
-      return "numberInput"
     case "Boolean":
       return "booleanInput"
     case "Bytes":

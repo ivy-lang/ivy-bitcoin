@@ -41,16 +41,14 @@ against some arguments to validate the transaction."
     (publicKey ? "public key" : "witness script") +
     "and which will later be used in the scriptSig of the spending transaction."
   const addressMessage =
-    "The address (in Base58) that you can use to fund this contract,\
- which appears in one of the <strong>outputs</strong> of the funding transaction."
+    "The testnet address (in Base58) that you would use to fund this contract,\
+ which appears in one of the outputs of the funding transaction."
   return (
     <div className="panel-body inner">
       This is a{" "}
-      {publicKey ? (
-        "Pay-To-Witness-Public-Key"
-      ) : (
-        "Pay-To-Witness-Script-Hash"
-      )}{" "}
+      {publicKey
+        ? "Pay-To-Witness-Public-Key"
+        : "Pay-To-Witness-Script-Hash"}{" "}
       address. For more information on how SegWit addresses work, see{" "}
       <a href="https://bitcoincore.org/en/segwit_wallet_dev/">here</a>.
       <br />
@@ -83,7 +81,7 @@ against some arguments to validate the transaction."
       <pre className="wrap">{redeemScript}</pre>
       <br />
       <h1>
-        Address <HelpIcon identifier="address" />
+        Address (Testnet) <HelpIcon identifier="address" />
       </h1>
       <HelpMessage identifier="address" message={addressMessage} />
       <pre className="wrap">{address}</pre>

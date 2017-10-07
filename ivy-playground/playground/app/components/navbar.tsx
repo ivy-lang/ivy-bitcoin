@@ -27,9 +27,9 @@ const Navbar = (props: { path: string }) => {
     <nav className="navbar navbar-inverse navbar-static-top">
       <div className="container fixedcontainer">
         <div className="navbar-header">
-          <a className="navbar-brand" href={"/"}>
+          <Link to="/create" className="navbar-brand">
             <img src={logo} />
-          </a>
+          </Link>
         </div>
         <ReactTooltip
           id="seedButtonTooltip"
@@ -39,7 +39,7 @@ const Navbar = (props: { path: string }) => {
         />
         <ul className="nav navbar-nav navbar-right">
           <li>
-            <Link to="/">Create Contract</Link>
+            <Link to="/create">Create Contract</Link>
           </li>
           <li>
             <Link to="/spend">Spend Contract</Link>

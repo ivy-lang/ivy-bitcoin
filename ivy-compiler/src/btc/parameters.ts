@@ -17,6 +17,7 @@ export type ContractParameterType =
   | "Duration"
   | "Signature"
   | "Value"
+  | "Boolean"
   | ContractParameterHash
 
 export interface ContractParameter {

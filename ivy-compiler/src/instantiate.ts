@@ -134,7 +134,7 @@ export function instantiate(
   const scriptSig: ScriptObject = Script.fromArray([
     argToPushData(redeemScript.toRaw())
   ])
-  const address = Address.fromScripthash(redeemScript.hash160())
+  const address = Address.fromScripthash(redeemScript.hash160(), "testnet")
   const tx = createFundingTransaction(address, valueArgs, seed)
   if (tx === undefined) {
     throw new Error(

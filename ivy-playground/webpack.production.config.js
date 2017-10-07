@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "playground.bundle.js",
-    publicPath: "/ivy/"
+    publicPath: "/"
   },
   resolve: {
     alias: {
