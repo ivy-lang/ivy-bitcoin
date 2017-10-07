@@ -8,7 +8,7 @@ import {
   instantiate,
   spend,
   Template
-} from "../index" // "../../dist/ivy-compiler"
+} from "../index"
 import {
   ERRORS,
   TEST_CASES,

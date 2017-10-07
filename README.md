@@ -1,10 +1,20 @@
 # Bitcoin Ivy
 
+Bitcoin Ivy is a higher-level language for writing smart contracts for the Bitcoin protocol. It compiles to instructions for Bitcoin’s virtual machine, Bitcoin Script, and can be used to create SegWit-compatible Bitcoin addresses. It is an adaptation of Chain’s smart contract language, [Ivy](http://chain.com/ivy).
+
+You can try out Bitcoin Ivy using the [Bitcoin Ivy Playground](http://danrobinson.github.io/bitcoindemo.html), which allows you to create test contracts and try spending them, in a sandboxed environment.
+
+**Bitcoin Ivy is prototype software and is intended for educational purposes only**. Do not use Bitcoin Ivy or the Bitcoin Ivy playground to control real Bitcoins. 
+
+Bug reports, feature requests are welcome; you can create an issue or email [ivy@chain.com](mailto:ivy@chain.com).
+
 ## FAQs
 
-**What is Bitcoin Ivy?**
+**What can I do with Bitcoin Ivy?**
 
-Bitcoin Ivy is a higher-level language for writing smart contracts for the Bitcoin protocol. It compiles to instructions for Bitcoin’s virtual machine, Bitcoin Script, and can be used to create SegWit-compatible Bitcoin addresses. It is an adaptation of Chain’s smart contract language, [Ivy](http://chain.com/ivy).
+Bitcoin Ivy contracts can check signatures, compute hashes, and compute and enforce both absolute and relative timelocks. These conditions can be combined into clauses to support sophisticated logic. 
+
+For more on what Bitcoin Ivy can do, see the [language documentation](#Language-documentation).
 
 **What is Bitcoin Script?**
 
@@ -16,11 +26,33 @@ Bitcoin Script is a relatively simple language, with support for cryptographic a
 
 The Bitcoin Ivy Playground is a developer tool for trying out Bitcoin Ivy. It allows you to write contract templates, generate corresponding Bitcoin testnet addresses, and simulate the creation of contracts in a sandboxed environment, and try spending those contracts with different arguments. It does not currently allow you to create or spend contracts on the Bitcoin testnet or mainnet.
 
-**Should I Bitcoin Ivy to store real Bitcoin?**
+**Should I use Bitcoin Ivy to store actual Bitcoin?**
 
 *No*. The Bitcoin Ivy playground is intended for educational purposes only. It does not currently support creating testnet or mainnet transactions, and if you try to use the generated scripts on the testnet or mainnet, you risk losing access to your coins. Furthermore, the playground is not built to be a secure wallet; it generates private keys and secret bytestrings using JavaScript and stores them insecurely in your browser’s local storage. Additionally, the Bitcoin Ivy compiler is relatively untested prototype software, and we make no guarantees that the scripts produced will be bug-free. 
 
-**How do I write contracts in Bitcoin Ivy?**
+**How do I use the Bitcoin Ivy playground?**
+
+Here’s an illustration of creating and spending the LockWithPublicKey contract.
+
+The LockWithPublicKey contract works like a typical Bitcoin address (in fact, the generated address is indistinguishable from a normal SegWit testnet address). To create it, you provide a public key, and some Bitcoin. To unlock the contract, you can sign the spending transaction with the private key that corresponds to tat public key.
+
+To create the contract, you provide a public key, **publicKey**, and fund the contract with some Bitcoins, **val**. The playground allows you to generate a keypair, or provide your own public or private key. (For security, do not paste your real Bitcoin private key into the playground!) The Bitcoins represented by **val** are locked up until the contract is spent.
+
+To unlock value from the contract, you must call the **spend** clause and provide a signature, **sig**. In the playground, you can generate this signature by pasting in a private key. The contract then uses *checkSig* to confirm that **sig** is a valid signature on the spending transaction by the private key corresponding to **publicKey**. If this operation fails, the attempt to spend the contract fails as well. If it succeeds, **val** is unlocked.
+
+Note: unlike the other contracts, which compile to Pay-To-Witness-Script-Hash addresses, this contract compiles to a Pay-To-Witness-Public-Key-Hash address, a special format for addresses that are controlled by a single public key.
+
+**How can I install and use Bitcoin Ivy?**
+
+Bitcoin Ivy is also available as a (very unstable and early-stage) [JavaScript library](https://www.npmjs.com/package/bitcoin-ivy).
+
+```
+npm install bitcoin-ivy
+```
+
+For examples of usage, see the [tests](/ivy-compiler/src/test/test.ts).
+
+## Language documentation
 
 Bitcoin Ivy allows you to write contracts that secure Bitcoin using arbitrary combinations of conditions supported by Bitcoin Script.
 
@@ -37,18 +69,6 @@ Each clause can list one or more conditions that must be satisfied. Supported co
 * Waiting until after a specified block height or block time (see LockUntil, TransferWithTimeout)
 
 * Waiting until the contract has been on the blockchain for longer than a specified duration (see LockDelay, EscrowWithDelay, VaultSpend)
-
-**How do I use the Bitcoin Ivy playground?**
-
-Here’s an illustration of creating and spending the LockWithPublicKey contract.
-
-The LockWithPublicKey contract works like a typical Bitcoin address (in fact, the generated address is indistinguishable from a normal SegWit testnet address). To create it, you provide a public key, and some Bitcoin. To unlock the contract, you can sign the spending transaction with the private key that corresponds to tat public key.
-
-To create the contract, you provide a public key, **publicKey**, and fund the contract with some Bitcoins, **val**. The playground allows you to generate a keypair, or provide your own public or private key. (For security, do not paste your real Bitcoin private key into the playground!) The Bitcoins represented by **val** are locked up until the contract is spent.
-
-To unlock value from the contract, you must call the **spend** clause and provide a signature, **sig**. In the playground, you can generate this signature by pasting in a private key. The contract then uses *checkSig* to confirm that **sig **is a valid signature on the spending transaction by the private key corresponding to **publicKey**. If this operation fails, the attempt to spend the contract fails as well. If it succeeds, **val** is unlocked.
-
-Note: unlike the other contracts, which compile to Pay-To-Witness-Script-Hash addresses, this contract compiles to a Pay-To-Witness-Public-Key-Hash address, a special format for addresses that are controlled by a single public key.
 
 ## Ivy Types
 
