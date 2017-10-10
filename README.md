@@ -2,11 +2,11 @@
 
 Bitcoin Ivy is a higher-level language for writing smart contracts for the Bitcoin protocol. It compiles to instructions for Bitcoin’s virtual machine, Bitcoin Script, and can be used to create SegWit-compatible Bitcoin addresses. It is an adaptation of Chain’s smart contract language, [Ivy](http://chain.com/ivy).
 
-You can try out Bitcoin Ivy using the [Bitcoin Ivy Playground](http://danrobinson.github.io/bitcoindemo.html), which allows you to create test contracts and try spending them, in a sandboxed environment.
+You can try out Bitcoin Ivy using the [Bitcoin Ivy Playground](http://danrobinson.github.io/bitcoindemo.html) [TODO: update with final URL], which allows you to create test contracts and try spending them, in a sandboxed environment.
 
 **Bitcoin Ivy is prototype software and is intended for educational purposes only**. Do not use Bitcoin Ivy or the Bitcoin Ivy playground to control real Bitcoins. 
 
-Bug reports, feature requests are welcome; you can create an issue or email [ivy@chain.com](mailto:ivy@chain.com).
+Bug reports, feature requests are welcome; you can create an issue or email [ivy@chain.com](mailto:ivy@chain.com) [TODO: update with final email address].
 
 ## FAQs
 
