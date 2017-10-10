@@ -56,7 +56,7 @@ export const create = () => {
       template,
       inputMap
     })
-    dispatch(push("/spend"))
+    dispatch(push("/unlock"))
   }
 }
 
@@ -82,7 +82,7 @@ export const spend = () => {
       // console.log(result)
     }
 
-    dispatch(push("/spend"))
+    dispatch(push("/unlock"))
   }
 }
 

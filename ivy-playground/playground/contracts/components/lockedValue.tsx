@@ -41,7 +41,7 @@ export default connect(state => ({
 
 const UnlockButton = (props: { contractId: string }) => {
   return (
-    <Link to={"/spend/" + props.contractId}>
+    <Link to={"/unlock/" + props.contractId}>
       <button className="btn btn-primary">Unlock</button>
     </Link>
   )

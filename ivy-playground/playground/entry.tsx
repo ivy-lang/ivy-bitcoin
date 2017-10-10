@@ -45,8 +45,8 @@ render(
       <ConnectedRouter history={history}>
         <app.components.Root>
           <Switch>
-            <Route exact path={"/spend"} component={LockedValue} />
-            <Route path={"/spend/:contractId"} component={Unlock} />
+            <Route exact path={"/unlock"} component={LockedValue} />
+            <Route path={"/unlock/:contractId"} component={Unlock} />
             <Route path={"*"} component={Lock} />
           </Switch>
         </app.components.Root>
