@@ -122,7 +122,7 @@ export default function reducer(
         spendInputMap,
         amount: instantiated.amount,
         unlockTxid: "",
-        address: instantiated.address,
+        address: instantiated.testnetAddress,
         witnessScript: instantiated.witnessScript,
         redeemScript: instantiated.redeemScript,
         scriptSig: instantiated.scriptSig,

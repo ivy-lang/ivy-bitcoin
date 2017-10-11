@@ -14,14 +14,13 @@ import {
 
 import {
   addParameterInput,
-  createSignature,
   getData,
   getPrivateKeyValue,
   getSequence,
   isValidInput
 } from "../inputs/data"
 
-import { fulfill, spend, toSighash } from "ivy-compiler"
+import { createSignature, fulfill, spend, toSighash } from "ivy-compiler"
 
 // internal imports
 import { Contract, ContractMap, ContractsState } from "./types"
@@ -224,9 +223,7 @@ export const getSpendTransaction = createSelector(
 export const getSpendTransactionSigHash = createSelector(
   getInstantiated,
   getSpendTransaction,
-  getSpendAmountInSatoshis,
-  (instantiated, spendTransaction, spendAmount) =>
-    toSighash(instantiated, spendTransaction, spendAmount)
+  (instantiated, spendTransaction) => toSighash(instantiated, spendTransaction)
 )
 
 export const getNumberOfClauses = createSelector(
@@ -396,7 +393,6 @@ export const generateInputMap = (compiled: Template): InputMap => {
       "contractParameters." + param.name
     )
   }
-
   const inputMap = {}
   for (const input of inputs) {
     inputMap[input.name] = input

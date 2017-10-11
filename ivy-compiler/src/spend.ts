@@ -5,6 +5,7 @@ import { Contract, Transaction } from "./instantiate"
 import {
   address as Address,
   crypto,
+  keyring,
   mtx as Mtx,
   opcode as Opcode,
   outpoint as Outpoint,
@@ -13,10 +14,11 @@ import {
   witness as Witness
 } from "bcoin"
 
+import { fromSecret, sign } from "./crypto"
+
 export const toSighash = (
   instantiated: Contract,
-  spendTransaction: Transaction,
-  amount: number
+  spendTransaction: Transaction
 ) => {
   if (spendTransaction === undefined) {
     return undefined
@@ -27,7 +29,7 @@ export const toSighash = (
           crypto.hash160(Buffer.from(instantiated.publicKey, "hex"))
         )
       : Script.fromRaw(Buffer.from(instantiated.witnessScript, "hex"))
-    return spendTransaction.signatureHash(0, script, amount, 1, 1)
+    return spendTransaction.signatureHash(0, script, instantiated.amount, 1, 1)
   } catch (e) {
     return undefined
   }
@@ -94,4 +96,18 @@ export const fulfill = (
   )
   spendTransaction.inputs[0].witness = witness
   return spendTransaction
+}
+
+const sigHashType = Buffer.from([1])
+
+export const createSignature = (sigHash: Buffer, secret: string) => {
+  let privKey
+  try {
+    privKey = fromSecret(secret).getPrivateKey()
+  } catch (e) {
+    return undefined
+  }
+  const sig = sign(sigHash, privKey) as Buffer
+  const fullSig = Buffer.concat([sig, sigHashType])
+  return fullSig
 }

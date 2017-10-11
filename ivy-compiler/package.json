@@ -1,5 +1,5 @@
 {
-  "name": "ivy-compiler",
+  "name": "bitcoin-ivy",
   "version": "0.0.1",
   "description": "Compiler for Ivy, Chain's smart contract language.",
   "main": "lib/index.js",
@@ -13,7 +13,7 @@
     "clean": "rm -rf lib"
   },
   "author": "",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.42",

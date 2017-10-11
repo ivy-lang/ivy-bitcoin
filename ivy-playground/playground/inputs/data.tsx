@@ -1,6 +1,7 @@
 import {
   ClauseParameter,
   ContractParameterHash,
+  createSignature,
   crypto,
   isHash
 } from "ivy-compiler"
@@ -373,20 +374,6 @@ export function getGenerateBytesInputValue(input: GenerateBytesInput) {
   return input.seed.slice(0, length * 2) // dumb, for now
 }
 
-// export function getAddressValue(inputsById: { [s: string]: Input }) {
-//   const input = inputsById["transactionDetails.addressInput"]
-//   if (input.value === "generateAddressInput") {
-//     return getGenerateAddressValue(
-//       "transactionDetails.addressInput.generateAddressInput",
-//       inputsById
-//     )
-//   } else {
-//     const provideInput =
-//       inputsById["transactionDetails.addressInput.provideAddressInput"]
-//     return provideInput.value
-//   }
-// }
-
 function getGenerateAddressValue(
   inputId: string,
   inputsById: { [s: string]: Input }
@@ -413,21 +400,6 @@ export function computeDataForInput(
     throw new Error("should not get data for a number")
   }
   return data.toString("hex")
-}
-
-const sigHashType = Buffer.from([1])
-
-export const createSignature = (sigHash: Buffer, secret: string) => {
-  let kr
-  try {
-    kr = crypto.fromSecret(secret)
-  } catch (e) {
-    return undefined
-  }
-  const privKey = kr.getPrivateKey()
-  const sig = crypto.sign(sigHash, privKey) as Buffer
-  const fullSig = Buffer.concat([sig, sigHashType])
-  return fullSig
 }
 
 export function getDefaultContractParameterValue(inputType: InputType): string {

@@ -27,7 +27,7 @@ const OpcodesUnconnected = ({ opcodes }) => {
 }
 
 const BytecodeUnconnected = ({
-  instantiated: { publicKey, witnessScript, redeemScript, address }
+  instantiated: { publicKey, witnessScript, redeemScript, testnetAddress }
 }) => {
   const witnessScriptMessage =
     "The compiled script (in hex), which will \
@@ -88,7 +88,7 @@ against some arguments to validate the transaction."
         Address (testnet) <HelpIcon identifier="address" />
       </h1>
       <HelpMessage identifier="address" message={addressMessage} />
-      <pre className="wrap">{address}</pre>
+      <pre className="wrap">{testnetAddress}</pre>
     </div>
   )
 }

@@ -21,7 +21,7 @@ export interface Contract {
   witnessScript: string
   redeemScript: string
   scriptSig: string
-  address: string
+  testnetAddress: string
   publicKey?: string
   fundingTransaction: TransactionJSON
   amount: number
@@ -134,8 +134,12 @@ export function instantiate(
   const scriptSig: ScriptObject = Script.fromArray([
     argToPushData(redeemScript.toRaw())
   ])
-  const address = Address.fromScripthash(redeemScript.hash160(), "testnet")
-  const tx = createFundingTransaction(address, valueArgs, seed)
+  const testnetAddress = Address.fromScripthash(
+    redeemScript.hash160(),
+    "testnet"
+  )
+  const mainnetAddress = Address.fromScripthash(redeemScript.hash160())
+  const tx = createFundingTransaction(testnetAddress, valueArgs, seed)
   if (tx === undefined) {
     throw new Error(
       "expected tx to not be undefined when called in instantiate"
@@ -145,7 +149,8 @@ export function instantiate(
     witnessScript: witnessScript.toJSON(),
     redeemScript: redeemScript.toJSON(),
     scriptSig: scriptSig.toJSON(),
-    address: address.toBase58(),
+    testnetAddress: testnetAddress.toBase58(),
+    mainnetAddress: mainnetAddress.toBase58(),
     publicKey: witnessScript.isPubkey()
       ? (args[0] as Buffer).toString("hex")
       : undefined,

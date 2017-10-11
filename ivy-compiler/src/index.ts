@@ -16,7 +16,7 @@ export { instantiate, Contract, Transaction } from "./instantiate"
 
 export { DEMO_CONTRACTS, DEMO_ID_LIST } from "./predefined"
 
-export { spend, fulfill, toSighash } from "./spend"
+export { spend, fulfill, toSighash, createSignature } from "./spend"
 
 import * as crypto from "./crypto"
 

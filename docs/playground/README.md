@@ -1,0 +1,3 @@
+# Bitcoin Ivy Playground
+
+The Bitcoin Ivy Playground is a developer tool for trying out Bitcoin Ivy. It allows you to write contract templates, generate corresponding Bitcoin testnet addresses, and simulate the creation of contracts in a sandboxed environment, and try spending those contracts with different arguments. It does not currently allow you to create or spend contracts on the Bitcoin testnet or mainnet.

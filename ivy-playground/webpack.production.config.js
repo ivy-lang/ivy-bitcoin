@@ -9,7 +9,7 @@ module.exports = {
     playground: path.resolve(__dirname, "playground/entry")
   },
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, "playground/public"),
     filename: "bitcoin-playground.bundle.js",
     publicPath: "/"
   },
