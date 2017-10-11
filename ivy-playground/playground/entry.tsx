@@ -1,5 +1,5 @@
 // external imports
-import createHistory from "history/createMemoryHistory"
+import createHistory from "history/createBrowserHistory"
 import React from "react"
 import DocumentTitle from "react-document-title"
 import { render } from "react-dom"
@@ -27,7 +27,7 @@ interface ExtensionWindow extends Window {
 const composeEnhancers =
   (window as ExtensionWindow).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const history = createHistory()
+const history = createHistory({ basename: "/bitcoin" })
 const store = createStore(
   app.reducer,
   composeEnhancers(
