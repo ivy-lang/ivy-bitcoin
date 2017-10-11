@@ -10,7 +10,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "public"),
-    filename: "playground.bundle.js",
+    filename: "bitcoin-playground.bundle.js",
     publicPath: "/"
   },
   resolve: {

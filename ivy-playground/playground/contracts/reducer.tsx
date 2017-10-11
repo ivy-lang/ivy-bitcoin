@@ -182,13 +182,14 @@ export default function reducer(
     }
     case "@@router/LOCATION_CHANGE":
       const path = action.payload.pathname.split("/")
-      if (path[1] === "ivy") {
-        path.shift()
+      if (path.length < 2) {
+        return state
       }
-      if (path.length > 2 && path[1] === "spend") {
+      const pathId = path.pop()
+      if (path.pop() === "unlock") {
         return {
           ...state,
-          spendContractId: path[2],
+          spendContractId: pathId,
           selectedClauseIndex: 0
         }
       }
