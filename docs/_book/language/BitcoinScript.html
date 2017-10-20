@@ -102,20 +102,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="../faq/README.md">
-            
-                <span>
-            
-                    
-                    FAQs
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="../playground/">
+        <li class="chapter " data-level="1.2" data-path="../playground/">
             
                 <a href="../playground/">
             
@@ -129,25 +116,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../playground/Creating.html">
+        <li class="chapter " data-level="1.2.1" data-path="../playground/Example.html">
             
-                <a href="../playground/Creating.html">
-            
-                    
-                    Creating contracts
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../playground/Unlocking.html">
-            
-                <a href="../playground/Unlocking.html">
+                <a href="../playground/Example.html">
             
                     
-                    Unlocking contracts
+                    Example
             
                 </a>
             
@@ -160,7 +134,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="./">
+        <li class="chapter " data-level="1.3" data-path="./">
             
                 <a href="./">
             
@@ -174,7 +148,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.4.1" data-path="BitcoinScript.html">
+        <li class="chapter active" data-level="1.3.1" data-path="BitcoinScript.html">
             
                 <a href="BitcoinScript.html">
             
@@ -187,7 +161,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="Types.html">
+        <li class="chapter " data-level="1.3.2" data-path="Types.html">
             
                 <a href="Types.html">
             
@@ -200,7 +174,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="Functions.html">
+        <li class="chapter " data-level="1.3.3" data-path="Functions.html">
             
                 <a href="Functions.html">
             
@@ -213,12 +187,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="FurtherReading.md">
+        <li class="chapter " data-level="1.3.4" data-path="ExampleContracts.html">
             
-                <span>
+                <a href="ExampleContracts.html">
             
                     
-                    Further Reading
+                    Example Contracts
             
                 </a>
             
@@ -231,12 +205,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="../js/">
+        <li class="chapter " data-level="1.4" data-path="../js/">
             
                 <a href="../js/">
             
                     
-                    JavaScript library
+                    JavaScript SDK
             
                 </a>
             
@@ -289,13 +263,33 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="bitcoin-script">Bitcoin Script</h1>
-<p>Bitcoin Ivy compiles to Bitcoin Script, a low-level language used by the Bitcoin Protocol to validate transactions. Each address in Bitcoin actually </p>
-<p>Developers already use Bitcoin Script to create multisignature Bitcoin addresses and time-locked transactions, as well as more complex protocols like payment channels and cross-chain atomic trades. Bitcoin Ivy aims to make it easier to design and instantiate these scripts.</p>
-<p>Bitcoin Script is a relatively simple language, with support for cryptographic and hash operations, as well as conditionals. It is not Turing-complete (since it has no support for looping or recursion), and does not allow scripts to require that value be sent to a particular address (i.e., <a href="http://fc16.ifca.ai/bitcoin/papers/MES16.pdf" target="_blank">covenants</a>).</p>
-<p>For more on Bitcoin Script, you can check out the <a href="https://en.bitcoin.it/wiki/Script" target="_blank">Bitcoin Wiki</a> and the <a href="https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch07.asciidoc" target="_blank">Advanced Transactions and Scripting</a> chapter from Mastering Bitcoin, by Andreas Antonopoulos.</p>
-<h3 id="segregated-witness">Segregated Witness</h3>
-<p>The Bitcoin Ivy compiler creates <em>Segregated Witness</em> (SegWit) addresses. For more on how SegWit addresses and scripts work, see the <a href="https://bitcoincore.org/en/segwit_wallet_dev/" target="_blank">Segregated Witness Wallet Development Guide</a> from Bitcoin Core.</p>
+                                <h1 id="how-bitcoin-smart-contracts-work">How Bitcoin smart contracts work</h1>
+<p>Bitcoin Ivy is designed to make it easier to create smart contracts for the Bitcoin network. Bitcoin&apos;s protocol works very differently from other blockchain protocols that support smart contracts, such as Ethereum, and the types of contracts that are supported are more limited. Despite those limitations, Bitcoin smart contracts have proven to be surprisingly flexible, supporting applications such as payment channels, cross-chain atomic trades, and more. Future protocol upgrades&#x2014;and improvements in tooling&#x2014;may make it possible to build increasingly sophisticated applications on top of Bitcoin.</p>
+<p>The below sections provide some background on how Bitcoin transactions, addresses, and scripting work, glossing over some important details. If you would like to learn about these topics, you can check out <a href="https://github.com/bitcoinbook/bitcoinbook" target="_blank">Mastering Bitcoin</a>, by Andreas Antonopoulos.</p>
+<p>These explanations also assume that you are familiar with the basic concept of a distributed ledger, as well as digital signatures and hash functions. For more background on those concepts, you can check out <a href="https://blog.chain.com/behind-the-magic-of-the-blockchain-48f1cb35f1dc" target="_blank">this introductory post</a> from the Chain blog.</p>
+<h2 id="bitcoin-contracts">Bitcoin contracts</h2>
+<p>The primary responsibility of the Bitcoin network is to maintain a distributed ledger, meaning information about who controls each of the over 16 million (at the time of this writing) Bitcoins in existence.</p>
+<p>You can think of the current state of the ledger as a set of lockboxes, each of which stores some value (i.e., 1000 BTC, 5 BTC, or .001 BTC) and is controlled by some <a href="#bitcoin-addresses"><em>address</em></a> (i.e., 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa).</p>
+<p>In Bitcoin, these lockboxes are usually referred to as &quot;unspent transaction outputs.&quot; In Bitcoin Ivy, we call them <em>contracts</em>.</p>
+<h2 id="bitcoin-transactions">Bitcoin transactions</h2>
+<p>Each Bitcoin transaction unlocks value from some set of contracts (or creates new value from thin air, in the case of a <a href="https://bitcoin.org/en/glossary/coinbase-transaction" target="_blank">coinbase transaction</a>), and locks that value into newly created contracts. The old contracts, once unlocked, are removed from the ledger state; there is no way to withdraw only part of the value from a contract, or change a contract&apos;s state. In other words, in Bitcoin, contracts are <em>immutable</em>.</p>
+<p>A transaction contains a list of <em>inputs</em>&#x2014;the unspent contracts that the transaction wants to unlock&#x2014;and a list of <em>outputs</em>&#x2014;the new contracts that the contract wants to create. The amount of value unlocked in the inputs must be equal to the amount of value locked in the outputs.</p>
+<p>For more on Bitcoin transactions, you can check out Chapter 6 of Mastering Bitcoin, <a href="https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch06.asciidoc" target="_blank">Transactions</a>.</p>
+<h2 id="bitcoin-addresses">Bitcoin addresses</h2>
+<p>Bitcoin wouldn&apos;t provide much security if anyone were able to unlock any contract. Contracts can only be unlocked under certain conditions, specified in that contract&apos;s <em>address</em>. For example, an address can specify that the contract can only be unlocked using a digital signature from the contract&apos;s owner (or more specifically, by the private key corresponding to a prespecified public key).</p>
+<p>Each Bitcoin address corresponds to a program.<sup><a href="#fn_1" id="reffn_1">1</a></sup> When you send Bitcoin to an address, you are creating a contract which locks that Bitcoin up with that address&apos;s program. The only way to spend that Bitcoin is to satisfy the program, thus unlocking the value and allowing it to be sent to a new address. </p>
+<p>When spending a contract, the user provides some arguments to satisfy the contract&apos;s program. For example, the arguments might include one or more signatures, or the preimage of a particular hash. In Bitcoin Ivy, these arguments are referred to as <em>clause arguments</em>, since they are provided at the time that a particular clause of the contract is invoked.</p>
+<h2 id="bitcoin-script">Bitcoin Script</h2>
+<p>Bitcoin Script is the low-level language that contracts&apos; programs are written in. It consists of a sequence of opcodes, which are executed in order by a stack-based virtual machine (after the provided clause arguments are first placed on the stack).</p>
+<p>Bitcoin Script is a relatively simple language, with support for cryptographic and hash operations, as well as conditionals. It is not Turing-complete (since it has no support for looping or recursion). It also does not allow scripts to inspect other inputs or outputs in the transaction, meaning the contract cannot control the flow of value or maintain any kind of persistent state.<sup><a href="#fn_2" id="reffn_2">2</a></sup></p>
+<p>Developers already use Bitcoin Script to create multisignature Bitcoin addresses and time-locked transactions, as well as more complex protocols like payment channels and cross-chain atomic trades. But reading and writing programs using Bitcoin Script is difficult, as is using it to create addresses and transactions. The goal of Bitcoin Ivy is to make it easier to write and instantiate these programs.</p>
+<p>For more on Bitcoin Script, you can check out the <a href="https://en.bitcoin.it/wiki/Script" target="_blank">Bitcoin Wiki</a> as well as Chapter 7 of Mastering Bitcoin, <a href="https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch07.asciidoc" target="_blank">Advanced Transactions and Scripting</a></p>
+<blockquote id="fn_1">
+<sup>1</sup>. Conversion between Bitcoin Script programs and Bitcoin addresses involves some technical details that are beyond the scope of this documentation. The Bitcoin Ivy compiler creates <em>Segregated Witness</em> (SegWit) addresses, a new kind of Bitcoin address that has been supported since a protocol upgrade in August 2017. To create a SegWit address, the bytecode of the program&#x2014;the &quot;witness script&quot;&#x2014;is hashed to create a &quot;redeem script,&quot; which is in turn hashed to create the address. To spend from a SegWit address, both the redeem script and the witness script are revealed, and arguments are provided to satisfy the witness script. For more on how SegWit addresses and scripts work, see the <a href="https://bitcoincore.org/en/segwit_wallet_dev/" target="_blank">Segregated Witness Wallet Development Guide</a> from Bitcoin Core.<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#x21A9;</a>
+</blockquote>
+<blockquote id="fn_2">
+<sup>2</sup>. The inability to directly control value is a major difference between Bitcoin Ivy and the version of <a href="https://www.chain.com/ivy" target="_blank">Ivy</a> used to write smart contracts for Chain Core. There have been several proposals to add this kind of functionality to Bitcoin Script, most notably in <a href="http://fc16.ifca.ai/bitcoin/papers/MES16.pdf" target="_blank">Bitcoin Covenants</a>, by Malte M&#xF6;ser, Ittay Eyal, and Emin G&#xFC;n Sirer.<a href="#reffn_2" title="Jump back to footnote [2] in the text."> &#x21A9;</a>
+</blockquote>
 
                                 
                                 </section>
@@ -339,7 +333,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Bitcoin Script","level":"1.4.1","depth":2,"next":{"title":"Types","level":"1.4.2","depth":2,"path":"language/Types.md","ref":"language/Types.md","articles":[]},"previous":{"title":"Language Documentation","level":"1.4","depth":1,"path":"language/README.md","ref":"language/README.md","articles":[{"title":"Bitcoin Script","level":"1.4.1","depth":2,"path":"language/BitcoinScript.md","ref":"language/BitcoinScript.md","articles":[]},{"title":"Types","level":"1.4.2","depth":2,"path":"language/Types.md","ref":"language/Types.md","articles":[]},{"title":"Functions","level":"1.4.3","depth":2,"path":"language/Functions.md","ref":"language/Functions.md","articles":[]},{"title":"Further Reading","level":"1.4.4","depth":2,"path":"language/FurtherReading.md","ref":"language/FurtherReading.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"language/BitcoinScript.md","mtime":"2017-10-11T20:59:04.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-11T18:30:53.334Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Bitcoin Script","level":"1.3.1","depth":2,"next":{"title":"Types","level":"1.3.2","depth":2,"path":"language/Types.md","ref":"language/Types.md","articles":[]},"previous":{"title":"Language Documentation","level":"1.3","depth":1,"path":"language/README.md","ref":"language/README.md","articles":[{"title":"Bitcoin Script","level":"1.3.1","depth":2,"path":"language/BitcoinScript.md","ref":"language/BitcoinScript.md","articles":[]},{"title":"Types","level":"1.3.2","depth":2,"path":"language/Types.md","ref":"language/Types.md","articles":[]},{"title":"Functions","level":"1.3.3","depth":2,"path":"language/Functions.md","ref":"language/Functions.md","articles":[]},{"title":"Example Contracts","level":"1.3.4","depth":2,"path":"language/ExampleContracts.md","ref":"language/ExampleContracts.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"language/BitcoinScript.md","mtime":"2017-10-17T21:46:43.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-22T19:36:26.736Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

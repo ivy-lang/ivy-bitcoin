@@ -1,4 +1,4 @@
-export { compileTemplate } from "./compile"
+export { compile } from "./compile"
 
 export { Template, TemplateClause, CompilerError } from "./template"
 

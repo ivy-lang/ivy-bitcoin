@@ -812,6 +812,22 @@ bcoin@danrobinson/bcoin#compat:
     socket.io "2.0.3"
     socket.io-client "2.0.3"
 
+"bcoin@https://github.com/danrobinson/bcoin.git#compat":
+  version "1.0.0-beta.14"
+  resolved "https://github.com/danrobinson/bcoin.git#efd93e88eb0828afce5cce5bb5285330848aea49"
+  dependencies:
+    babel-cli "^6.26.0"
+    babel-polyfill "^6.26.0"
+    bn.js "4.11.8"
+    elliptic "6.4.0"
+    n64 "0.0.18"
+  optionalDependencies:
+    bcoin-native "0.0.23"
+    leveldown "1.7.2"
+    secp256k1 "3.3.0"
+    socket.io "2.0.3"
+    socket.io-client "2.0.3"
+
 bcrypt-pbkdf@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.1.tgz#63bc5dcb61331b92bc05fd528953c33462a06f8d"

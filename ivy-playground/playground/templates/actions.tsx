@@ -1,5 +1,5 @@
 // internal imports
-import { compileTemplate, DEMO_ID_LIST } from "ivy-compiler"
+import { compile, DEMO_ID_LIST } from "ivy-compiler"
 import { getSourceMap } from "./selectors"
 import { Template } from "./types"
 
@@ -39,7 +39,7 @@ export const setSource = (source: string) => {
     const type = SET_SOURCE
     dispatch({ type, source })
 
-    const compiled = compileTemplate(source)
+    const compiled = compile(source)
 
     if (compiled.type === "compilerError") {
       dispatch(updateError(compiled.message))

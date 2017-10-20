@@ -12,6 +12,8 @@
 
 * **Boolean**: either **true** or **false**
 
+* **Value**: Some amount of Bitcoins (or, more precisely, some amount of satoshis). Parameters of type *Value* represent actual Bitcoins that are locked up in a contract.
+
 * **HashableType**: any type which can be passed to hash functions: **Bytes**, **PublicKey**, **Sha256(T)**, **Sha1(T)**, and **Ripemd160(T)**.
 
 * **Sha256(T: HashableType)**: the result of taking a [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash of a value of the hashable type T.

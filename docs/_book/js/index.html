@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>JavaScript library · GitBook</title>
+        <title>JavaScript SDK · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -58,7 +58,7 @@
 
     
     
-    <link rel="prev" href="../language/FurtherReading.md" />
+    <link rel="prev" href="../language/ExampleContracts.html" />
     
 
     </head>
@@ -100,20 +100,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="../faq/README.md">
-            
-                <span>
-            
-                    
-                    FAQs
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="../playground/">
+        <li class="chapter " data-level="1.2" data-path="../playground/">
             
                 <a href="../playground/">
             
@@ -127,25 +114,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../playground/Creating.html">
+        <li class="chapter " data-level="1.2.1" data-path="../playground/Example.html">
             
-                <a href="../playground/Creating.html">
-            
-                    
-                    Creating contracts
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../playground/Unlocking.html">
-            
-                <a href="../playground/Unlocking.html">
+                <a href="../playground/Example.html">
             
                     
-                    Unlocking contracts
+                    Example
             
                 </a>
             
@@ -158,7 +132,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../language/">
+        <li class="chapter " data-level="1.3" data-path="../language/">
             
                 <a href="../language/">
             
@@ -172,7 +146,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../language/BitcoinScript.html">
+        <li class="chapter " data-level="1.3.1" data-path="../language/BitcoinScript.html">
             
                 <a href="../language/BitcoinScript.html">
             
@@ -185,7 +159,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../language/Types.html">
+        <li class="chapter " data-level="1.3.2" data-path="../language/Types.html">
             
                 <a href="../language/Types.html">
             
@@ -198,7 +172,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../language/Functions.html">
+        <li class="chapter " data-level="1.3.3" data-path="../language/Functions.html">
             
                 <a href="../language/Functions.html">
             
@@ -211,12 +185,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../language/FurtherReading.md">
+        <li class="chapter " data-level="1.3.4" data-path="../language/ExampleContracts.html">
             
-                <span>
+                <a href="../language/ExampleContracts.html">
             
                     
-                    Further Reading
+                    Example Contracts
             
                 </a>
             
@@ -229,12 +203,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.5" data-path="./">
+        <li class="chapter active" data-level="1.4" data-path="./">
             
                 <a href="./">
             
                     
-                    JavaScript library
+                    JavaScript SDK
             
                 </a>
             
@@ -272,7 +246,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >JavaScript library</a>
+        <a href=".." >JavaScript SDK</a>
     </h1>
 </div>
 
@@ -287,13 +261,65 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="javascript-library">JavaScript library</h1>
-<p>Bitcoin Ivy is also available as a (very unstable and early-stage) <a href="https://www.npmjs.com/package/bitcoin-ivy" target="_blank">JavaScript library</a>.</p>
-<p>This library allows you to create transaction templates (using the <code>compileTemplate</code> function), as . It does no</p>
+                                <h1 id="javascript-sdk">JavaScript SDK</h1>
+<p>Bitcoin Ivy is also available as a (very unstable and early-stage) <a href="https://www.npmjs.com/package/bitcoin-ivy" target="_blank">JavaScript SDK</a>.</p>
 <pre><code>npm install bitcoin-ivy
-</code></pre><pre><code>
+</code></pre><p>This library allows you to write and compile contract templates, instantiate them with arguments (to create Bitcoin addresses), create dummy contracts (with fake value), and unlock them with arguments. </p>
+<p>It does not support creating real transactions (on either the testnet or mainnet). Do not try to send BTC to addresses created by this library.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> {
+  compile,
+  fulfill,
+  instantiate,
+  spend,
+  toSighash,
+  createSignature,
+  crypto
+} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;bitcoin-ivy&quot;</span>
 
-</code></pre><p>For more examples of usage, see the <a href="https://github.com/ivy-lang/bitcoin-ivy/blob/main/ivy-compiler/src/test/test.ts" target="_blank">tests</a>.</p>
+<span class="hljs-keyword">const</span> source = <span class="hljs-string">`contract LockWithPublicKey(publicKey: PublicKey, val: Value) {
+  clause spend(sig: Signature) {
+    verify checkSig(publicKey, sig)
+    unlock val
+  }
+}`</span>
+<span class="hljs-keyword">const</span> privateKey = <span class="hljs-string">&quot;Kyw8s2qf2TxNnJMwfrKYhAsZ6eAmMMhAv4Ej4VVE8KpVsDvXurJK&quot;</span>
+<span class="hljs-keyword">const</span> publicKey = crypto.fromSecret(privateKey).getPublicKey(<span class="hljs-string">&quot;hex&quot;</span>)
+<span class="hljs-keyword">const</span> destinationAddress = <span class="hljs-string">&quot;&quot;</span>
+<span class="hljs-keyword">const</span> amount = <span class="hljs-number">0</span>
+<span class="hljs-keyword">const</span> locktime = <span class="hljs-number">0</span>
+<span class="hljs-keyword">const</span> sequenceNumber = { sequence: <span class="hljs-number">0</span>, seconds: <span class="hljs-literal">false</span> }
+
+<span class="hljs-comment">// compile the template</span>
+<span class="hljs-keyword">const</span> template = compile(source)
+
+<span class="hljs-comment">// instantiate it</span>
+<span class="hljs-keyword">const</span> instantiated = instantiate(template, [publicKey, amount])
+
+<span class="hljs-comment">// get the testnet and mainnet addresses corresponding to the contract</span>
+<span class="hljs-comment">// note: any BTC sent to these addresses may not be recoverable!</span>
+<span class="hljs-built_in">console</span>.log(instantiated.testnetAddress)
+<span class="hljs-built_in">console</span>.log(instantiated.mainnetAddress)
+
+<span class="hljs-comment">// create the spending transaction</span>
+<span class="hljs-keyword">const</span> spendTransaction = spend(
+  instantiated.fundingTransaction,
+  destinationAddress,
+  amount,
+  locktime,
+  sequenceNumber
+)
+
+<span class="hljs-comment">// sign it</span>
+<span class="hljs-keyword">const</span> sighash = toSighash(instantiated, spendTransaction)
+<span class="hljs-keyword">const</span> sig = createSignature(sighash, privateKey)
+
+<span class="hljs-comment">// add the signature so the script succeeds</span>
+<span class="hljs-keyword">const</span> fulfilledTransaction = fulfill(instantiated, spendTransaction, [sig], <span class="hljs-string">&quot;spend&quot;</span>)
+
+<span class="hljs-comment">// throw an error if transaction is invalid</span>
+fulfilledTransaction.check()
+</code></pre>
+<p>For more examples of how to use the library, see the <a href="https://github.com/ivy-lang/bitcoin-ivy/blob/main/ivy-compiler/src/test/test.ts" target="_blank">tests</a>.</p>
 
                                 
                                 </section>
@@ -321,7 +347,7 @@
 
             
                 
-                <a href="../language/FurtherReading.md" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Further Reading">
+                <a href="../language/ExampleContracts.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Example Contracts">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -333,7 +359,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"JavaScript library","level":"1.5","depth":1,"previous":{"title":"Further Reading","level":"1.4.4","depth":2,"path":"language/FurtherReading.md","ref":"language/FurtherReading.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js/README.md","mtime":"2017-10-11T21:14:33.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-11T18:30:53.334Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"JavaScript SDK","level":"1.4","depth":1,"previous":{"title":"Example Contracts","level":"1.3.4","depth":2,"path":"language/ExampleContracts.md","ref":"language/ExampleContracts.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"js/README.md","mtime":"2017-10-23T03:52:33.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-22T19:36:26.736Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

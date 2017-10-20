@@ -4,10 +4,8 @@
   "description": "Compiler for Ivy, Chain's smart contract language.",
   "main": "lib/index.js",
   "scripts": {
-    "test":
-      "./node_modules/mocha/bin/mocha src/test/*.ts --compilers ts:./node_modules/ts-node/register,tsx:./node_modules/ts-node/register",
-    "compile-pegjs":
-      "./node_modules/pegjs/bin/pegjs -o lib/parser.js src/parser.pegjs",
+    "test": "./node_modules/mocha/bin/mocha src/test/*.ts --compilers ts:./node_modules/ts-node/register,tsx:./node_modules/ts-node/register",
+    "compile-pegjs": "./node_modules/pegjs/bin/pegjs -o lib/parser.js src/parser.pegjs",
     "compile-tsc": "tsc",
     "build": "npm run compile-tsc && npm run compile-pegjs",
     "clean": "rm -rf lib"
@@ -39,7 +37,7 @@
   "types": "./lib/index.d.ts",
   "dependencies": {
     "babel-plugin-transform-runtime": "^6.23.0",
-    "level-js": "^2.2.4",
-    "bcoin": "danrobinson/bcoin#compat"
+    "bcoin": "https://github.com/danrobinson/bcoin.git#compat",
+    "level-js": "^2.2.4"
   }
 }

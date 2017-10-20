@@ -15,7 +15,7 @@ import { DEMO_CONTRACTS } from "./predefined"
 
 const parser = require("../lib/parser")
 
-export function compileTemplate(
+export function compile(
   source: string,
   importable = DEMO_CONTRACTS
 ): Template | CompilerError {

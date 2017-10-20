@@ -13,7 +13,7 @@ import {
   getSource
 } from "../templates/selectors"
 
-import { compileTemplate } from "ivy-compiler"
+import { compile } from "ivy-compiler"
 
 // internal imports
 import {

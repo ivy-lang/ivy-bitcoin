@@ -1,16 +1,18 @@
-# JavaScript library
+# JavaScript SDK
 
-Bitcoin Ivy is also available as a (very unstable and early-stage) [JavaScript library](https://www.npmjs.com/package/bitcoin-ivy).
-
-This library allows you to create transaction templates (using the `compileTemplate` function), as . It does not support creating real transactions (on either the testnet or mainnet).
+Bitcoin Ivy is also available as a (very unstable and early-stage) [JavaScript SDK](https://www.npmjs.com/package/bitcoin-ivy).
 
 ```
 npm install bitcoin-ivy
 ```
 
-```
+This library allows you to write and compile contract templates, instantiate them with arguments (to create Bitcoin addresses), create dummy contracts (with fake value), and unlock them with arguments. 
+
+It does not support creating real transactions (on either the testnet or mainnet). Do not try to send BTC to addresses created by this library.
+
+```js
 import {
-  compileTemplate,
+  compile,
   fulfill,
   instantiate,
   spend,
@@ -33,15 +35,14 @@ const locktime = 0
 const sequenceNumber = { sequence: 0, seconds: false }
 
 // compile the template
-const template = compileTemplate(source)
+const template = compile(source)
 
 // instantiate it
 const instantiated = instantiate(template, [publicKey, amount])
 
-// you can get the testnet address
+// get the testnet and mainnet addresses corresponding to the contract
+// note: any BTC sent to these addresses may not be recoverable!
 console.log(instantiated.testnetAddress)
-
-// and the mainnet address
 console.log(instantiated.mainnetAddress)
 
 // create the spending transaction
@@ -57,11 +58,11 @@ const spendTransaction = spend(
 const sighash = toSighash(instantiated, spendTransaction)
 const sig = createSignature(sighash, privateKey)
 
-// add the arguments to make the script pass
-const fulfilled = fulfill(instantiated, spendTransaction, [sig], "spend")
+// add the signature so the script succeeds
+const fulfilledTransaction = fulfill(instantiated, spendTransaction, [sig], "spend")
 
 // throw an error if transaction is invalid
-fulfilled.check()
+fulfilledTransaction.check()
 ```
 
 For more examples of how to use the library, see the [tests](https://github.com/ivy-lang/bitcoin-ivy/blob/main/ivy-compiler/src/test/test.ts).

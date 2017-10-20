@@ -68,7 +68,7 @@ Each clause can list one or more conditions that must be satisfied. Supported co
 
 * Waiting until after a specified block height or block time (see LockUntil, TransferWithTimeout)
 
-* Waiting until the contract has been on the blockchain for longer than a specified duration (see LockDelay, EscrowWithDelay, VaultSpend)
+* Waiting until the contract has been on the blockchain for longer than a specified duration (see LockDelay, EscrowWithTimeout, VaultSpend)
 
 ## Ivy Types
 
