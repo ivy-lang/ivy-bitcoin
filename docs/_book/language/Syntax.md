@@ -17,4 +17,4 @@ To instantiate it as a contract, you must also pass some *Value*—the Bitcoins 
 
 Each contract has one or more _clauses_. To unlock the contract, you need to invoke one of its clauses, pass it one or more *clause arguments*—in this case, a signature—and satisfy each of its conditions. In this case, the only condition enforced by the *spend* clause is that *sig* must be a valid signature on the transaction by the private key corresponding to the prespecified *publicKey*.
 
-Finally, each clause needs to unlock the value.
+Finally, each clause needs to unlock the value
