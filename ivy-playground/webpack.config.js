@@ -1,7 +1,6 @@
 const webpack = require("webpack")
 const path = require("path")
 const { CheckerPlugin } = require("awesome-typescript-loader")
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
 
 module.exports = {
   target: "web",
