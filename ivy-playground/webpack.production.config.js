@@ -6,10 +6,10 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
 module.exports = {
   target: "web",
   entry: {
-    playground: path.resolve(__dirname, "playground/entry")
+    playground: path.resolve(__dirname, "src/entry")
   },
   output: {
-    path: path.resolve(__dirname, "playground/public"),
+    path: path.resolve(__dirname, "public"),
     filename: "bitcoin-playground.bundle.js",
     publicPath: "/"
   },

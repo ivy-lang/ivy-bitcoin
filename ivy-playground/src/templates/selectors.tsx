@@ -132,13 +132,8 @@ export const getInstantiated = createSelector(
     if (template === undefined || contractArgs === undefined) {
       return undefined
     }
-    return instantiate(template, contractArgs, Buffer.from("", "hex")) // REMOVE
+    return instantiate(template, contractArgs)
   }
-)
-
-export const getWitnessScript = createSelector(
-  getInstantiated,
-  script => script
 )
 
 export const getSelectedTemplate = createSelector(

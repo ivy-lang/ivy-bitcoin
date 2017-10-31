@@ -48,4 +48,4 @@ jspm_packages
 .yarn-integrity
 
 # built app and compiler
-build/*.bundle.js
+ivy-playground/public/*.bundle.js

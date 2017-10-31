@@ -1,6 +1,5 @@
 // external imports
 import React from "react"
-import DocumentTitle from "react-document-title"
 import { connect } from "react-redux"
 import ReactTooltip from "react-tooltip"
 
@@ -15,8 +14,8 @@ import {
   getCompiled,
   getContractParameters,
   getError,
-  getSource,
-  getWitnessScript
+  getInstantiated,
+  getSource
 } from "../selectors"
 import Editor from "./editor"
 import LockButton from "./lockButton"
@@ -25,7 +24,7 @@ const mapStateToProps = state => {
   const source = getSource(state)
   const contractParameters = getContractParameters(state)
   const error = getError(state)
-  const bytecode = getWitnessScript(state)
+  const bytecode = getInstantiated(state)
   return { source, contractParameters, error, bytecode }
 }
 
@@ -75,12 +74,10 @@ const Lock = ({ source, contractParameters, error, bytecode }) => {
     instantiate = <div />
   }
   return (
-    <DocumentTitle title="Bitcoin Script Compiler">
-      <div>
-        <Editor />
-        {instantiate}
-      </div>
-    </DocumentTitle>
+    <div>
+      <Editor />
+      {instantiate}
+    </div>
   )
 }
 

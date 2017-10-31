@@ -10,7 +10,7 @@
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["./playground"],
+  "include": ["./src"],
   "exclude": ["build/*", "node_modules"],
   "awesomeTypescriptLoaderOptions": {
     "useBabel": true

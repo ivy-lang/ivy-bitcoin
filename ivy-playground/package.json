@@ -2,11 +2,12 @@
   "name": "ivy-playground",
   "version": "0.0.1",
   "description": "Sandbox for testing Bitcoin Ivy.",
-  "main": "playground/entry.js",
+  "main": "src/entry.js",
   "scripts": {
     "build": "webpack --config webpack.production.config.js",
-    "start":
-      "webpack-dev-server --content-base playground/public --inline --hot",
+    "deploy":
+      "npm run build && aws s3 cp public s3://ivy-lang.com/bitcoin --recursive",
+    "start": "webpack-dev-server --content-base public --inline --hot",
     "test": ""
   },
   "author": "",
