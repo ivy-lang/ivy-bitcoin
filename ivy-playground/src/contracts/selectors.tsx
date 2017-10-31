@@ -20,7 +20,7 @@ import {
   isValidInput
 } from "../inputs/data"
 
-import { createSignature, fulfill, spend, toSighash } from "ivy-compiler"
+import { createSignature, fulfill, spend, toSighash } from "bitcoin-ivy"
 
 // internal imports
 import { Contract, ContractMap, ContractsState } from "./types"

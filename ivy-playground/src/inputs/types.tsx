@@ -4,7 +4,7 @@ import {
   ContractParameterType,
   HashFunction,
   isHash
-} from "ivy-compiler"
+} from "bitcoin-ivy"
 
 export {
   ContractParameterType,

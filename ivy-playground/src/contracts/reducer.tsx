@@ -1,4 +1,4 @@
-import { instantiate } from "ivy-compiler"
+import { instantiate } from "bitcoin-ivy"
 import { addParameterInput } from "../inputs/data"
 import {
   ContractParameterType,
@@ -31,7 +31,7 @@ import {
   Contract as IvyContract,
   TemplateClause,
   Transaction
-} from "ivy-compiler"
+} from "bitcoin-ivy"
 
 export const INITIAL_STATE: ContractsState = {
   contractMap: {},

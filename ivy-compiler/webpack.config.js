@@ -18,12 +18,6 @@ module.exports = {
     umdNamedDefine: true
   },
   resolve: {
-    alias: {
-      bcoin: path.resolve(
-        __dirname,
-        "node_modules/bcoin/compat/bcoin-browser.js"
-      )
-    },
     modules: ["node_modules"],
     extensions: ["-browser.js", ".js", ".json", ".jsx", ".ts", ".tsx", ".pegjs"]
   },

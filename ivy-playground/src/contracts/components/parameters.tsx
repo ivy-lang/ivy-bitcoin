@@ -1,4 +1,4 @@
-import { typeToString } from "ivy-compiler"
+import { typeToString } from "bitcoin-ivy"
 import * as momentImport from "moment"
 // external imports
 import React from "react"
