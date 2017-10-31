@@ -54,14 +54,15 @@
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack-bundle-analyzer": "^2.9.0"
+  },
   "license": "MIT",
   "main": "src/entry.js",
   "repository": "ivy-lang/bitcoin-ivy",
   "scripts": {
     "build": "webpack --config webpack.production.config.js",
-    "deploy":
-      "npm run build && aws s3 cp public s3://ivy-lang.com/bitcoin --recursive",
+    "deploy": "npm run build && aws s3 cp public s3://ivy-lang.com/bitcoin --recursive",
     "start": "webpack-dev-server --content-base public --inline --hot",
     "test": ""
   }
