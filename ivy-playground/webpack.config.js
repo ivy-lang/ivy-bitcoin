@@ -19,11 +19,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"]
-      },
-      {
         test: /\.json$/,
         use: ["json-loader"]
       },
@@ -33,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: ["babel-loader", "awesome-typescript-loader", "tslint-loader"]
+        use: ["awesome-typescript-loader", "tslint-loader"]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
