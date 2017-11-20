@@ -1,4 +1,4 @@
-# How Bitcoin smart contracts work
+# Bitcoin Script
 
 Bitcoin Ivy is designed to make it easier to create smart contracts for the Bitcoin network. Bitcoin's protocol works very differently from other blockchain protocols that support smart contracts, such as Ethereum, and the types of contracts that are supported are more limited. Despite those limitations, Bitcoin smart contracts have proven to be surprisingly flexible, supporting applications such as payment channels, cross-chain atomic trades, and more. Future protocol upgrades—and improvements in tooling—may make it possible to build increasingly sophisticated applications on top of Bitcoin.
 

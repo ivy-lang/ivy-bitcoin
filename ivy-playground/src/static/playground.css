@@ -2,18 +2,18 @@
 
 @font-face {
   font-family: "Nitti";
-  src: url('fonts/nitti-normal.woff');
+  src: url("fonts/nitti-normal.woff");
 }
 
 @font-face {
   font-family: "Nitti Grotesk";
-  src: url('fonts/nittigrotesk-normal.woff');
+  src: url("fonts/nittigrotesk-normal.woff");
 }
 
 @font-face {
   font-family: "Nitti Grotesk";
   font-weight: bold;
-  src: url('fonts/nittigrotesk-medium.woff');
+  src: url("fonts/nittigrotesk-medium.woff");
 }
 
 body {
@@ -23,22 +23,27 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1,h2,h3,h4,h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   color: #20252d;
 }
 
-small, .small {
+small,
+.small {
   font-size: 90%;
   font-weight: bold;
-  color: #20252d;  
+  color: #20252d;
 }
 
 .navbar {
-  background: #20252D;
+  background: #20252d;
   border: 0;
   margin-bottom: 30px;
-  font-size:100%;
-  font-weight:700;
+  font-size: 100%;
+  font-weight: 700;
 }
 
 .glyphicon-question-sign {
@@ -55,7 +60,7 @@ small, .small {
 }
 
 .dropdown-menu {
-  font-size:16px;
+  font-size: 16px;
 }
 
 .container {
@@ -66,7 +71,7 @@ tr:last-of-type td {
   padding-bottom: 0 !important;
 }
 
-.table>thead>tr>th {
+.table > thead > tr > th {
   border: none;
 }
 
@@ -75,7 +80,7 @@ tr:last-of-type td {
   margin-bottom: 0;
 }
 
-.table>tbody>tr>td {
+.table > tbody > tr > td {
   line-height: 34px;
   padding: 20px 8px;
   color: #747c89;
@@ -86,7 +91,7 @@ tr:last-of-type td {
   border-radius: 2px;
 }
 
-.panel-default>.panel-heading {
+.panel-default > .panel-heading {
   background-image: none !important;
   color: #20252d;
   border-top-left-radius: 2px;
@@ -95,13 +100,13 @@ tr:last-of-type td {
 
 .panel-heading-btns {
   list-style: none;
-  margin:0;
+  margin: 0;
   padding: 0;
 }
 
 .panel-heading-btns li {
   display: inline-block;
-  margin:0;
+  margin: 0;
   padding: 0;
 }
 
@@ -118,7 +123,7 @@ tr:last-of-type td {
   color: #20252d;
   font-size: 18px;
   font-weight: bold;
-  background: #F5F5F8;
+  background: #f5f5f8;
 }
 
 .panel-body {
@@ -151,7 +156,7 @@ tr:last-of-type td {
 
 .form-control {
   max-width: 300px;
-  font-size:16px;
+  font-size: 16px;
 }
 
 .form-control.string-input {
@@ -166,9 +171,10 @@ tr:last-of-type td {
   margin-right: 10px;
 }
 
-.form-control, .input-group-addon {
+.form-control,
+.input-group-addon {
   border-radius: 2px;
-  font-size:16px;
+  font-size: 16px;
 }
 
 .input-group select.with-addon {
@@ -178,7 +184,7 @@ tr:last-of-type td {
 }
 
 input[type="datetime"] {
-  width:300px;
+  width: 300px;
 }
 
 input[type="text"]:disabled {
@@ -191,7 +197,7 @@ select {
   -webkit-appearance: none;
   -webkit-border-left-radius: 0px !important;
   min-width: 200px;
-  background: url('./images/select-arrow.png') no-repeat!important;
+  background: url("./images/select-arrow.png") no-repeat !important;
   background-size: 10px !important;
   background-position: calc(100% - 10px) center !important;
   cursor: pointer;
@@ -209,7 +215,7 @@ select:hover {
 .input-group-addon {
   min-width: 100px;
   text-align: left;
-  background: #F5F5F8;
+  background: #f5f5f8;
 }
 
 .btn {
@@ -225,8 +231,8 @@ select:hover {
 }
 
 .btn-primary {
-  background: #00BFAA;
-  border-color: #00BFAA;
+  background: #00bfaa;
+  border-color: #00bfaa;
   text-shadow: none;
   box-shadow: none;
 }
@@ -235,18 +241,24 @@ select:hover {
   min-width: 100px;
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary.active, .btn-primary:active, .open>.dropdown-toggle.btn-primary{
-  background: #00BFAA !important;
-  border-color: #00BFAA !important;
-  opacity: .8;
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary.active,
+.btn-primary:active,
+.open > .dropdown-toggle.btn-primary {
+  background: #00bfaa !important;
+  border-color: #00bfaa !important;
+  opacity: 0.8;
   outline: none !important;
 }
 
-.btn-primary:disabled, .btn-primary:disabled:hover {
+.btn-primary:disabled,
+.btn-primary:disabled:hover {
   background: #cccccc !important;
   border-color: #cccccc !important;
   color: #808080;
-  opacity:.65;
+  opacity: 0.65;
 }
 
 .dropdown .btn {
@@ -254,7 +266,7 @@ select:hover {
 }
 
 .btn .glyphicon {
-  top:3px;
+  top: 3px;
   padding-right: 5px;
 }
 
@@ -285,11 +297,11 @@ select:hover {
 
 .alert a:hover {
   text-decoration: none;
-  opacity: .9
+  opacity: 0.9;
 }
 
 pre {
-  background: #F5F5F8;
+  background: #f5f5f8;
   padding: 15px;
   border-radius: 2px;
   margin-bottom: 0;
@@ -304,7 +316,7 @@ pre.wrap {
 
 code {
   color: #999999;
-  background-color: transparent ;
+  background-color: transparent;
   border: 1px solid #ececec;
   padding: 5px 7px;
   font-family: Nitti, Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -325,7 +337,7 @@ code {
 }
 
 .contracts-table tbody a {
-  color: #00BFAA;
+  color: #00bfaa;
 }
 
 /*Styles*/
@@ -335,17 +347,17 @@ code {
 }
 
 .navbar .divider-vertical {
-    height: 20px;
-    margin: 15px 9px;
-    border-right: 1px solid rgba(255,255,255,0.2);
+  height: 20px;
+  margin: 15px 9px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.navbar-inverse .navbar-nav>.active>a,
-.navbar-inverse .navbar-nav>.active>a:focus,
-.navbar-inverse .navbar-nav>.active>a:hover,
-.navbar-inverse .navbar-nav>.open>a,
-.navbar-inverse .navbar-nav>.open>a:focus,
-.navbar-inverse .navbar-nav>.open>a:hover {
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:focus,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:focus,
+.navbar-inverse .navbar-nav > .open > a:hover {
   background: none;
   box-shadow: none;
 }
@@ -392,10 +404,10 @@ section h4 {
 }
 
 .nested {
-  margin: 10px 0 10px 20px
+  margin: 10px 0 10px 20px;
 }
 
-.nested .description {
+.description {
   font-style: italic;
   position: relative;
   color: #929292;
@@ -405,8 +417,8 @@ section h4 {
 .nested .description::before {
   content: "↳";
   position: absolute;
-  left:-16px;
-  top:2px;
+  left: -16px;
+  top: 2px;
   font-style: normal;
   font-size: 90%;
 }
@@ -435,7 +447,7 @@ section h4 {
 
 .__react_component_tooltip {
   z-index: 9999 !important;
-  font-size:17px !important;
+  font-size: 17px !important;
 }
 
 #root {
@@ -458,20 +470,22 @@ section h4 {
 
 .ace_gutter {
   background-color: #000 !important;
-  opacity: .2;
+  opacity: 0.2;
   color: #fff !important;
   border-radius: 0 0 2px 2px;
 }
 
 .ace_keyword {
-  color: #F92672 !important;
+  color: #f92672 !important;
 }
 .ace_type,
 .ace_storage {
-  color: #48BFB2 !important;
+  color: #48bfb2 !important;
   font-style: normal !important;
 }
 
-.ace_function, .ace_variable, .ace_language {
-  color: #BFD472 !important;
+.ace_function,
+.ace_variable,
+.ace_language {
+  color: #bfd472 !important;
 }

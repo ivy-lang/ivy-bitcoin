@@ -20,7 +20,7 @@ const mapStateToBytecodeProps = state => {
 const OpcodesUnconnected = ({ opcodes }) => {
   return (
     <div className="panel-body inner">
-      <h1>Instructions</h1>
+      <h1>Bitcoin Script</h1>
       <pre className="wrap">{opcodes.join(" ")}</pre>
     </div>
   )
@@ -53,8 +53,8 @@ against some arguments to validate the transaction."
       <a href="https://bitcoincore.org/en/segwit_wallet_dev/">here</a>.
       <br />
       <br />
-      The generated address is a testnet address, but do not send any testnet
-      Bitcoin to it. It may be difficult or impossible to withdraw.
+      The generated address is a testnet address, but do not actually send any
+      testnet Bitcoin to it. It may be difficult or impossible to withdraw.
       <br />
       <br />
       {publicKey ? (

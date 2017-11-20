@@ -12,12 +12,9 @@ import Section from "../../app/components/section"
 import { getContract, getContractIds, getSpentContractIds } from "../selectors"
 import { Contract } from "../types"
 
-function shortenHash(hash: string) {
-  if (hash.length < 9) {
-    return hash
-  } else {
-    return hash.slice(0, 25) + "..."
-  }
+function amountFromSatoshis(amountInSatoshis: number) {
+  const amount = amountInSatoshis / 100000000
+  return amount
 }
 
 const LockedValueDisplay = (props: {
@@ -54,9 +51,8 @@ function LockedValue(props: { contractIds: string[] }) {
       <table className="table contracts-table">
         <thead>
           <tr>
-            <th>Amount</th>
             <th>Contract Template</th>
-            <th>Lock Transaction</th>
+            <th>Amount</th>
             <th />
           </tr>
         </thead>
@@ -78,9 +74,8 @@ const LockedValueRowUnconnected = (props: {
   const contract = props.contract
   return (
     <tr>
-      <td>{contract.amount}</td>
       <td>{contract.template.name}</td>
-      <td>{shortenHash(contract.id)}</td>
+      <td>{amountFromSatoshis(contract.amount)}</td>
       <td className="td-button">
         <UnlockButton contractId={contract.id} />
       </td>
@@ -104,10 +99,8 @@ const History = (props: { spentContractIds: string[] }) => {
         <table className="table contracts-table">
           <thead>
             <tr>
-              <th>Amount</th>
               <th>Contract Template</th>
-              <th>Lock Transaction</th>
-              <th>Unlock Transaction</th>
+              <th>Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -126,10 +119,8 @@ const HistoryRowUnconnected = (props: { string; contract: Contract }) => {
   const contract = props.contract
   return (
     <tr>
-      <td>{contract.amount}</td>
       <td>{contract.template.name}</td>
-      <td>{shortenHash(contract.id)}</td>
-      <td>{shortenHash(contract.unlockTxid)}</td>
+      <td>{amountFromSatoshis(contract.amount)}</td>
       <td />
     </tr>
   )

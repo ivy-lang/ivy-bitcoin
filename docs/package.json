@@ -1,0 +1,26 @@
+{
+  "name": "bitcoin-ivy-docs",
+  "version": "0.0.1",
+  "description": "Docs for Bitcoin Ivy.",
+  "main": "index.js",
+  "scripts": {
+    "build": "gitbook build",
+    "serve": "gitbook serve",
+    "deploy":
+      "npm run build && aws s3 cp _book s3://docs.ivy-lang.com/bitcoin --recursive",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivy-lang/bitcoin-ivy.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivy-lang/bitcoin-ivy/issues"
+  },
+  "homepage": "https://github.com/ivy-lang/bitcoin-ivy#readme",
+  "dependencies": {
+    "gitbook-cli": "^2.3.2"
+  }
+}

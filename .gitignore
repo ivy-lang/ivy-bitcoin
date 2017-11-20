@@ -47,5 +47,8 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-# built app and compiler
+# Built app
 ivy-playground/public/*.bundle.js
+
+# Built book
+docs/_book

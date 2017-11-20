@@ -14,5 +14,5 @@
 
 * **ripemd160(preimage: (T: HashableType)) -> Ripemd160(T)**: compute the RIPEMD-160 hash of **preimage**
 
-* **==, !=**: check equality of any two values of the same type. (Note: because of certain limitations of Bitcoin Script, using these operators on Booleans is not allowed.)
+* **==**, **!=**: check equality of any two values of the same type. (Note: because of certain limitations of Bitcoin Script, using these operators on Booleans is not allowed.)
 

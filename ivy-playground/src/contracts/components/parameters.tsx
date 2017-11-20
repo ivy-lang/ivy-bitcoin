@@ -167,7 +167,7 @@ function ValueWidget(props: {
         value={props.input.value}
         onChange={props.handleChange}
       />
-      <InputGroup.Addon>BTC</InputGroup.Addon>
+      <InputGroup.Addon>BTC (simulated)</InputGroup.Addon>
     </InputGroup>
   )
 }

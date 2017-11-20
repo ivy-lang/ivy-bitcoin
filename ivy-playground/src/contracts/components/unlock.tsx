@@ -72,7 +72,7 @@ export const Unlock = ({ error, display, result }) => {
           <DisplaySpendContract />
         </section>
         <section>
-          <h4>Instructions</h4>
+          <h4>Bitcoin Script</h4>
           <DisplayInstructions />
         </section>
         <SpendInputs />

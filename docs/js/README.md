@@ -65,4 +65,4 @@ const fulfilledTransaction = fulfill(instantiated, spendTransaction, [sig], "spe
 fulfilledTransaction.check()
 ```
 
-For more examples of how to use the library, see the [tests](https://github.com/ivy-lang/bitcoin-ivy/blob/main/ivy-compiler/src/test/test.ts).
+For more examples of how to use the library, see the [tests](https://github.com/ivy-lang/bitcoin-ivy/blob/main/bitcoin-ivy/src/test/test.ts).

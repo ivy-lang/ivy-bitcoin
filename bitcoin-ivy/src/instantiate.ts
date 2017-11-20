@@ -23,7 +23,7 @@ export interface Contract {
   scriptSig: string
   testnetAddress: string
   publicKey?: string
-  fundingTransaction: TransactionJSON
+  fundingTransaction?: TransactionJSON
   amount: number
   template: Template
 }
@@ -140,11 +140,11 @@ export function instantiate(
   )
   const mainnetAddress = Address.fromScripthash(redeemScript.hash160())
   const tx = createFundingTransaction(testnetAddress, valueArgs, seed)
-  if (tx === undefined) {
-    throw new Error(
-      "expected tx to not be undefined when called in instantiate"
-    )
-  }
+  // if (tx === undefined) {
+  //   throw new Error(
+  //     "expected tx to not be undefined when called in instantiate"
+  //   )
+  // }
   const instantiated = {
     witnessScript: witnessScript.toJSON(),
     redeemScript: redeemScript.toJSON(),

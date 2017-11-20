@@ -63,7 +63,7 @@ const Lock = ({ source, contractParameters, error, bytecode }) => {
           <div />
         )}
         {bytecode ? (
-          <Section name="Bytecode">{error ? <div /> : <Bytecode />}</Section>
+          <Section name="Address">{error ? <div /> : <Bytecode />}</Section>
         ) : (
           <div />
         )}

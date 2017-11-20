@@ -36,7 +36,8 @@ const Ace = ({ source, handleChange }) => {
           useSoftTabs: true,
           showPrintMargin: false,
           fontFamily: "Menlo, Monaco, Consolas, Courier New, monospace",
-          fontSize: 16
+          fontSize: 16,
+          highlightActiveLine: false
         }}
       />
     </div>
