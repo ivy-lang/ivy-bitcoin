@@ -1,6 +1,6 @@
 # Example Contracts
 
-Below are some examples of contract templates written in Bitcoin Ivy. You can try out these contracts in the playground, where they are preloaded as default templates.
+Below are some examples of contract templates written in Ivy. You can try out these contracts in the playground, where they are preloaded as default templates.
 
 * [LockWithPublicKey](#lockwithpublickey)
 * [LockWithMultiSig](#lockwithmultisig)
@@ -26,7 +26,7 @@ contract LockWithPublicKey(publicKey: PublicKey, val: Value) {
 
 LockWithPublicKey creates a simple Bitcoin address. A public key is specified at the time the contract is created. To spend from the contract, the user must provide a signature on the spending transaction from that public key.
 
-All addresses produced by the Bitcoin Ivy compiler are [SegWit addresses](https://bitcoincore.org/en/segwit_wallet_dev/). However, unlike the other contracts, which compile to Pay-To-Witness-Script-Hash addresses, LockWithPublicKey compiles to a Pay-To-Witness-Public-Key-Hash address, a special (slightly more efficient) format for addresses that are controlled by a single public key.
+All Bitcoin addresses produced by the Ivy compiler are [SegWit addresses](https://bitcoincore.org/en/segwit_wallet_dev/). However, unlike the other contracts, which compile to Pay-To-Witness-Script-Hash addresses, LockWithPublicKey compiles to a Pay-To-Witness-Public-Key-Hash address, a special (slightly more efficient) format for addresses that are controlled by a single public key.
 
 ## LockWithMultiSig
 

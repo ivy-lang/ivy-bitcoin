@@ -1,7 +1,7 @@
 {
-  "name": "bitcoin-ivy-docs",
+  "name": "ivy-bitcoin-docs",
   "version": "0.0.1",
-  "description": "Docs for Bitcoin Ivy.",
+  "description": "Docs for Ivy for Bitcoin.",
   "main": "index.js",
   "scripts": {
     "build": "gitbook build",

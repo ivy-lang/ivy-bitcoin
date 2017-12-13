@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Example Contracts · Bitcoin Ivy</title>
+        <title>Example Contracts · Ivy for Bitcoin</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -107,7 +107,7 @@
                 <a href="./">
             
                     
-                    Bitcoin Ivy Language
+                    Ivy Language
             
                 </a>
             
@@ -178,7 +178,7 @@
                 <a href="../playground/">
             
                     
-                    Bitcoin Ivy Playground
+                    Ivy Playground for Bitcoin
             
                 </a>
             
@@ -290,7 +290,7 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="example-contracts">Example Contracts</h1>
-<p>Below are some examples of contract templates written in Bitcoin Ivy. You can try out these contracts in the playground, where they are preloaded as default templates.</p>
+<p>Below are some examples of contract templates written in Ivy. You can try out these contracts in the playground, where they are preloaded as default templates.</p>
 <ul>
 <li><a href="#lockwithpublickey">LockWithPublicKey</a></li>
 <li><a href="#lockwithmultisig">LockWithMultiSig</a></li>
@@ -311,7 +311,7 @@
   }
 }
 </code></pre><p>LockWithPublicKey creates a simple Bitcoin address. A public key is specified at the time the contract is created. To spend from the contract, the user must provide a signature on the spending transaction from that public key.</p>
-<p>All addresses produced by the Bitcoin Ivy compiler are <a href="https://bitcoincore.org/en/segwit_wallet_dev/" target="_blank">SegWit addresses</a>. However, unlike the other contracts, which compile to Pay-To-Witness-Script-Hash addresses, LockWithPublicKey compiles to a Pay-To-Witness-Public-Key-Hash address, a special (slightly more efficient) format for addresses that are controlled by a single public key.</p>
+<p>All Bitcoin addresses produced by the Ivy compiler are <a href="https://bitcoincore.org/en/segwit_wallet_dev/" target="_blank">SegWit addresses</a>. However, unlike the other contracts, which compile to Pay-To-Witness-Script-Hash addresses, LockWithPublicKey compiles to a Pay-To-Witness-Public-Key-Hash address, a special (slightly more efficient) format for addresses that are controlled by a single public key.</p>
 <h2 id="lockwithmultisig">LockWithMultiSig</h2>
 <pre><code>contract LockWithMultisig(
   pubKey1: PublicKey,
@@ -477,7 +477,7 @@
                 </a>
                 
                 
-                <a href="../playground/" class="navigation navigation-next " aria-label="Next page: Bitcoin Ivy Playground">
+                <a href="../playground/" class="navigation navigation-next " aria-label="Next page: Ivy Playground for Bitcoin">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -488,7 +488,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Example Contracts","level":"1.2.4","depth":2,"next":{"title":"Bitcoin Ivy Playground","level":"1.3","depth":1,"path":"playground/README.md","ref":"playground/README.md","articles":[{"title":"Example","level":"1.3.1","depth":2,"path":"playground/Example.md","ref":"playground/Example.md","articles":[]},{"title":"Creating Contracts","level":"1.3.2","depth":2,"path":"playground/CreatingContracts.md","ref":"playground/CreatingContracts.md","articles":[]},{"title":"Unlocking Contracts","level":"1.3.3","depth":2,"path":"playground/UnlockingContracts.md","ref":"playground/UnlockingContracts.md","articles":[]}]},"previous":{"title":"Functions","level":"1.2.3","depth":2,"path":"language/Functions.md","ref":"language/Functions.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Bitcoin Ivy","gitbook":"*"},"file":{"path":"language/ExampleContracts.md","mtime":"2017-10-22T19:41:41.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-17T22:09:10.943Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Example Contracts","level":"1.2.4","depth":2,"next":{"title":"Ivy Playground for Bitcoin","level":"1.3","depth":1,"path":"playground/README.md","ref":"playground/README.md","articles":[{"title":"Example","level":"1.3.1","depth":2,"path":"playground/Example.md","ref":"playground/Example.md","articles":[]},{"title":"Creating Contracts","level":"1.3.2","depth":2,"path":"playground/CreatingContracts.md","ref":"playground/CreatingContracts.md","articles":[]},{"title":"Unlocking Contracts","level":"1.3.3","depth":2,"path":"playground/UnlockingContracts.md","ref":"playground/UnlockingContracts.md","articles":[]}]},"previous":{"title":"Functions","level":"1.2.3","depth":2,"path":"language/Functions.md","ref":"language/Functions.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Ivy for Bitcoin","gitbook":"*"},"file":{"path":"language/ExampleContracts.md","mtime":"2017-12-13T20:38:54.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-14T01:33:30.991Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

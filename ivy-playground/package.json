@@ -1,6 +1,6 @@
 {
   "name": "ivy-playground",
-  "description": "Sandbox for testing Bitcoin Ivy.",
+  "description": "Sandbox for testing Ivy for Bitcoin.",
   "version": "0.0.1",
   "bugs": {
     "url": "https://github.com/ivy-lang/bitcoin-ivy/issues",

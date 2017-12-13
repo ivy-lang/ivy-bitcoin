@@ -1,6 +1,6 @@
 # JavaScript SDK
 
-Bitcoin Ivy is also available as a (very unstable and early-stage) [JavaScript SDK](https://www.npmjs.com/package/bitcoin-ivy).
+Ivy is also available as a (very unstable and early-stage) [JavaScript SDK](https://www.npmjs.com/package/bitcoin-ivy).
 
 ```
 npm install bitcoin-ivy

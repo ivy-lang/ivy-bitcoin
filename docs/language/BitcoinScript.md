@@ -1,6 +1,6 @@
 # Bitcoin Script
 
-Bitcoin Ivy is designed to make it easier to create smart contracts for the Bitcoin network. Bitcoin's protocol works very differently from other blockchain protocols that support smart contracts, such as Ethereum, and the types of contracts that are supported are more limited. Despite those limitations, Bitcoin smart contracts have proven to be surprisingly flexible, supporting applications such as payment channels, cross-chain atomic trades, and more. Future protocol upgrades—and improvements in tooling—may make it possible to build increasingly sophisticated applications on top of Bitcoin.
+Ivy is designed to make it easier to create smart contracts for the Bitcoin network. Bitcoin's protocol works very differently from other blockchain protocols that support smart contracts, such as Ethereum, and the types of contracts that are supported are more limited. Despite those limitations, Bitcoin smart contracts have proven to be surprisingly flexible, supporting applications such as payment channels, cross-chain atomic trades, and more. Future protocol upgrades—and improvements in tooling—may make it possible to build increasingly sophisticated applications on top of Bitcoin.
 
 The below sections provide some background on how Bitcoin transactions, addresses, and scripting work, glossing over some important details. If you would like to learn about these topics, you can check out [Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook), by Andreas Antonopoulos.
 
@@ -12,7 +12,7 @@ The primary responsibility of the Bitcoin network is to maintain a distributed l
 
 You can think of the current state of the ledger as a set of lockboxes, each of which stores some value (i.e., 1000 BTC, 5 BTC, or .001 BTC) and is controlled by some [*address*](#bitcoin-addresses) (i.e., 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa).
 
-In Bitcoin, these lockboxes are usually referred to as "unspent transaction outputs." In Bitcoin Ivy, we call them *contracts*.
+In the Bitcoin context, these lockboxes are usually referred to as "unspent transaction outputs." In Ivy, we call them *contracts*.
 
 ## Bitcoin transactions
 
@@ -28,7 +28,7 @@ Bitcoin wouldn't provide much security if anyone were able to unlock any contrac
 
 Each Bitcoin address corresponds to a program.[^1] When you send Bitcoin to an address, you are creating a contract which locks that Bitcoin up with that address's program. The only way to spend that Bitcoin is to satisfy the program, thus unlocking the value and allowing it to be sent to a new address. 
 
-When spending a contract, the user provides some arguments to satisfy the contract's program. For example, the arguments might include one or more signatures, or the preimage of a particular hash. In Bitcoin Ivy, these arguments are referred to as *clause arguments*, since they are provided at the time that a particular clause of the contract is invoked.
+When spending a contract, the user provides some arguments to satisfy the contract's program. For example, the arguments might include one or more signatures, or the preimage of a particular hash. In Ivy, these arguments are referred to as *clause arguments*, since they are provided at the time that a particular clause of the contract is invoked.
 
 ## Bitcoin Script
 
@@ -36,10 +36,10 @@ Bitcoin Script is the low-level language that contracts' programs are written in
 
 Bitcoin Script is a relatively simple language, with support for cryptographic and hash operations, as well as conditionals. It is not Turing-complete (since it has no support for looping or recursion). It also does not allow scripts to inspect other inputs or outputs in the transaction, meaning the contract cannot control the flow of value or maintain any kind of persistent state.[^2]
 
-Developers already use Bitcoin Script to create multisignature Bitcoin addresses and time-locked transactions, as well as more complex protocols like payment channels and cross-chain atomic trades. But reading and writing programs using Bitcoin Script is difficult, as is using it to create addresses and transactions. The goal of Bitcoin Ivy is to make it easier to write and instantiate these programs.
+Developers already use Bitcoin Script to create multisignature Bitcoin addresses and time-locked transactions, as well as more complex protocols like payment channels and cross-chain atomic trades. But reading and writing programs using Bitcoin Script is difficult, as is using it to create addresses and transactions. The goal of Ivy is to make it easier to write and instantiate these programs.
 
 For more on Bitcoin Script, you can check out the [Bitcoin Wiki](https://en.bitcoin.it/wiki/Script) as well as Chapter 7 of Mastering Bitcoin, [Advanced Transactions and Scripting](https://github.com/bitcoinbook/bitcoinbook/blob/second_edition/ch07.asciidoc)
 
-[^1]: Conversion between Bitcoin Script programs and Bitcoin addresses involves some technical details that are beyond the scope of this documentation. The Bitcoin Ivy compiler creates *Segregated Witness* (SegWit) addresses, a new kind of Bitcoin address that has been supported since a protocol upgrade in August 2017. To create a SegWit address, the bytecode of the program—the "witness script"—is hashed to create a "redeem script," which is in turn hashed to create the address. To spend from a SegWit address, both the redeem script and the witness script are revealed, and arguments are provided to satisfy the witness script. For more on how SegWit addresses and scripts work, see the [Segregated Witness Wallet Development Guide](https://bitcoincore.org/en/segwit_wallet_dev/) from Bitcoin Core.
+[^1]: Conversion between Bitcoin Script programs and Bitcoin addresses involves some technical details that are beyond the scope of this documentation. The Ivy compiler creates *Segregated Witness* (SegWit) addresses, a new kind of Bitcoin address that has been supported since a protocol upgrade in August 2017. To create a SegWit address, the bytecode of the program—the "witness script"—is hashed to create a "redeem script," which is in turn hashed to create the address. To spend from a SegWit address, both the redeem script and the witness script are revealed, and arguments are provided to satisfy the witness script. For more on how SegWit addresses and scripts work, see the [Segregated Witness Wallet Development Guide](https://bitcoincore.org/en/segwit_wallet_dev/) from Bitcoin Core.
 
-[^2]: The inability to directly control value is a major difference between Bitcoin Ivy and the version of [Ivy](https://www.chain.com/ivy) used to write smart contracts for Chain Core. There have been several proposals to add this kind of functionality to Bitcoin Script, most notably in [Bitcoin Covenants](http://fc16.ifca.ai/bitcoin/papers/MES16.pdf), by Malte Möser, Ittay Eyal, and Emin Gün Sirer.
+[^2]: The inability to directly control value is a major difference when compiling Ivy to Bitcoin rather than using the version of [Ivy](https://www.chain.com/ivy) designed to write smart contracts for Chain Core. There have been several proposals to add this kind of functionality to Bitcoin Script, most notably in [Bitcoin Covenants](http://fc16.ifca.ai/bitcoin/papers/MES16.pdf), by Malte Möser, Ittay Eyal, and Emin Gün Sirer.
