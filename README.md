@@ -4,8 +4,8 @@ Ivy is a higher-level language that allows you to write smart contracts for the 
 
 You can try out Ivy using the [Ivy Playground for Bitcoin](https://d2w65k0ltszbq7.cloudfront.net/bitcoin), which allows you to create test contracts and try spending them, all in a sandboxed environment.
 
-You can learn more about Ivy and using the Ivy Playground for Bitcoin by reading the [docs](https://docs.ivy-lang.com/bitcoin).
+You can learn more about Ivy and using the Ivy Playground for Bitcoin by reading the [docs](https://docs.ivy-lang.org/bitcoin).
 
 **Ivy is prototype software and is intended for educational purposes only**. Do not attempt to use Ivy to control real Bitcoins. 
 
-Bug reports, feature requests, and pull requests are welcome; you can create an issue or email [bugs@ivy-lang.com](mailto:bugs@ivy-lang.com).
+Bug reports and feature requests are welcome; you can create an [issue](https://github.com/ivy-lang/bitcoin-ivy/issues) or [pull request](https://github.com/ivy-lang/bitcoin-ivy/pulls) on this repo.

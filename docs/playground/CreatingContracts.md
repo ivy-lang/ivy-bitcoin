@@ -1,6 +1,6 @@
 ### Creating contracts
 
-To create a contract in the playground, use the [Create Contract](https://d2w65k0ltszbq7.cloudfront.net/bitcoin/create) page.
+To create a contract in the playground, use the [Create Contract](https://ivy-lang.org/bitcoin/create) page.
 
 ![Load Template](/gitbook/images/LoadTemplate.png)
 

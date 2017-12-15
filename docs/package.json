@@ -1,13 +1,13 @@
 {
   "name": "ivy-bitcoin-docs",
   "version": "0.0.1",
-  "description": "Docs for Ivy for Bitcoin.",
+  "description": "Docs for Ivy.",
   "main": "index.js",
   "scripts": {
     "build": "gitbook build",
     "serve": "gitbook serve",
     "deploy":
-      "npm run build && aws s3 cp _book s3://docs.ivy-lang.com/bitcoin --recursive",
+      "npm run build && aws s3 cp _book s3://docs.ivy-lang.org/bitcoin --recursive",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
