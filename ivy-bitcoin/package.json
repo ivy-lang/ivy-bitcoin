@@ -1,7 +1,10 @@
 {
   "name": "ivy-bitcoin",
   "description": "Compiler for Ivy, Chain's smart contract language.",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "homepage": "https://www.github.com/ivy-lang/ivy-bitcoin",
+  "license": "MIT",
+  "main": "lib/index.js",
   "dependencies": {
     "bcoin": "danrobinson/bcoin#compat",
     "level-js": "^2.2.4"
@@ -18,8 +21,6 @@
     "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.5.3"
   },
-  "license": "MIT",
-  "main": "lib/index.js",
   "scripts": {
     "build": "npm run compile-tsc && npm run compile-pegjs",
     "clean": "rm -rf lib",
