@@ -1,5 +1,5 @@
 {
-  "name": "bitcoin-ivy",
+  "name": "ivy-bitcoin",
   "description": "Compiler for Ivy, Chain's smart contract language.",
   "version": "0.0.1",
   "dependencies": {

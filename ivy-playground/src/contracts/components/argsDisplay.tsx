@@ -1,5 +1,5 @@
 // external imports
-import { typeToString } from "bitcoin-ivy"
+import { typeToString } from "ivy-bitcoin"
 import React from "react"
 import { connect } from "react-redux"
 import {

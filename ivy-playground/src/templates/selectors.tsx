@@ -1,5 +1,5 @@
 // external imports
-import { instantiate } from "bitcoin-ivy"
+import { instantiate } from "ivy-bitcoin"
 import { createSelector } from "reselect"
 import { getContract } from "../contracts/selectors"
 

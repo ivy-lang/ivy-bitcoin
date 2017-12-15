@@ -6,7 +6,7 @@ import { push } from "react-router-redux"
 import contracts from "../contracts"
 import templates from "../templates"
 
-import { DEMO_CONTRACTS, DEMO_ID_LIST } from "bitcoin-ivy"
+import { DEMO_CONTRACTS, DEMO_ID_LIST } from "ivy-bitcoin"
 
 export const RESET: string = "app/RESET"
 

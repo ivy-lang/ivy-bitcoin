@@ -1,6 +1,6 @@
 ### Unlocking contracts
 
-Once you've created a contract in the playground, you can unlock it on the [Unlock](https://d2w65k0ltszbq7.cloudfront.net/unlock) page. 
+Once you've created a contract in the playground, you can unlock it on the [Unlock](https://ivy-lang.org/unlock) page. 
 
 This page shows you all your existing contracts, as well as showing you information about any contracts that you've previously created and unlocked. Find the contract you created and click the "Unlock" button next to it.
 

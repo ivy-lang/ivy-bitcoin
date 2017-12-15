@@ -2,7 +2,7 @@ import { Input, InputMap } from "../inputs/types"
 
 import { Template, TemplateClause } from "../templates/types"
 
-import { Contract as IvyContract } from "bitcoin-ivy"
+import { Contract as IvyContract } from "ivy-bitcoin"
 
 export interface Contract {
   // lock tx id

@@ -1,6 +1,6 @@
 import { ContractParameterType, InputMap } from "../inputs/types"
 
-import { Template, TemplateClause } from "bitcoin-ivy"
+import { Template, TemplateClause } from "ivy-bitcoin"
 
 export interface SourceMap {
   [s: string]: string

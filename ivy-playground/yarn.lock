@@ -602,7 +602,7 @@ bindings@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
 
-bitcoin-ivy@../bitcoin-ivy:
+ivy-bitcoin@../ivy-bitcoin:
   version "0.0.1"
   dependencies:
     bcoin "../../bcoin"

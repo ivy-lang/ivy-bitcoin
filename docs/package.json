@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ivy-lang/bitcoin-ivy.git"
+    "url": "git+https://github.com/ivy-lang/ivy-bitcoin.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ivy-lang/bitcoin-ivy/issues"
+    "url": "https://github.com/ivy-lang/ivy-bitcoin/issues"
   },
-  "homepage": "https://github.com/ivy-lang/bitcoin-ivy#readme",
+  "homepage": "https://github.com/ivy-lang/ivy-bitcoin#readme",
   "dependencies": {
     "gitbook-cli": "^2.3.2"
   }

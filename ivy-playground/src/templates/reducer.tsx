@@ -5,7 +5,7 @@ import { InputMap } from "../inputs/types"
 import { Template, TemplateState } from "./types"
 
 // internal imports
-import { DEMO_CONTRACTS, DEMO_ID_LIST } from "bitcoin-ivy"
+import { DEMO_CONTRACTS, DEMO_ID_LIST } from "ivy-bitcoin"
 import {
   SAVE_TEMPLATE,
   SET_SOURCE,

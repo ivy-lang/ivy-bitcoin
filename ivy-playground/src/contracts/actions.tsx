@@ -13,7 +13,7 @@ import {
   getSource
 } from "../templates/selectors"
 
-import { compile } from "bitcoin-ivy"
+import { compile } from "ivy-bitcoin"
 
 // internal imports
 import {

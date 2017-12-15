@@ -1,5 +1,5 @@
 // internal imports
-import { compile, DEMO_ID_LIST } from "bitcoin-ivy"
+import { compile, DEMO_ID_LIST } from "ivy-bitcoin"
 import { getSourceMap } from "./selectors"
 import { Template } from "./types"
 
