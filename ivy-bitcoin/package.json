@@ -3,7 +3,7 @@
   "description": "Compiler for Ivy, Chain's smart contract language.",
   "version": "0.0.1",
   "dependencies": {
-    "bcoin": "../../bcoin",
+    "bcoin": "danrobinson/bcoin#compat",
     "level-js": "^2.2.4"
   },
   "devDependencies": {
