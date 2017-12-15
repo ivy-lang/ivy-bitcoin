@@ -6,8 +6,7 @@
   "scripts": {
     "build": "gitbook build",
     "serve": "gitbook serve",
-    "deploy":
-      "npm run build && aws s3 cp _book s3://docs.ivy-lang.org/bitcoin --recursive",
+    "deploy": "npm run build && aws s3 cp _book s3://docs.ivy-lang.org/bitcoin --recursive",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

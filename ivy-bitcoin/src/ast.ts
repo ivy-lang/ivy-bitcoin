@@ -36,6 +36,7 @@ export interface Conditional {
   condition: Expression
   ifBlock: Block
   elseBlock?: Block
+  location?: Location
 }
 
 export type Block = Conditional | Clause

@@ -5,8 +5,7 @@ You can try out the Ivy Playground for Bitcoin [here](https://ivy-lang.org/bitco
 You can also run the playground locally:
 
 ```
-> brew install yarn
-> yarn install
-> yarn start
+> npm install
+> npm start
 > open http://localhost:8081/
 ```
