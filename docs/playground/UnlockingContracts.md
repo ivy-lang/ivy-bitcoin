@@ -8,16 +8,16 @@ Now you can see all the information about your contract, including its template 
 
 To spend this contract, you must call one of its clauses, and provide the required arguments.
 
-![Transfer](/gitbook/images/Transfer.png)
-
 If you have approval of both the sender and the recipient, you can call the **transfer** clause.
+
+![Transfer](/gitbook/images/Transfer.png)
 
 In our case, we control both private keys, so we can just copy them from the fields shown in the Contract Arguments section and paste them into the necessary fields.
 
-![Timeout](/gitbook/images/Timeout.png)
-
 If the recipient disappears, the sender would have to wait until the timeout is complete, and then call the **timeout** clause.
 
-To do this, you need to not only paste in the sender's private key to generate the signature, but need to also set the **Minimum Time** on the transaction (in the Transaction Details section) to be later than (or equal to) the locktime you set. Setting this field is needed to satisfy the contract, and the field, in turn, ensures that the spending transaction cannot be added to the blockchain until that time.
+![Timeout](/gitbook/images/Timeout.png)
 
-If either of these clauses is satisfied, the value can be unlocked. Click the *Unlock* button to do so.
+To do this, you need to not only paste in the sender's private key to generate the signature, but need to also set the **Minimum Time** on the transaction (in the **Transaction Details** section) to be later than (or equal to) the locktime you set. Setting this field is needed to satisfy the contract, and the field, in turn, ensures that the spending transaction cannot be added to the blockchain until that time.
+
+If either of these clauses is satisfied, the value can be unlocked. Click the **Unlock** button to do so.

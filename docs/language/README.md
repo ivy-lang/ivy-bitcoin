@@ -8,13 +8,13 @@ Each contract has one or more clauses. You only need to satisfy one of a contrac
 
 Each clause can list one or more conditions that must be satisfied. Supported conditions include:
 
-* Requiring a signature corresponding to a prespecified public key (see LockWithPublicKey)
+* Requiring a signature corresponding to a prespecified public key (see [LockWithPublicKey](/language/ExampleContracts.html#lockwithpublickey))
 
-* Requiring M signatures corresponding to any of N prespecified public keys (see LockWithMultisig)
+* Requiring M signatures corresponding to any of N prespecified public keys (see [LockWithMultisig](/language/ExampleContracts.html#lockwithmultisig))
 
-* Checking that the cryptographic hash of a string or public key is equal to a prespecified hash (see LockWithPublicKeyHash, RevealCollision, RevealPreimage)
+* Checking that the cryptographic hash of a string or public key is equal to a prespecified hash (see [LockWithPublicKeyHash](/language/ExampleContracts.html#lockwithpublickeyhash), [RevealCollision](/language/ExampleContracts.html#revealcollision), [RevealPreimage](/language/ExampleContracts.html#revealpreimage))
 
-* Waiting until after a specified block height or block time (see LockUntil, TransferWithTimeout)
+* Waiting until after a specified block height or block time (see [LockUntil](/language/ExampleContracts.html#lockuntil), [TransferWithTimeout](/language/ExampleContracts.html#transferwithtimeout), [EscrowWithTimeout](/language/ExampleContracts.html#escrowwithtimeout))
 
-* Waiting until the contract has been on the blockchain for longer than a specified duration (see LockDelay, EscrowWithTimeout, VaultSpend)
+* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](/language/ExampleContracts.html#lockdelay), [VaultSpend](/language/ExampleContracts.html#vaultspend))
 

@@ -1,5 +1,7 @@
 # Functions
 
+The following functions and operators are available when compiling Ivy to Bitcoin Script:
+
 * **checkSig(publicKey: PublicKey, sig: Signature) -> Boolean**: check that the signature **sig **is a valid signature on the spending transaction by the private key corresponding to **publicKey**. 
 
 * **checkMultiSig(publicKeys: [PublicKey], sigs: [Signature]) -> Boolean**: check that each of the signatures in **sigs** is a valid signature on the spending transaction by the private key corresponding to one of the **publicKeys**. The signatures must be provided in the same order as their respective public keys.

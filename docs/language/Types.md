@@ -1,5 +1,7 @@
 # Types
 
+The following argument types are supported when compiling Ivy to Bitcoin Script:
+
 * **Bytes**: a string of bytes (typically represented in hexadecimal)
 
 * **PublicKey**: an ECDSA public key

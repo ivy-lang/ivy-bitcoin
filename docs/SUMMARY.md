@@ -2,6 +2,7 @@
 
 * [Ivy Language](language/README.md)
   * [Bitcoin Script](language/BitcoinScript.md)
+  * [Ivy Syntax](language/IvySyntax.md)
   * [Types](language/Types.md)
   * [Functions](language/Functions.md)
   * [Example Contracts](language/ExampleContracts.md)
