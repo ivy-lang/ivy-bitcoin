@@ -10,7 +10,7 @@ Below are some examples of contract templates written in Ivy. You can try out th
 * [LockUntil](#lockuntil)
 * [LockDelay](#lockdelay)
 * [TransferWithTimeout](#transferwithtimeout)
-* [EscrowWithTimeout](#escrowwithtimeout)
+* [EscrowWithDelay](#escrowwithdelay)
 * [VaultSpend](#vaultspend)
 
 ## LockWithPublicKey
@@ -109,7 +109,7 @@ contract LockUntil(publicKey: PublicKey, time: Time, val: Value) {
 
 LockUntil is similar to [LockWithPublicKey](#lockwithpublickey), but adds an additional condition known as a timelock—it can only be spent after a particular time has passed.
 
-Absolute timelocks (which use the [nLockTime](https://en.bitcoin.it/wiki/NLockTime) field of the spending transaction and the [CHECKLOCKTIMEVERIFY](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki) opcode) can be used to prevent yourself from withdrawing Bitcoin before a certain time. They are also useful for some more sophisticated applications, such as [escrow](#escrowwithtimeout) or [payment channels](#transferwithtimeout).
+Absolute timelocks (which use the [nLockTime](https://en.bitcoin.it/wiki/NLockTime) field of the spending transaction and the [CHECKLOCKTIMEVERIFY](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki) opcode) can be used to prevent yourself from withdrawing Bitcoin before a certain time. They are also useful for some more sophisticated applications, such as [escrow](#escrowwithdelay) or [payment channels](#transferwithtimeout).
 
 ## LockDelay
 
@@ -161,36 +161,37 @@ Alice can then send additional micropayments on this channel by creating new tra
 
 What happens if Bob disappears, or refuses to sign any transactions? That's what the `timeout` clause is for. After the channel's expiration time, Alice can call the `timeout` clause to reclaim all of the Bitcoin she used to prefund the channel. This prevents Alice's money from being locked up forever if Bob refuses to cooperate.
 
-## EscrowWithTimeout
+## EscrowWithDelay
 
 ```
-contract EscrowWithTimeout(
+contract EscrowWithDelay(
   sender: PublicKey,
   recipient: PublicKey,
   escrow: PublicKey,
-  timeout: Time,
+  delay: Duration,
   val: Value
 ) {
-  clause transfer(escrowSig: Signature, recipientSig: Signature) {
-    verify checkSig(escrow, escrowSig)
-    verify checkSig(recipient, recipientSig)
+  clause transfer(sig1: Signature, sig2: Signature) {
+    verify checkMultiSig(
+      [sender, recipient, escrow], 
+      [sig1, sig2]
+    )
     unlock val
   }
-  clause timeout(senderSig: Signature) {
-    verify checkSig(sender, senderSig)
-    verify after(timeout)
+  clause timeout(sig: Signature) {
+    verify checkSig(sender, sig)
+    verify older(delay)
     unlock val
   }
-}
-```
+}```
 
-EscrowWithTimeout implements a simple escrow contract. When it is instantiated, three keys are specified—one for the `sender` of the transfer, one for the `recipient`, and one for an `escrow` agent.
+EscrowWithDelay implements a simple escrow contract. When it is instantiated, three keys are specified—one for the `sender` of the transfer, one for the `recipient`, and one for an `escrow` agent.
 
-The escrow agent can approve the transfer with the cooperation of the recipient, but cannot steal the money for himself.
+The escrow agent can approve or cancel the transfer with the cooperation of one of the other parties, but cannot steal the money for himself.
 
-If the escrow agent fails to cooperate, then after the expiration time, the sender is able to cancel the transfer and recover the money with the `timeout` clause.
+If the escrow agent and recipient both fail to cooperate, then after the expiration time, the sender is able to cancel the transfer and recover the money with the `timeout` clause.
 
-You can imagine variants of this contract that, for example give the `recipient` the funds in the event of a timeout instead of the `sender`, or that allow the `sender` and `escrow` agent, or the `sender` and `recipient`, to unlock the funds by mutual agreement.
+You can imagine variants of this contract that, for example, give the `recipient` the funds in the event of a timeout instead of the `sender`.
 
 ## VaultSpend
 

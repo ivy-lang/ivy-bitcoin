@@ -14,7 +14,7 @@ Each clause can list one or more conditions that must be satisfied. Supported co
 
 * Checking that the cryptographic hash of a string or public key is equal to a prespecified hash (see [LockWithPublicKeyHash](/language/ExampleContracts.html#lockwithpublickeyhash), [RevealCollision](/language/ExampleContracts.html#revealcollision), [RevealPreimage](/language/ExampleContracts.html#revealpreimage))
 
-* Waiting until after a specified block height or block time (see [LockUntil](/language/ExampleContracts.html#lockuntil), [TransferWithTimeout](/language/ExampleContracts.html#transferwithtimeout), [EscrowWithTimeout](/language/ExampleContracts.html#escrowwithtimeout))
+* Waiting until after a specified block height or block time (see [LockUntil](/language/ExampleContracts.html#lockuntil), [TransferWithTimeout](/language/ExampleContracts.html#transferwithtimeout)
 
-* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](/language/ExampleContracts.html#lockdelay), [VaultSpend](/language/ExampleContracts.html#vaultspend))
+* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](/language/ExampleContracts.html#lockdelay),  [EscrowWithDelay](/language/ExampleContracts.html#escrowwithdelay)), [VaultSpend](/language/ExampleContracts.html#vaultspend))
 

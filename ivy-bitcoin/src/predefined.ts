@@ -11,7 +11,7 @@ export const DEMO_ID_LIST = [
   "LockUntil",
   "LockDelay",
   "TransferWithTimeout",
-  "EscrowWithTimeout",
+  "EscrowWithDelay",
   "VaultSpend"
 ]
 
@@ -84,21 +84,23 @@ export const DEMO_CONTRACTS = {
     unlock val
   }
 }`,
-  EscrowWithTimeout: `contract EscrowWithTimeout(
+  EscrowWithDelay: `contract EscrowWithDelay(
   sender: PublicKey,
   recipient: PublicKey,
   escrow: PublicKey,
-  timeout: Time,
+  delay: Duration,
   val: Value
 ) {
-  clause transfer(escrowSig: Signature, recipientSig: Signature) {
-    verify checkSig(escrow, escrowSig)
-    verify checkSig(recipient, recipientSig)
+  clause transfer(sig1: Signature, sig2: Signature) {
+    verify checkMultiSig(
+      [sender, recipient, escrow], 
+      [sig1, sig2]
+    )
     unlock val
   }
-  clause timeout(senderSig: Signature) {
-    verify checkSig(sender, senderSig)
-    verify after(timeout)
+  clause timeout(sig: Signature) {
+    verify checkSig(sender, sig)
+    verify older(delay)
     unlock val
   }
 }`,
@@ -170,7 +172,7 @@ export const TEST_CONTRACT_ARGS = {
   LockUntil: [PublicKeys[0], 20, 0],
   LockDelay: [PublicKeys[0], 20, 0],
   TransferWithTimeout: [PublicKeys[0], PublicKeys[1], 20, 0],
-  EscrowWithTimeout: [...PublicKeys, 20, 0],
+  EscrowWithDelay: [...PublicKeys, 20, 0],
   VaultSpend: [PublicKeys[0], PublicKeys[1], 20, 0],
   HashOperations: [Sha256Bytes, Sha1Bytes, Ripemd160Bytes, 0]
 }
@@ -184,19 +186,19 @@ export const TEST_CONTRACT_CLAUSE_NAMES = {
   LockUntil: "spend",
   LockDelay: "spend",
   TransferWithTimeout: "transfer",
-  EscrowWithTimeout: "timeout",
+  EscrowWithDelay: "timeout",
   VaultSpend: "complete",
   HashOperations: "reveal"
 }
 
 export const TEST_CONTRACT_TIMES = {
   LockUntil: 20,
-  EscrowWithTimeout: 20  
 }
 
 export const TEST_CONTRACT_AGES = {
   LockDelay: 20,
-  VaultSpend: 20
+  VaultSpend: 20,
+  EscrowWithDelay: 20,  
 }
 
 export const TEST_SPEND_ARGUMENTS = {
@@ -226,8 +228,8 @@ export const TEST_SPEND_ARGUMENTS = {
     "304402207f47f0619e76293967c6a91864ddcfdad01dd17d56d0989e0bf2be2c08ab3ba502200a69fb6386a57fbed938683a0f1ee4973fcc89c5d2b1992ba90d252002d7c3fe01",
     "304402203cfdd4e55d7e11d95ca466f4d110d8054994b1ad42c4bd1567d553ed982859e102207b6332ce6e23b5fac755c1712f3396786b6f4512d82b4ca0d343d464eba106a001"
   ],
-  EscrowWithTimeout: [
-    "3045022100bb52beee7bfc24a94819397633d98ae8065bb2eb9461208edd0fbc435d464f99022067a337ab8c2b18762a9a8ec22c53d0eb639e6cd264ac39dc8519e03373f1470101"
+  EscrowWithDelay: [
+    "30440220139ecf74c68ea3cfb476e8d375a900cf1b148b7b5a5cc7221d1ea0a35817a6df022041bb11e3a6dd52458654d8f352d1885e339d4f9daa34fab313bfc696c9ea3b4901"
   ],
   VaultSpend: [
     "30440220259d47913eb5c5ff625fb29cfe571632e1bd197e53026eb6db3f335b05be6efe022033f59f4f240a098d41304f35870bb54012ff5d29a6f0d9664b23779e295f998001"
