@@ -232,7 +232,6 @@ function BytesWidget(props: {
     { label: "Generate Bytes", value: "generateBytesInput" },
     { label: "Provide Bytes", value: "provideBytesInput" }
   ]
-  const handleChange = (s: string) => undefined
   return (
     <div>
       <RadioSelect
@@ -381,7 +380,21 @@ function SignatureWidget(props: {
   handleChange: (e) => undefined
   computedValue: string
 }) {
-  return <div>{getChildWidget(props.input)}</div>
+  const options = [
+    { label: "Generate Signature", value: "generateSignatureInput" },
+    { label: "Provide Signature", value: "provideSignatureInput" }
+  ]
+  return (
+    <div>
+      <RadioSelect
+        options={options}
+        selected={props.input.value}
+        name={props.input.name}
+        handleChange={props.handleChange}
+      />
+      {getChildWidget(props.input)}
+    </div>
+  )
 }
 
 function GeneratePrivateKeyWidget(props: {
