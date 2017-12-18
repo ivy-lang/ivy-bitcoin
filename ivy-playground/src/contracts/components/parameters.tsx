@@ -252,7 +252,7 @@ function ProvidePrivateKeyWidget(props: {
   return (
     <div>
       <TextWidget input={props.input} handleChange={props.handleChange} />
-      <HelpBlock className="text-warning">(Do not paste the private key for a real Bitcoin address into this field)</HelpBlock>
+      <HelpBlock>(Do not paste your own Bitcoin private key here)</HelpBlock>
     </div>
   )
 }
