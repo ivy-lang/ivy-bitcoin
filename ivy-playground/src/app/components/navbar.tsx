@@ -39,7 +39,10 @@ const Navbar = (props: { path: string }) => {
         />
         <ul className="nav navbar-nav navbar-right">
           <li>
-            <a href="http://docs.ivy-lang.org/bitcoin/">Docs</a>
+            <a href="https://github.com/ivy-lang/ivy-bitcoin">GitHub</a>
+          </li>
+          <li>
+            <a href="https://docs.ivy-lang.org/bitcoin/">Docs</a>
           </li>
           <li>
             <Link to="/create">Create Contract</Link>
