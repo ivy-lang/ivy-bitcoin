@@ -22,7 +22,7 @@ const LockedValueDisplay = (props: {
   spentContractIds: string[]
 }) => {
   return (
-    <DocumentTitle title="Unlock Value">
+    <DocumentTitle title="Unlock Contract">
       <div>
         <LockedValue contractIds={props.contractIds} />
         <History spentContractIds={props.spentContractIds} />

@@ -1,6 +1,7 @@
 // external imports
 import React from "react"
 import { Alert, Col, Glyphicon, Grid, Row } from "react-bootstrap"
+import DocumentTitle from "react-document-title"
 import { connect } from "react-redux"
 import {} from "../../templates/components/helpicon"
 
@@ -105,12 +106,14 @@ export const Unlock = ({ error, display, result }) => {
     )
   }
   return (
-    <div>
-      <Section name="Contract Summary">{summary}</Section>
-      {details}
-      {display && <TransactionDetails />}
-      {button}
-    </div>
+    <DocumentTitle title="Unlock Contract">
+      <div>
+        <Section name="Contract Summary">{summary}</Section>
+        {details}
+        {display && <TransactionDetails />}
+        {button}
+      </div>
+    </DocumentTitle>
   )
 }
 
