@@ -245,6 +245,18 @@ function BytesWidget(props: {
   )
 }
 
+function ProvidePrivateKeyWidget(props: {
+  input: ProvidePrivateKeyInput,
+  handleChange: (e) => undefined
+}) {
+  return (
+    <div>
+      <TextWidget input={props.input} handleChange={props.handleChange} />
+      <HelpBlock className="text-warning">(Do not paste the private key for a real Bitcoin address into this field)</HelpBlock>
+    </div>
+  )
+}
+
 function TextWidget(props: {
   input:
     | ProvideBytesInput
@@ -594,7 +606,7 @@ function getWidgetType(
     case "providePublicKeyInput":
       return TextWidget
     case "providePrivateKeyInput":
-      return TextWidget
+      return ProvidePrivateKeyWidget
     case "provideSignatureInput":
       return TextWidget
     case "hashInput":
