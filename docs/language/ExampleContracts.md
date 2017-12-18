@@ -13,6 +13,20 @@ Below are some examples of contract templates written in Ivy. You can try out th
 * [EscrowWithDelay](#escrowwithdelay)
 * [VaultSpend](#vaultspend)
 
+These contracts demonstrate the following conditions supported by Bitcoin Script:
+
+* Requiring a signature corresponding to a prespecified public key (see [LockWithPublicKey](#lockwithpublickey))
+
+* Requiring M signatures corresponding to any of N prespecified public keys (see [LockWithMultisig](#lockwithmultisig))
+
+* Checking that the cryptographic hash of a string or public key is equal to a prespecified hash (see [LockWithPublicKeyHash](#lockwithpublickeyhash), [RevealCollision](#revealcollision), [RevealPreimage](#revealpreimage))
+
+* Waiting until after a specified block height or block time (see [LockUntil](#lockuntil), [TransferWithTimeout](#transferwithtimeout)
+
+* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](#lockdelay),  [EscrowWithDelay](#escrowwithdelay)), [VaultSpend](#vaultspend))
+
+
+
 ## LockWithPublicKey
 
 ```
