@@ -16,5 +16,7 @@ The following functions and operators are available when compiling Ivy to Bitcoi
 
 * **ripemd160(preimage: (T: HashableType)) -> Ripemd160(T)**: compute the RIPEMD-160 hash of **preimage**
 
+* **bytes(item: T) -> Bytes**: coerce `item` to a bytestring (of type Bytes). This function does not have any effect on the compiled output or on script execution (since the Bitcoin Script VM treats every item as a bytestring); it only affects typechecking. (This cannot be called on an item of type Value.)
+
 * **==**, **!=**: check equality of any two values of the same type. (Note: because of certain limitations of Bitcoin Script, using these operators on Booleans is not allowed.)
 

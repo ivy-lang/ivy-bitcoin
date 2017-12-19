@@ -184,6 +184,9 @@ export function typeCheckExpression(expression: Expression): Type {
       const inputTypes = expression.args.map(arg => typeCheckExpression(arg))
       if (isHashFunctionName(expression.instruction)) {
         const inputType = typeCheckExpression(expression.args[0])
+        if (inputTypes.length !== 1) {
+          throw new IvyTypeError("hash function expected 1 argument, got " + inputTypes.length)
+        }
         if (
           !isHash(inputType) &&
           inputType !== "Bytes" &&
@@ -200,6 +203,17 @@ export function typeCheckExpression(expression: Expression): Type {
         }
       }
       switch (expression.instruction) {
+        case "bytes":
+          if (inputTypes.length !== 1) { 
+            throw new IvyTypeError("bytes function expected 1 argument, got " + inputTypes.length)
+          }
+          if (inputTypes[0] === "Value") {
+            throw new IvyTypeError("cannot call bytes on an item of type Value")
+          }
+          if (inputTypes[0] === "Boolean") {
+            throw new IvyTypeError("cannot call bytes on an item of type Boolean")
+          }
+          return "Bytes"
         case "==":
         case "!=":
           if (inputTypes[0] === "Boolean" || inputTypes[1] === "Boolean") {

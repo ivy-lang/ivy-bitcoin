@@ -8,11 +8,12 @@ export const DEMO_ID_LIST = [
   "LockWithPublicKeyHash",
   "RevealPreimage",
   "RevealCollision",
+  "RevealFixedPoint",
   "LockUntil",
   "LockDelay",
   "TransferWithTimeout",
   "EscrowWithDelay",
-  "VaultSpend"
+  "VaultSpend",
 ]
 
 export const DEMO_CONTRACTS = {
@@ -119,6 +120,12 @@ export const DEMO_CONTRACTS = {
     verify checkSig(hotKey, sig)
     unlock val
   }
+}`,
+RevealFixedPoint: `contract RevealFixedPoint(val: Value) {
+  clause reveal(hash: Bytes) {
+    verify bytes(sha256(hash)) == hash
+    unlock val
+  }
 }`
 }
 
@@ -174,6 +181,7 @@ export const TEST_CONTRACT_ARGS = {
   TransferWithTimeout: [PublicKeys[0], PublicKeys[1], 20, 0],
   EscrowWithDelay: [...PublicKeys, 20, 0],
   VaultSpend: [PublicKeys[0], PublicKeys[1], 20, 0],
+  RevealFixedPoint: [0],
   HashOperations: [Sha256Bytes, Sha1Bytes, Ripemd160Bytes, 0]
 }
 
@@ -188,7 +196,8 @@ export const TEST_CONTRACT_CLAUSE_NAMES = {
   TransferWithTimeout: "transfer",
   EscrowWithDelay: "timeout",
   VaultSpend: "complete",
-  HashOperations: "reveal"
+  RevealFixedPoint: "reveal",
+  HashOperations: "reveal",
 }
 
 export const TEST_CONTRACT_TIMES = {
@@ -234,6 +243,7 @@ export const TEST_SPEND_ARGUMENTS = {
   VaultSpend: [
     "30440220259d47913eb5c5ff625fb29cfe571632e1bd197e53026eb6db3f335b05be6efe022033f59f4f240a098d41304f35870bb54012ff5d29a6f0d9664b23779e295f998001"
   ],
+  RevealFixedPoint: [Bytes], // this is supposed to fail
   HashOperations: [Bytes]
 }
 
@@ -283,9 +293,16 @@ export const ERRORS = {
     unlock val
   }
 }`,
-  "uses non-matching hash types": `contract LockWithPublicKeyHash(publicKeyHash: Sha256(PublicKey), val: Value) {
+"uses non-matching hash types": `contract LockWithPublicKeyHash(publicKeyHash: Sha256(PublicKey), val: Value) {
   clause spend(publicKey: PublicKey, sig: Signature) {
     verify sha1(publicKey) == publicKeyHash
+    verify checkSig(publicKey, sig)
+    unlock val
+  }
+}`,
+"passes wrong number of arguments to hash function": `contract LockWithPublicKeyHash(publicKeyHash: Sha256(PublicKey), val: Value) {
+  clause spend(publicKey: PublicKey, sig: Signature) {
+    verify sha1(publicKey, publicKey) == publicKeyHash
     verify checkSig(publicKey, sig)
     unlock val
   }

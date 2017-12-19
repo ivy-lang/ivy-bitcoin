@@ -16,6 +16,7 @@ export type FunctionName =
   | "older"
   | "after"
   | "checkMultiSig"
+  | "bytes"
 
 export type Opcode = string // for now
 
@@ -52,6 +53,8 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["EQUAL"]
     case "!=":
       return ["EQUAL", "NOT"]
+    case "bytes":
+      return []
   }
 }
 
@@ -78,5 +81,7 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
     case "sha1":
     case "sha256":
       throw new Error("should not call getTypeSignature on hash function")
+    case "bytes":
+      throw new Error("should not call getTypeSignature on bytes function")
   }
 }

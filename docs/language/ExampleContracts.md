@@ -7,6 +7,7 @@ Below are some examples of contract templates written in Ivy. You can try out th
 * [LockWithPublicKeyHash](#lockwithpublickeyhash)
 * [RevealPreimage](#revealpreimage)
 * [RevealCollision](#revealcollision)
+* [RevealFixedPoint](#revealfixedpoint)
 * [LockUntil](#lockuntil)
 * [LockDelay](#lockdelay)
 * [TransferWithTimeout](#transferwithtimeout)
@@ -19,7 +20,7 @@ These contracts demonstrate the following conditions supported by Bitcoin Script
 
 * Requiring M signatures corresponding to any of N prespecified public keys (see [LockWithMultisig](#lockwithmultisig))
 
-* Checking that the cryptographic hash of a string or public key is equal to a prespecified hash (see [LockWithPublicKeyHash](#lockwithpublickeyhash), [RevealCollision](#revealcollision), [RevealPreimage](#revealpreimage))
+* Checking that the cryptographic hash of a string or public key is equal to a prespecified hash (see [LockWithPublicKeyHash](#lockwithpublickeyhash), [RevealCollision](#revealcollision), [RevealPreimage](#revealpreimage), [RevealFixedPoint](#revealfixedpoint))
 
 * Waiting until after a specified block height or block time (see [LockUntil](#lockuntil), [TransferWithTimeout](#transferwithtimeout)
 
@@ -108,6 +109,21 @@ RevealCollision pays a reward to anyone who provides a SHA1 collision—two diff
 Peter Todd used this script to [post a bounty](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2013-September/003253.html) on collisions for several hash functions. When a SHA1 collision was [found in February 2017](https://shattered.io/), someone used that collision to [claim the bounty](https://tradeblock.com/bitcoin/tx/8d31992805518fd62daa3bdd2a5c4fd2cd3054c9b3dca1d78055e9528cff6adc).
 
 As with the [RevealPreimage](#revealpreimage) contract, any attempt to spend this contract could potentially be sniped by miners.
+
+## RevealFixedPoint
+
+```
+contract RevealFixedPoint(val: Value) {
+  clause reveal(hash: Bytes) {
+    verify bytes(sha256(hash)) == hash
+    unlock val
+  }
+}
+```
+
+RevealFixedPoint is similar to [RevealCollision](#revealcollision), except the challenge is to reveal a SHA256 [fixed point](https://en.wikipedia.org/wiki/One-way_compression_function#cite_ref-8), rather than a SHA1 collision.
+
+In order to compare a SHA256 hash with its preimage, the former needs to be coerced to a bytestring, using the `bytes` function. This has no effect on script execution, but prevents the typechecker from objecting to the comparison.
 
 ## LockUntil
 
