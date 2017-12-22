@@ -46,9 +46,7 @@ against some arguments to validate the transaction."
   return (
     <div className="panel-body inner">
       This is a{" "}
-      {publicKey
-        ? "Pay-To-Witness-Public-Key"
-        : "Pay-To-Witness-Script-Hash"}{" "}
+      {publicKey ? "Pay-To-Witness-Public-Key" : "Pay-To-Witness-Script-Hash"}{" "}
       address. For more information on how SegWit addresses work, see{" "}
       <a href="https://bitcoincore.org/en/segwit_wallet_dev/">here</a>.
       <br />

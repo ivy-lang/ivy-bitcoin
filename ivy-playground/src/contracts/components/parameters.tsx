@@ -246,7 +246,7 @@ function BytesWidget(props: {
 }
 
 function ProvidePrivateKeyWidget(props: {
-  input: ProvidePrivateKeyInput,
+  input: ProvidePrivateKeyInput
   handleChange: (e) => undefined
 }) {
   return (
