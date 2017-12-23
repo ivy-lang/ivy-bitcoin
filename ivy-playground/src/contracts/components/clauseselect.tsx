@@ -8,6 +8,7 @@ import { setClauseIndex } from "../actions"
 import {
   getSelectedClauseIndex,
   getSpendContract,
+  getSpendContractClauses,
   getSpendContractId
 } from "../selectors"
 
@@ -38,7 +39,7 @@ const ClauseSelect = (props: {
 export default connect(
   state => ({
     spendIndex: getSelectedClauseIndex(state),
-    clauses: getSpendContract(state).template.clauses,
+    clauses: getSpendContractClauses(state),
     contractId: getSpendContractId(state)
   }),
   { setClauseIndex }

@@ -31,7 +31,13 @@ import {
   TimestampTimeInput,
   ValueInput
 } from "../../inputs/types"
-import { getInputMap, getInputSelector, getParameterIds } from "../selectors"
+import {
+  getInputMap,
+  getInputSelector,
+  getParameterIds,
+  getSpendContractJson
+} from "../selectors"
+import { Contract } from "../types"
 
 function getChildWidget(input: ComplexInput) {
   return getWidget(getChild(input))
@@ -208,7 +214,11 @@ function getWidget(id: string): JSX.Element {
     id
   })
 }
-function SpendInputsUnconnected(props: { spendInputIds: string[] }) {
+
+function SpendInputsUnconnected(props: {
+  spendInputIds: string[]
+  contractJson: string
+}) {
   if (props.spendInputIds.length === 0) {
     return <div />
   }
@@ -228,7 +238,8 @@ function SpendInputsUnconnected(props: { spendInputIds: string[] }) {
 }
 
 const SpendInputs = connect(state => ({
-  spendInputIds: getParameterIds(state)
+  spendInputIds: getParameterIds(state),
+  contractJson: getSpendContractJson(state)
 }))(SpendInputsUnconnected)
 
 export default SpendInputs

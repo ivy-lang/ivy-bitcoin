@@ -83,6 +83,13 @@ export const getSpendContract = createSelector(
   }
 )
 
+export const getSpendContractJson = createSelector(
+  getSpendContract,
+  (contract: Contract) => {
+    return JSON.stringify(contract.instantiated)
+  }
+)
+
 export const getInputSelector = (id: string) => {
   return createSelector(getInputMap, (inputMap: InputMap) => {
     const input = inputMap[id]
@@ -116,14 +123,16 @@ export const getInputMap = createSelector(
 )
 
 export const getParameterIds = createSelector(getSpendContract, spendContract =>
-  spendContract.template.params.map(param => "contractParameters." + param.name)
+  spendContract.instantiated.template.params.map(
+    param => "contractParameters." + param.name
+  )
 )
 
 export const getSelectedClause = createSelector(
   getSpendContract,
   getSelectedClauseIndex,
   (spendContract, clauseIndex) => {
-    return spendContract.template.clauses[clauseIndex]
+    return spendContract.instantiated.template.clauses[clauseIndex]
   }
 )
 
@@ -154,7 +163,7 @@ export const getInstantiated = createSelector(
 
 export const getSpendSourceTransaction = createSelector(
   getSpendContract,
-  spendContract => spendContract.fundingTransaction
+  spendContract => spendContract.instantiated.fundingTransaction
 )
 
 export const getSpendDestinationAddress = createSelector(
@@ -191,7 +200,7 @@ export const getSpendingSequenceNumber = createSelector(
 
 export const getSpendAmountInSatoshis = createSelector(
   getSpendContract,
-  spendContract => spendContract.amount
+  spendContract => spendContract.instantiated.amount
 )
 
 export const getSpendTransaction = createSelector(
@@ -228,7 +237,7 @@ export const getSpendTransactionSigHash = createSelector(
 
 export const getNumberOfClauses = createSelector(
   getSpendContract,
-  spendContract => spendContract.template.clauses.length
+  spendContract => spendContract.instantiated.template.clauses.length
 )
 
 export const getSpendClauseArgument = createSelector(
@@ -274,17 +283,17 @@ export const getSignatureData = (
 
 export const getRedeemScript = createSelector(
   getSpendContract,
-  spendContract => spendContract.redeemScript
+  spendContract => spendContract.instantiated.redeemScript
 )
 
 export const getWitnessScript = createSelector(
   getSpendContract,
-  spendContract => spendContract.witnessScript
+  spendContract => spendContract.instantiated.witnessScript
 )
 
 export const getScriptSig = createSelector(
   getSpendContract,
-  spendContract => spendContract.scriptSig
+  spendContract => spendContract.instantiated.scriptSig
 )
 
 export const getFulfilledSpendTransaction = createSelector(
@@ -380,6 +389,26 @@ export const areSpendInputsValid = createSelector(
       return false
     }
   }
+)
+
+export const getSpendContractClauses = createSelector(
+  getSpendContract,
+  contract => contract.instantiated.template.clauses
+)
+
+export const getSpendContractTemplate = createSelector(
+  getSpendContract,
+  contract => contract.instantiated.template
+)
+
+export const getSpendContractSource = createSelector(
+  getSpendContractTemplate,
+  template => template.source
+)
+
+export const getSpendContractInstructions = createSelector(
+  getSpendContractTemplate,
+  template => template.instructions.join(" ")
 )
 
 export const getError = createSelector(getState, state => state.error)

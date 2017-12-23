@@ -74,8 +74,8 @@ const LockedValueRowUnconnected = (props: {
   const contract = props.contract
   return (
     <tr>
-      <td>{contract.template.name}</td>
-      <td>{amountFromSatoshis(contract.amount)}</td>
+      <td>{contract.instantiated.template.name}</td>
+      <td>{amountFromSatoshis(contract.instantiated.amount)}</td>
       <td className="td-button">
         <UnlockButton contractId={contract.id} />
       </td>
@@ -119,8 +119,8 @@ const HistoryRowUnconnected = (props: { string; contract: Contract }) => {
   const contract = props.contract
   return (
     <tr>
-      <td>{contract.template.name}</td>
-      <td>{amountFromSatoshis(contract.amount)}</td>
+      <td>{contract.instantiated.template.name}</td>
+      <td>{amountFromSatoshis(contract.instantiated.amount)}</td>
       <td />
     </tr>
   )

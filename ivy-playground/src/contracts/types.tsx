@@ -7,15 +7,7 @@ import { Contract as IvyContract } from "ivy-bitcoin"
 export interface Contract {
   // lock tx id
   id: string
-  unlockTxid: string
-  amount: number
-  template: Template
-  address: string
-  redeemScript: string
-  witnessScript: string
-  scriptSig: string
-
-  fundingTransaction: {}
+  unlockTxid?: string
 
   // Map of UI Form inputs
   // used during locking tx.
@@ -26,11 +18,9 @@ export interface Contract {
   spendInputMap: InputMap
 
   // Details on the contract clauses.
-  clauseNames: string[]
   clauseMap: {
     [s: string]: TemplateClause
   }
-  publicKey?: string
   instantiated: IvyContract
 }
 

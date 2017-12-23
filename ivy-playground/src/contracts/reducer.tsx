@@ -118,19 +118,10 @@ export default function reducer(
       const clauseMap = generateClauseMap(template)
       const tx = instantiated.fundingTransaction
       const contract: Contract = {
-        template: action.template as Template,
         inputMap: action.inputMap as InputMap,
         id: tx.hash,
-        fundingTransaction: tx,
         spendInputMap,
-        amount: instantiated.amount,
-        unlockTxid: "",
-        address: instantiated.testnetAddress,
-        witnessScript: instantiated.witnessScript,
-        redeemScript: instantiated.redeemScript,
-        scriptSig: instantiated.scriptSig,
-        publicKey: instantiated.publicKey,
-        clauseNames,
+        unlockTxid: undefined,
         clauseMap,
         instantiated
       }

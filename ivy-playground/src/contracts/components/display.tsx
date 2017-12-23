@@ -1,23 +1,23 @@
 import React from "react"
 import { connect } from "react-redux"
-import { getSpendContract } from "../selectors"
+import {
+  getSpendContractInstructions,
+  getSpendContractSource
+} from "../selectors"
 
 export const Display = (props: { displayed: string }) => {
   return <pre className="wrap">{props.displayed}</pre>
 }
 
 export const DisplaySpendContract = connect(state => {
-  const contract = getSpendContract(state)
-  if (contract) {
-    return { displayed: contract.template.source }
+  const source = getSpendContractSource(state)
+  if (source) {
+    return { displayed: source }
   }
   return { displayed: "" }
 })(Display)
 
 export const DisplayInstructions = connect(state => {
-  const contract = getSpendContract(state)
-  if (contract) {
-    return { displayed: contract.template.instructions.join(" ") }
-  }
-  return { displayed: "" }
+  const displayed = getSpendContractInstructions(state)
+  return { displayed }
 })(Display)
