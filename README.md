@@ -9,3 +9,5 @@ You can learn more about Ivy and using the Ivy Playground for Bitcoin by reading
 **Ivy is prototype software and is intended for educational purposes only**. Do not attempt to use Ivy to control real Bitcoins.
 
 Bug reports and feature requests are welcome; you can create an [issue](https://github.com/ivy-lang/ivy-bitcoin/issues) or [pull request](https://github.com/ivy-lang/ivy-bitcoin/pulls) on this repo.
+
+You can also join the [Ivy discussion channel](https://discord.gg/fqZ7unX) on Discord.
