@@ -11,14 +11,9 @@ import { typeCheckContract } from "./typeCheck"
 
 import { RawContract } from "./ast"
 
-import { DEMO_CONTRACTS } from "./predefined"
-
 const parser = require("../lib/parser")
 
-export function compile(
-  source: string,
-  importable = DEMO_CONTRACTS
-): Template | CompilerError {
+export function compile(source: string): Template | CompilerError {
   try {
     const rawAst = parser.parse(source) as RawContract
     const referenceChecked = referenceCheck(rawAst)

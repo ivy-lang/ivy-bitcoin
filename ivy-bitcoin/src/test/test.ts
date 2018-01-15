@@ -48,18 +48,6 @@ describe("instantiate", () => {
 const seed = Buffer.from("", "hex")
 const destinationAddress = ""
 
-function createTestSpendTransaction(id: string) {
-  const template = compile(TEST_CASES[id]) as Template
-  const instantiated = instantiate(template, TEST_CONTRACT_ARGS[id], seed)
-  const spendTx = spend(
-    instantiated.fundingTransaction,
-    destinationAddress,
-    0,
-    0,
-    { sequence: 0, seconds: false }
-  )
-}
-
 describe("spend", () => {
   Object.keys(TEST_SPEND_ARGUMENTS).forEach(id => {
     it("should create spend transaction for " + id, () => {
@@ -78,7 +66,9 @@ describe("spend", () => {
 
 describe("fulfill", () => {
   Object.keys(TEST_SPEND_ARGUMENTS).forEach(id => {
-    if (id === "RevealFixedPoint") { return } // we know this would fail
+    if (id === "RevealFixedPoint") {
+      return
+    } // we know this would fail
     it("should be able to fulfill the spend transaction for " + id, () => {
       const template = compile(TEST_CASES[id]) as Template
       const instantiated = instantiate(template, TEST_CONTRACT_ARGS[id], seed)

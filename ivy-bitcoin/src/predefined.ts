@@ -1,6 +1,11 @@
 // Predefined contract templates
 
 import { opcode as Opcode } from "bcoin"
+import { compile } from "./compile"
+import { instantiate } from "./instantiate"
+import { spend } from "./spend"
+import { createSignature, toSighash } from "./spend"
+import { Template } from "./template"
 
 export const DEMO_ID_LIST = [
   "LockWithPublicKey",
@@ -13,7 +18,7 @@ export const DEMO_ID_LIST = [
   "LockDelay",
   "TransferWithTimeout",
   "EscrowWithDelay",
-  "VaultSpend",
+  "VaultSpend"
 ]
 
 export const DEMO_CONTRACTS = {
@@ -121,7 +126,7 @@ export const DEMO_CONTRACTS = {
     unlock val
   }
 }`,
-RevealFixedPoint: `contract RevealFixedPoint(val: Value) {
+  RevealFixedPoint: `contract RevealFixedPoint(val: Value) {
   clause reveal(hash: Bytes) {
     verify bytes(sha256(hash)) == hash
     unlock val
@@ -164,11 +169,11 @@ const PublicKeys = [
   )
 ]
 
-// const PrivateKeys = [ // just for reference
-//   "Kyw8s2qf2TxNnJMwfrKYhAsZ6eAmMMhAv4Ej4VVE8KpVsDvXurJK",
-//   "L3tiMe49mswHQKqrikqNxJpVZSiBU7bYs1tstuXEYnrvjqRYvWUE",
-//   "KwFv55qQSs3ipb8Trh6EkYaUTNGNtx5qVx55LMqNvRrj69En5tzY"
-// ]
+const PrivateKeys = [
+  "Kyw8s2qf2TxNnJMwfrKYhAsZ6eAmMMhAv4Ej4VVE8KpVsDvXurJK",
+  "L3tiMe49mswHQKqrikqNxJpVZSiBU7bYs1tstuXEYnrvjqRYvWUE",
+  "KwFv55qQSs3ipb8Trh6EkYaUTNGNtx5qVx55LMqNvRrj69En5tzY"
+]
 
 export const TEST_CONTRACT_ARGS = {
   LockWithPublicKey: [PublicKeys[0], 0],
@@ -197,55 +202,21 @@ export const TEST_CONTRACT_CLAUSE_NAMES = {
   EscrowWithDelay: "timeout",
   VaultSpend: "complete",
   RevealFixedPoint: "reveal",
-  HashOperations: "reveal",
+  HashOperations: "reveal"
 }
 
 export const TEST_CONTRACT_TIMES = {
-  LockUntil: 20,
+  LockUntil: 20
 }
 
 export const TEST_CONTRACT_AGES = {
   LockDelay: 20,
   VaultSpend: 20,
-  EscrowWithDelay: 20,  
+  EscrowWithDelay: 20
 }
 
-export const TEST_SPEND_ARGUMENTS = {
-  LockWithPublicKey: [
-    "3045022100f07c2b971827ddb8a42fba5d33b6ab2d2aaeede3f9701e43d3103d79eb2c6af8022060e270bc75dddecc174fb04372cee9dead858ecd38ad700d28ab08c9618bb44b01"
-  ],
-  LockWithMultisig: [
-    "3044022027e02641754f6e5d8e610b094bfff6a18c1259e79fe23388a187275650b6236b0220224d9170e5044cb91f5222ff0e05900a0c02786cdd82cf43922097c6b5c5ba8801",
-    "3045022100dc5fa44d6129ded838ed3188aa1e2ff3d622a8545180ef29b5f32d073e7fc45302207fd1aa149379018c1d3715402db152d03243309c62ac89958ff35e7d12ff5a3b01"
-  ],
-  LockWithPublicKeyHash: [
-    PublicKeys[0],
-    "3045022100a6f4423172a0a4c79e409f4643172386e54f51f3052a636e1b9c3e45bc45dc6c02204f541ff5193494b3ef5f86fad0912b662477aae16c6a0fbe9a1875754665ff6a01"
-  ],
-  RevealPreimage: [Bytes],
-  RevealCollision: [
-    "255044462d312e330a25e2e3cfd30a0a0a312030206f626a0a3c3c2f57696474682032203020522f4865696768742033203020522f547970652034203020522f537562747970652035203020522f46696c7465722036203020522f436f6c6f7253706163652037203020522f4c656e6774682038203020522f42697473506572436f6d706f6e656e7420383e3e0a73747265616d0affd8fffe00245348412d3120697320646561642121212121852fec092339759c39b1a1c63c4c97e1fffe017f46dc93a6b67e013b029aaa1db2560b45ca67d688c7f84b8c4c791fe02b3df614f86db1690901c56b45c1530afedfb76038e972722fe7ad728f0e4904e046c230570fe9d41398abe12ef5bc942be33542a4802d98b5d70f2a332ec37fac3514e74ddc0f2cc1a874cd0c78305a21566461309789606bd0bf3f98cda8044629a1",
-    "255044462d312e330a25e2e3cfd30a0a0a312030206f626a0a3c3c2f57696474682032203020522f4865696768742033203020522f547970652034203020522f537562747970652035203020522f46696c7465722036203020522f436f6c6f7253706163652037203020522f4c656e6774682038203020522f42697473506572436f6d706f6e656e7420383e3e0a73747265616d0affd8fffe00245348412d3120697320646561642121212121852fec092339759c39b1a1c63c4c97e1fffe017346dc9166b67e118f029ab621b2560ff9ca67cca8c7f85ba84c79030c2b3de218f86db3a90901d5df45c14f26fedfb3dc38e96ac22fe7bd728f0e45bce046d23c570feb141398bb552ef5a0a82be331fea48037b8b5d71f0e332edf93ac3500eb4ddc0decc1a864790c782c76215660dd309791d06bd0af3f98cda4bc4629b1"
-  ],
-  LockUntil: [
-    "304502210083bf22a83f82d3eaac824eaf8832302355055d744e12e290692d5c1a6f191f250220348ce48f05b2670ce8c954d04f71005efe2cd9aa10a1010bb9047547f8305e2001"
-  ],
-  LockDelay: [
-    "3044022076f2201970acba71067a3defa7aa2ac58c2e8cb2b1fd7bb49dc4a29fec0e55d20220384f85cee5598ecbcb6530634e8f1bc4d0098b6c99cb087964b47befe57ca7af01"
-  ],
-  TransferWithTimeout: [
-    "304402207f47f0619e76293967c6a91864ddcfdad01dd17d56d0989e0bf2be2c08ab3ba502200a69fb6386a57fbed938683a0f1ee4973fcc89c5d2b1992ba90d252002d7c3fe01",
-    "304402203cfdd4e55d7e11d95ca466f4d110d8054994b1ad42c4bd1567d553ed982859e102207b6332ce6e23b5fac755c1712f3396786b6f4512d82b4ca0d343d464eba106a001"
-  ],
-  EscrowWithDelay: [
-    "30440220139ecf74c68ea3cfb476e8d375a900cf1b148b7b5a5cc7221d1ea0a35817a6df022041bb11e3a6dd52458654d8f352d1885e339d4f9daa34fab313bfc696c9ea3b4901"
-  ],
-  VaultSpend: [
-    "30440220259d47913eb5c5ff625fb29cfe571632e1bd197e53026eb6db3f335b05be6efe022033f59f4f240a098d41304f35870bb54012ff5d29a6f0d9664b23779e295f998001"
-  ],
-  RevealFixedPoint: [Bytes], // this is supposed to fail
-  HashOperations: [Bytes]
-}
+const seed = Buffer.from("", "hex")
+const destinationAddress = ""
 
 export const TEST_CASES = {
   ...DEMO_CONTRACTS,
@@ -262,6 +233,55 @@ export const TEST_CASES = {
     unlock val
   }
 }`
+}
+
+function generateSignature(id: string, privateKeyIndex: number): string {
+  const privateKey = PrivateKeys[privateKeyIndex]
+  const template = compile(TEST_CASES[id]) as Template
+  const instantiated = instantiate(template, TEST_CONTRACT_ARGS[id], seed)
+  const tx = spend(
+    instantiated.fundingTransaction,
+    destinationAddress,
+    0,
+    TEST_CONTRACT_TIMES[id] || 0,
+    { sequence: TEST_CONTRACT_AGES[id] || 0, seconds: false }
+  )
+  const sigHash = toSighash(instantiated, tx)
+  if (sigHash === undefined) {
+    throw new Error("sighash unexpectedly undefined")
+  }
+  const sig = createSignature(sigHash, privateKey)
+  if (sig === undefined) {
+    throw new Error("sig unexpectedly undefined")
+  }
+  return sig.toString("hex")
+}
+
+export const TEST_SPEND_ARGUMENTS = {
+  LockWithPublicKey: [generateSignature("LockWithPublicKey", 0)],
+  LockWithMultisig: [
+    generateSignature("LockWithMultisig", 0),
+    generateSignature("LockWithMultisig", 1)
+  ],
+  LockWithPublicKeyHash: [
+    PublicKeys[0],
+    generateSignature("LockWithPublicKeyHash", 0)
+  ],
+  RevealPreimage: [Bytes],
+  RevealCollision: [
+    "255044462d312e330a25e2e3cfd30a0a0a312030206f626a0a3c3c2f57696474682032203020522f4865696768742033203020522f547970652034203020522f537562747970652035203020522f46696c7465722036203020522f436f6c6f7253706163652037203020522f4c656e6774682038203020522f42697473506572436f6d706f6e656e7420383e3e0a73747265616d0affd8fffe00245348412d3120697320646561642121212121852fec092339759c39b1a1c63c4c97e1fffe017f46dc93a6b67e013b029aaa1db2560b45ca67d688c7f84b8c4c791fe02b3df614f86db1690901c56b45c1530afedfb76038e972722fe7ad728f0e4904e046c230570fe9d41398abe12ef5bc942be33542a4802d98b5d70f2a332ec37fac3514e74ddc0f2cc1a874cd0c78305a21566461309789606bd0bf3f98cda8044629a1",
+    "255044462d312e330a25e2e3cfd30a0a0a312030206f626a0a3c3c2f57696474682032203020522f4865696768742033203020522f547970652034203020522f537562747970652035203020522f46696c7465722036203020522f436f6c6f7253706163652037203020522f4c656e6774682038203020522f42697473506572436f6d706f6e656e7420383e3e0a73747265616d0affd8fffe00245348412d3120697320646561642121212121852fec092339759c39b1a1c63c4c97e1fffe017346dc9166b67e118f029ab621b2560ff9ca67cca8c7f85ba84c79030c2b3de218f86db3a90901d5df45c14f26fedfb3dc38e96ac22fe7bd728f0e45bce046d23c570feb141398bb552ef5a0a82be331fea48037b8b5d71f0e332edf93ac3500eb4ddc0decc1a864790c782c76215660dd309791d06bd0af3f98cda4bc4629b1"
+  ],
+  LockUntil: [generateSignature("LockUntil", 0)],
+  LockDelay: [generateSignature("LockDelay", 0)],
+  TransferWithTimeout: [
+    generateSignature("TransferWithTimeout", 0),
+    generateSignature("TransferWithTimeout", 1)
+  ],
+  EscrowWithDelay: [generateSignature("EscrowWithDelay", 0)],
+  VaultSpend: [generateSignature("VaultSpend", 0)],
+  RevealFixedPoint: [Bytes], // this is supposed to fail
+  HashOperations: [Bytes]
 }
 
 export const ERRORS = {
@@ -293,14 +313,14 @@ export const ERRORS = {
     unlock val
   }
 }`,
-"uses non-matching hash types": `contract LockWithPublicKeyHash(publicKeyHash: Sha256(PublicKey), val: Value) {
+  "uses non-matching hash types": `contract LockWithPublicKeyHash(publicKeyHash: Sha256(PublicKey), val: Value) {
   clause spend(publicKey: PublicKey, sig: Signature) {
     verify sha1(publicKey) == publicKeyHash
     verify checkSig(publicKey, sig)
     unlock val
   }
 }`,
-"passes wrong number of arguments to hash function": `contract LockWithPublicKeyHash(publicKeyHash: Sha256(PublicKey), val: Value) {
+  "passes wrong number of arguments to hash function": `contract LockWithPublicKeyHash(publicKeyHash: Sha256(PublicKey), val: Value) {
   clause spend(publicKey: PublicKey, sig: Signature) {
     verify sha1(publicKey, publicKey) == publicKeyHash
     verify checkSig(publicKey, sig)
