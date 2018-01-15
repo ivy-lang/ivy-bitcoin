@@ -17,7 +17,7 @@
     "brace": "^0.10.0",
     "css-loader": "^0.28.1",
     "file-loader": "~0.9.0",
-    "ivy-bitcoin": "0.0.6",
+    "ivy-bitcoin": "0.0.7",
     "json-loader": "^0.5.4",
     "moment": "^2.19.1",
     "pegjs": "^0.10.0",
@@ -54,7 +54,8 @@
   "repository": "ivy-lang/ivy-bitcoin",
   "scripts": {
     "build": "webpack --config webpack.production.config.js",
-    "deploy": "npm run build && aws s3 cp public s3://ivy-lang.org/static --recursive",
+    "deploy":
+      "npm run build && aws s3 cp public s3://ivy-lang.org/static --recursive",
     "start": "webpack-dev-server --content-base public --inline --hot",
     "test": ""
   }
