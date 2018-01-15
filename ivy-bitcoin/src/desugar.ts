@@ -24,34 +24,25 @@ function setupClauses(oldClauses: Clause[], clauseSelector: string): Block {
     // last clause, or only one clause
     return clause
   }
-  let condition
-  if (newClauses.length === 1) {
-    condition = {
+  const args: Expression[] = [
+    {
+      type: "literal",
+      literalType: "Integer",
+      location: clause.location,
+      value: newClauses.length.toString()
+    },
+    {
       type: "variable",
       location: clause.location,
       name: clauseSelector
     }
-  } else {
-    const args: Expression[] = [
-      {
-        type: "literal",
-        literalType: "Integer",
-        location: clause.location,
-        value: newClauses.length.toString()
-      },
-      {
-        type: "variable",
-        location: clause.location,
-        name: clauseSelector
-      }
-    ]
-    condition = {
-      type: "instructionExpression",
-      expressionType: "binaryExpression",
-      location: clause.location,
-      instruction: "==",
-      args
-    }
+  ]
+  const condition: InstructionExpression = {
+    type: "instructionExpression",
+    expressionType: "binaryExpression",
+    location: clause.location,
+    instruction: "==",
+    args
   }
   return {
     type: "conditional",
