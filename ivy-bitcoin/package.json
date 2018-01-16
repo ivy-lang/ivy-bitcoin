@@ -1,7 +1,7 @@
 {
   "name": "ivy-bitcoin",
   "description": "Compiler for Ivy, Chain's smart contract language.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://www.github.com/ivy-lang/ivy-bitcoin",
   "license": "MIT",
   "main": "lib/index.js",
@@ -26,8 +26,7 @@
     "clean": "rm -rf lib",
     "compile-pegjs": "pegjs -o lib/parser.js src/parser.pegjs",
     "compile-tsc": "tsc",
-    "test":
-      "mocha src/test/*.ts --compilers ts:./node_modules/ts-node/register,tsx:./node_modules/ts-node/register"
+    "test": "mocha src/test/*.ts --compilers ts:./node_modules/ts-node/register,tsx:./node_modules/ts-node/register"
   },
   "types": "./lib/index.d.ts"
 }
