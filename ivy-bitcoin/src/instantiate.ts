@@ -8,6 +8,7 @@ import {
   outpoint as Outpoint,
   script as Script
 } from "bcoin"
+import { BugError } from "./errors"
 
 interface ScriptObject {
   toJSON: () => string // encodes as hex string
@@ -103,8 +104,16 @@ export function argToPushData(arg: Buffer | number | string) {
   }
 }
 
-export function symbolToOpcode(sym: string) {
-  if (/^\d+$/.test(sym)) {
+export function symbolToOpcode(sym: string, argMap: Map<string, any>) {
+  if (sym[sym.length - 1] === ")") {
+    // it's a contract argument
+    const name = sym.slice(5, sym.length - 1)
+    const arg = argMap.get(name)
+    if (arg === undefined) {
+      throw new BugError("argument '" + name + "' unexpectedly has no data")
+    }
+    return argToPushData(arg)
+  } else if (/^\d+$/.test(sym)) {
     return Opcode.fromInt(parseInt(sym, 10))
   }
   return Opcode.fromSymbol(sym)
@@ -126,9 +135,13 @@ export function instantiate(
     (_, i) => template.params[i].valueType === "Value"
   ) as number[]
   const instructions = template.instructions
-  const body = instructions.slice(dataArgs.length).map(symbolToOpcode)
-  const argOps = [...dataArgs].reverse().map(argToPushData)
-  const opcodes = ([] as any[]).concat(argOps, body)
+  const argMap = new Map<string, any>()
+  template.params.map((param, i) => {
+    if (param.valueType !== "Value") {
+      argMap.set(param.name, args[i])
+    }
+  })
+  const opcodes = instructions.map(inst => symbolToOpcode(inst, argMap))
   const witnessScript: ScriptObject = Script.fromArray(opcodes)
   const redeemScript: ScriptObject = witnessScript.forWitness()
   const scriptSig: ScriptObject = Script.fromArray([
