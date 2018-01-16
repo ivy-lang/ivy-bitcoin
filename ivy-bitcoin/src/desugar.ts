@@ -76,8 +76,51 @@ export function desugarClauses(rawContract: RawContract): Contract {
   }
 }
 
+function isSpecialInstruction(statement: Statement) {
+  // returns true if statement is a checklocktimeverify or checksequenceverify statement
+  return (
+    statement.type === "assertion" &&
+    statement.expression.type === "instructionExpression" &&
+    (statement.expression.instruction === "older" ||
+      statement.expression.instruction === "after")
+  )
+}
+
+export function rearrangeStatements(contract: RawContract): RawContract {
+  // this implements an optimization where checklocktimeverify and check
+  return mapOverAST((node: ASTNode) => {
+    switch (node.type) {
+      case "clause": {
+        if (node.statements.some(isSpecialInstruction)) {
+          node.statements.sort((a, b) => {
+            if (a.type === "unlock") {
+              return 1
+            }
+            if (b.type === "unlock") {
+              return -1
+            }
+            const aIsSpecial = isSpecialInstruction(a)
+            const bIsSpecial = isSpecialInstruction(b)
+            if (aIsSpecial && !bIsSpecial) {
+              return -1
+            }
+            if (!aIsSpecial && bIsSpecial) {
+              return 1
+            }
+            return 0
+          })
+        }
+        return node
+      }
+      default:
+        return node
+    }
+  }, contract) as RawContract
+}
+
 export function desugarContract(rawContract: RawContract): Contract {
-  const contract = desugarClauses(rawContract)
+  const rearranged = rearrangeStatements(rawContract)
+  const contract = desugarClauses(rearranged)
 
   return mapOverAST((node: ASTNode) => {
     switch (node.type) {
