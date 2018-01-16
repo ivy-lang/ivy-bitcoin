@@ -49,6 +49,7 @@ export interface Contract {
   block: Block
   numClauses: number
   clauseSelector?: string
+  referenceCounts: Map<string, number>
 }
 
 export interface Clause {

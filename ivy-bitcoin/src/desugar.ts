@@ -60,6 +60,10 @@ export function desugarClauses(rawContract: RawContract): Contract {
 
   const block = setupClauses(clauses, clauseSelector)
 
+  if (rawContract.referenceCounts === undefined) {
+    throw new BugError("raw contract reference counts unexpectedly undefined")
+  }
+
   return {
     type: "contract",
     location: rawContract.location,
@@ -67,7 +71,8 @@ export function desugarClauses(rawContract: RawContract): Contract {
     parameters: rawContract.parameters,
     block,
     numClauses,
-    clauseSelector: clauseSelector === "/" ? undefined : clauseSelector
+    clauseSelector: clauseSelector === "/" ? undefined : clauseSelector,
+    referenceCounts: rawContract.referenceCounts
   }
 }
 

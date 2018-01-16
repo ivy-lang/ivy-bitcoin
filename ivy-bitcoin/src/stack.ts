@@ -51,6 +51,7 @@ export function compileStackOps(ops: Operation[]): FinalOperation[] {
 
   const contractParameterNames = contract.parameters
     .filter(param => param.itemType !== "Value")
+    .filter(param => contract.referenceCounts.get(param.name) !== 1)
     .map(param => param.name)
     .reverse()
 
@@ -78,6 +79,7 @@ export function compileStackOps(ops: Operation[]): FinalOperation[] {
     .slice()
     .reverse()
     .filter(param => param.itemType !== "Value")
+    .filter(param => contract.referenceCounts.get(param.name) !== 1)
     .map(param => emit({ type: "pushParameter", name: param.name }))
 
   for (const op of ops) {
@@ -96,7 +98,7 @@ export function compileStackOps(ops: Operation[]): FinalOperation[] {
         stack = [...clauseParameterNames, ...defaultStack]
         // empty the stack of parameters that aren't used in this clause
         counts.forEach((value, key) => {
-          if (value === 0) {
+          if (value === 0 && contract.referenceCounts.get(key) !== 1) {
             const depth = getDepth(stack, key)
             if (depth === -1) {
               throw new BugError(key + " not found in stack")
@@ -132,6 +134,12 @@ export function compileStackOps(ops: Operation[]): FinalOperation[] {
         break
       }
       case "get": {
+        const name = op.variable.name
+        if (contract.referenceCounts.get(name) === 1) {
+          emit({ type: "pushParameter", name })
+          pushResult(stack)
+          continue
+        }
         const count = counts.get(op.variable.name)
         if (count === undefined) {
           throw new BugError("reference count unexpectedly undefined")
