@@ -51,6 +51,10 @@ Expression2
 Literal
   = ListLiteral
   / BooleanLiteral
+  / IntegerLiteral
+
+IntegerLiteral "integer"
+  = [-]?[0-9]+ { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
 ComparisonExpression // not associative
   = left:Expression2 __ operator:ComparisonOperator __ right:Expression2 { return createBinaryExpression([{left: left, operator: operator}], right) }

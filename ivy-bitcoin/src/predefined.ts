@@ -187,7 +187,9 @@ export const TEST_CONTRACT_ARGS = {
   EscrowWithDelay: [...PublicKeys, 20, 0],
   VaultSpend: [PublicKeys[0], PublicKeys[1], 20, 0],
   RevealFixedPoint: [0],
-  HashOperations: [Sha256Bytes, Sha1Bytes, Ripemd160Bytes, 0]
+  HashOperations: [Sha256Bytes, Sha1Bytes, Ripemd160Bytes, 0],
+  RevealNumber: [5, 0],
+  CheckSize: [0]
 }
 
 export const TEST_CONTRACT_CLAUSE_NAMES = {
@@ -202,7 +204,9 @@ export const TEST_CONTRACT_CLAUSE_NAMES = {
   EscrowWithDelay: "timeout",
   VaultSpend: "complete",
   RevealFixedPoint: "reveal",
-  HashOperations: "reveal"
+  HashOperations: "reveal",
+  RevealNumber: "reveal",
+  CheckSize: "reveal"
 }
 
 export const TEST_CONTRACT_TIMES = {
@@ -232,7 +236,20 @@ export const TEST_CASES = {
     verify ripemd160(preimage) == hash3
     unlock val
   }
-}`
+}`,
+  RevealNumber: `contract RevealNumber(num: Integer, val: Value) {
+    clause reveal(num2: Integer) {
+      verify num == num2
+      verify num2 == 5
+      unlock val
+    }
+  }`,
+  CheckSize: `contract CheckSize(val: Value) {
+    clause reveal(str: Bytes) {
+      verify size(str) == 32
+      unlock val
+    }
+  }`
 }
 
 function generateSignature(id: string, privateKeyIndex: number): string {
@@ -281,7 +298,9 @@ export const TEST_SPEND_ARGUMENTS = {
   EscrowWithDelay: [generateSignature("EscrowWithDelay", 0)],
   VaultSpend: [generateSignature("VaultSpend", 0)],
   RevealFixedPoint: [Bytes], // this is supposed to fail
-  HashOperations: [Bytes]
+  HashOperations: [Bytes],
+  RevealNumber: [5],
+  CheckSize: [Bytes]
 }
 
 export const ERRORS = {

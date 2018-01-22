@@ -18,5 +18,7 @@ The following functions and operators are available when compiling Ivy to Bitcoi
 
 * **bytes(item: T) -> Bytes**: coerce `item` to a bytestring (of type Bytes). This function does not have any effect on the compiled output or on script execution (since the Bitcoin Script VM treats every item as a bytestring); it only affects typechecking. (This cannot be called on an item of type Value or Boolean.)
 
+* **size(bytestring: Bytes) -> Number**: get the length of `bytestring` in bytes.
+
 * **==**, **!=**: check equality of any two values of the same type. (Note: because of certain limitations of Bitcoin Script, using these operators on Booleans is not allowed.)
 

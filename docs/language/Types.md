@@ -14,6 +14,8 @@ The following argument types are supported when compiling Ivy to Bitcoin Script:
 
 * **Boolean**: either **true** or **false**
 
+* **Number**: an integer between -2147483647 and 2147483647, inclusive.
+
 * **Value**: Some amount of Bitcoins (or, more precisely, some amount of satoshis). Parameters of type *Value* represent actual Bitcoins that are locked up in a contract.
 
 * **HashableType**: any type which can be passed to hash functions: **Bytes**, **PublicKey**, **Sha256(T)**, **Sha1(T)**, and **Ripemd160(T)**.

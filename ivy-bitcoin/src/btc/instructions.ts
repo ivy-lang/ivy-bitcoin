@@ -17,6 +17,7 @@ export type FunctionName =
   | "after"
   | "checkMultiSig"
   | "bytes"
+  | "size"
 
 export type Opcode = string // for now
 
@@ -55,6 +56,8 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["EQUAL", "NOT"]
     case "bytes":
       return []
+    case "size":
+      return ["SIZE", "SWAP", "DROP"]
   }
 }
 
@@ -66,6 +69,8 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
       return createTypeSignature(["Duration"], "Boolean")
     case "after":
       return createTypeSignature(["Time"], "Boolean")
+    case "size":
+      return createTypeSignature(["Bytes"], "Integer")
     case "checkMultiSig":
       return createTypeSignature(
         [

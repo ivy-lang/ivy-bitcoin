@@ -153,7 +153,7 @@ export interface Variable {
   itemType?: Type
 }
 
-export type LiteralType = "Boolean" | "Integer" // integer is only for desugared checkMultiSig
+export type LiteralType = "Boolean" | "Integer"
 
 export interface ListLiteral {
   type: "listLiteral"

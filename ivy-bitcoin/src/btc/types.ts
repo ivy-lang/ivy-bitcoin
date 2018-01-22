@@ -10,7 +10,7 @@ export type Primitive =
   | "Duration"
   | "Value"
   | "Boolean"
-  | "Integer" // just for desugared checkMultiSig
+  | "Integer"
 
 export type HashFunction = "sha1" | "sha256" | "ripemd160"
 
@@ -56,7 +56,8 @@ export function isPrimitive(str: Type | string): str is Primitive {
     case "Time":
     case "Duration":
     case "Boolean":
-    case "Value": // note: Integer not allowed. this is maybe a hack, tbd
+    case "Integer":
+    case "Value":
       return true
     default:
       return false
