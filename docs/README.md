@@ -1,6 +1,6 @@
 # Ivy
 
-Ivy is a higher-level language that allows you to write smart contracts for the Bitcoin protocol. It can compile to instructions for Bitcoin’s virtual machine, Bitcoin Script, and can be used to create SegWit-compatible Bitcoin addresses. Ivy was developed at Chain as a [smart contract language for its own platform](http://chain.com/ivy).
+Ivy is a higher-level language that allows you to write smart contracts for the Bitcoin protocol. It can compile to instructions for Bitcoin’s virtual machine, Bitcoin Script, and can be used to create SegWit-compatible Bitcoin addresses. Ivy was developed at [Chain](https://chain.com).
 
 You can try out Ivy using the [Ivy Playground for Bitcoin](https://ivy-lang.org/bitcoin), which allows you to create test contracts and try spending them, all in a sandboxed environment.
 
