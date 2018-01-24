@@ -84,12 +84,12 @@ export type PrimaryInputType =
   | "bytesInput"
   | "hashInput"
   | "publicKeyInput"
-  | "numberInput"
   | "booleanInput"
   | "durationInput"
   | "timeInput"
   | "signatureInput"
   | "valueInput"
+  | "numberInput"
 
 export type InputContext =
   | "contractParameters"
@@ -368,6 +368,8 @@ export function getInputType(type: ContractParameterType): PrimaryInputType {
   switch (type) {
     case "Boolean":
       return "booleanInput"
+    case "Integer":
+      return "numberInput"
     case "Bytes":
       return "bytesInput"
     case "PublicKey":

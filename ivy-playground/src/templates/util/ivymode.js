@@ -108,7 +108,7 @@ ace.define(
       .TextHighlightRules
     var identifierRe =
       "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*\\b"
-    var typeRe = "PublicKey|Signature|Bytes|Hash|Time|Duration|Boolean|Value"
+    var typeRe = "PublicKey|Signature|Bytes|Hash|Time|Duration|Boolean|Integer|Value"
 
     var IvyHighlightRules = function(options) {
       var keywordMapper = this.createKeywordMapper(
