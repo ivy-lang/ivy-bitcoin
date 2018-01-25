@@ -25,7 +25,6 @@ describe("compile", () => {
       const contractSource = TEST_CASES[name]
       const compiled = compile(contractSource)
       expect((compiled as CompilerError).message).to.equal(undefined) // so it prints the error
-      console.log((compiled as Template).instructions)
     })
   })
   Object.keys(ERRORS).forEach(errorName => {
