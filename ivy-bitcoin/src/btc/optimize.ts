@@ -1,4 +1,4 @@
-function optimizeLast(instructions: string[]): string[] {
+function optimizeLast(instructions: string[], endInstructions: string[] = []): string[] {
   const lastInstructions: string[] = []
   let lastInstruction = ""
   for (const inst of instructions) {
@@ -12,13 +12,14 @@ function optimizeLast(instructions: string[]): string[] {
   const allSame = lastInstructions.every(inst => inst === oneInstruction)
   if (allSame) {
     const instructionsString = " " + instructions.join(" ")
-    return instructionsString
-      .replace(` ${oneInstruction} ELSE`, " ELSE")
+    const optimizedInstructions = instructionsString
+      .replace(new RegExp(` ${oneInstruction} ELSE`, 'g'), " ELSE")
       .replace(` ${oneInstruction} ENDIF`, " ENDIF")
-      .replace(/ENDIF$/g, "ENDIF " + oneInstruction)
       .slice(1).split(" ")
+    endInstructions.unshift(oneInstruction)
+    return optimizeLast(optimizedInstructions, endInstructions)
   }
-  return instructions
+  return instructions.concat(endInstructions)
 }
 
 export function optimize(instructions: string[]): string[] {
