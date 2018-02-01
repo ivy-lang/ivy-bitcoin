@@ -1,3 +1,26 @@
+function optimizeLast(instructions: string[]): string[] {
+  const lastInstructions: string[] = []
+  let lastInstruction = ""
+  for (const inst of instructions) {
+    if (inst === "ELSE" || inst === "ENDIF") {
+      lastInstructions.push(lastInstruction)
+    }
+    lastInstruction = inst
+  }
+
+  const oneInstruction = lastInstructions[0]
+  const allSame = lastInstructions.every(inst => inst === oneInstruction)
+  if (allSame) {
+    const instructionsString = " " + instructions.join(" ")
+    return instructionsString
+      .replace(` ${oneInstruction} ELSE`, " ELSE")
+      .replace(` ${oneInstruction} ENDIF`, " ENDIF")
+      .replace(/ENDIF$/g, "ENDIF " + oneInstruction)
+      .slice(1).split(" ")
+  }
+  return instructions
+}
+
 export function optimize(instructions: string[]): string[] {
   const instructionsString = " " + instructions.join(" ")
   const optimizedInstructions = instructionsString
@@ -26,5 +49,12 @@ export function optimize(instructions: string[]): string[] {
     .replace(/ (EQUAL|CHECKSIG|CHECKMULTISIG) VERIFY/g, " $1VERIFY")
     .replace(/ SHA256 RIPEMD160/g, " HASH160")
     .replace(/ SHA256 SHA256/g, " HASH256")
-  return optimizedInstructions.slice(1).split(" ")
+    .slice(1).split(" ")
+
+  // detect identical final instructions
+  if (optimizedInstructions[optimizedInstructions.length - 1] === "ENDIF") {
+    return optimizeLast(optimizedInstructions)
+  }
+
+  return optimizedInstructions
 }
