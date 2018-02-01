@@ -61,8 +61,8 @@ export const DEMO_CONTRACTS = {
 }`,
   LockUntil: `contract LockUntil(publicKey: PublicKey, time: Time, val: Value) {
   clause spend(sig: Signature) {
-    verify checkSig(publicKey, sig)
     verify after(time)
+    verify checkSig(publicKey, sig)
     unlock val
   }
 }`,
@@ -85,8 +85,8 @@ export const DEMO_CONTRACTS = {
     unlock val
   }
   clause timeout(senderSig: Signature) {
-    verify checkSig(sender, senderSig)
     verify after(timeout)
+    verify checkSig(sender, senderSig)
     unlock val
   }
 }`,
