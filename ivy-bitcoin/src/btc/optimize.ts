@@ -2,7 +2,7 @@ function optimizeLast(instructions: string[]): string[] {
   const lastInstructions: string[] = []
   let lastInstruction = ""
   for (const inst of instructions) {
-    if (inst === "ELSE" || inst === "ENDIF") {
+    if (inst === "ELSE" || (inst === "ENDIF" && lastInstruction !== "ENDIF")) {
       lastInstructions.push(lastInstruction)
     }
     lastInstruction = inst
