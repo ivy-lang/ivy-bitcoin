@@ -22,7 +22,7 @@ These contracts demonstrate the following conditions supported by Bitcoin Script
 
 * Checking that the cryptographic hash of a string or public key is equal to a prespecified hash (see [LockWithPublicKeyHash](#lockwithpublickeyhash), [RevealCollision](#revealcollision), [RevealPreimage](#revealpreimage), [RevealFixedPoint](#revealfixedpoint))
 
-* Waiting until after a specified block height or block time (see [LockUntil](#lockuntil), [TransferWithTimeout](#transferwithtimeout)
+* Waiting until after a specified block height or block time (see [LockUntil](#lockuntil), [TransferWithTimeout](#transferwithtimeout))
 
 * Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](#lockdelay),  [EscrowWithDelay](#escrowwithdelay)), [VaultSpend](#vaultspend))
 
