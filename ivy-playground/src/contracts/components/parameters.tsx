@@ -34,7 +34,7 @@ import {
   getShowLockInputErrors
 } from "../../templates/selectors"
 
-import RadioSelect from "../../app/components/radioSelect"
+import RadioSelect from "../../app/components/radioselect"
 import {
   BlockheightTimeInput,
   BlocksDurationInput,
