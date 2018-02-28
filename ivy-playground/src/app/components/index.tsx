@@ -1,5 +1,5 @@
 import NavBar from "./navbar"
-import RadioSelect from "./radioSelect"
+import RadioSelect from "./radioselect"
 import Reset from "./reset"
 import Root from "./root"
 import Section from "./section"
