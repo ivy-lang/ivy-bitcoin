@@ -50,11 +50,12 @@
     "webpack-dev-server": "^2.9.3"
   },
   "license": "MIT",
-  "main": "src/index.tsx",
+  "main": "lib/index.js",
   "repository": "ivy-lang/ivy-bitcoin",
   "scripts": {
     "build": "tsc",
-    "deploy": "npm run build && aws s3 cp public s3://ivy-lang.org/static --recursive",
+    "deploy":
+      "npm run build && aws s3 cp public s3://ivy-lang.org/static --recursive",
     "start": "webpack-dev-server --content-base public --inline --hot",
     "test": ""
   }
