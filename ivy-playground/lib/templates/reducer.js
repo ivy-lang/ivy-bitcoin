@@ -43,7 +43,6 @@ export default function reducer(state = INITIAL_STATE, action) {
         case UPDATE_ERROR: {
             return Object.assign({}, state, { compiled: undefined, error: action.error });
         }
-        case "@@INIT":
         case UPDATE_COMPILED: {
             const compiled = action.compiled;
             const inputMap = generateInputMap(compiled);

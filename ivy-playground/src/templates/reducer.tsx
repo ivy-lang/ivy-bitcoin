@@ -85,7 +85,6 @@ export default function reducer(
         error: action.error
       }
     }
-    case "@@INIT":
     case UPDATE_COMPILED: {
       const compiled = action.compiled
       const inputMap = generateInputMap(compiled)
