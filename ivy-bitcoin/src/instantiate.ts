@@ -1,6 +1,13 @@
 import { Template } from "./template"
 
-import { Address, MTX as Mtx, Opcode, Outpoint, Script } from "bcoin"
+import {
+  Address,
+  httpWallet,
+  MTX as Mtx,
+  Opcode,
+  Outpoint,
+  Script
+} from "bcoin"
 import * as crypto from "bcrypto"
 import { BugError } from "./errors"
 
@@ -17,6 +24,7 @@ export interface Contract {
   redeemScript: string
   scriptSig: string
   testnetAddress: string
+  mainnetAddress: string
   publicKey?: string
   fundingTransaction?: TransactionJSON
   amount: number
@@ -88,6 +96,21 @@ function createFundingTransaction(
   return tx.toJSON()
 }
 
+export async function sendFundingTransaction(
+  address: string,
+  amount: number,
+  client: any
+): Promise<TransactionJSON> {
+  return await client.send("primary", {
+    outputs: [
+      {
+        address,
+        value: amount
+      }
+    ]
+  })
+}
+
 export function argToPushData(arg: Buffer | number | string) {
   if (typeof arg === "number") {
     return Opcode.fromInt(arg)
@@ -146,22 +169,21 @@ export function instantiate(
     "testnet"
   )
   const mainnetAddress = Address.fromScripthash(redeemScript.hash160())
-  const tx = createFundingTransaction(testnetAddress, valueArgs, seed)
-  // if (tx === undefined) {
-  //   throw new Error(
-  //     "expected tx to not be undefined when called in instantiate"
-  //   )
-  // }
+  const fundingTransaction = createFundingTransaction(
+    testnetAddress,
+    valueArgs,
+    seed
+  )
   const instantiated = {
     witnessScript: witnessScript.toJSON(),
     redeemScript: redeemScript.toJSON(),
     scriptSig: scriptSig.toJSON(),
     testnetAddress: testnetAddress.toBase58(),
     mainnetAddress: mainnetAddress.toBase58(),
+    fundingTransaction,
     publicKey: witnessScript.isPubkey()
       ? (args[0] as Buffer).toString("hex")
       : undefined,
-    fundingTransaction: tx,
     amount: valueArgs.reduce((a, b) => a + b, 0),
     template
   }

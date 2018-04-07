@@ -13,7 +13,11 @@ import {
   getSource
 } from "../templates/selectors"
 
-import { compile } from "ivy-bitcoin"
+import { compile, sendFundingTransaction } from "ivy-bitcoin"
+
+import { bwalletClient } from "@bpanel/bpanel-utils"
+
+import { WalletClient } from "bclient"
 
 // internal imports
 import {
@@ -23,6 +27,8 @@ import {
   getSpendContract,
   getSpendContractId
 } from "./selectors"
+
+import { Contract } from "ivy-bitcoin"
 
 export const SHOW_UNLOCK_INPUT_ERRORS = "contracts/SHOW_UNLOCK_INPUT_ERRORS"
 
@@ -45,11 +51,26 @@ export const updateError = (error?) => {
 export const CREATE_CONTRACT = "contracts/CREATE_CONTRACT"
 
 export const create = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState()
     const inputMap = getInputMap(state)
     const template = getCompiled(state)
-    const instantiated = getInstantiated(state)
+    const partialInstantiated = getInstantiated(state)
+    if (partialInstantiated === undefined) {
+      throw new Error("instantiated unexpectedly undefined")
+    }
+    const client = new WalletClient({ port: 5000, path: "/bwallet" })
+    console.log("client", client)
+    const fundingTransaction = await sendFundingTransaction(
+      partialInstantiated.testnetAddress,
+      partialInstantiated.amount,
+      client
+    )
+    console.log(fundingTransaction)
+    const instantiated: Contract = {
+      fundingTransaction,
+      ...partialInstantiated
+    }
     dispatch({
       type: CREATE_CONTRACT,
       instantiated,
