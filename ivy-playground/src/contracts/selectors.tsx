@@ -20,6 +20,10 @@ import {
   isValidInput
 } from "../inputs/data"
 
+import {
+  getAppState
+} from '../app/selectors'
+
 import { createSignature, fulfill, spend, toSighash } from "ivy-bitcoin"
 
 // internal imports
@@ -27,7 +31,10 @@ import { Contract, ContractMap, ContractsState } from "./types"
 
 import { SPEND_CONTRACT } from "./actions"
 
-export const getState = (state: AppState): ContractsState => state.contracts
+export const getState = createSelector(
+  getAppState,
+  (state: AppState): ContractsState => state.contracts
+)
 
 export const getContractIds = createSelector(
   getState,

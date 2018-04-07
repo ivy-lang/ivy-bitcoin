@@ -26,6 +26,7 @@
     "react": "16.0.0",
     "react-ace": "5.5.0",
     "react-bootstrap": "^0.31.5",
+    "react-datetime": "github:danrobinson/react-datetime",
     "react-document-title": "^2.0.2",
     "react-dom": "16.0.0",
     "react-redux": "^5.0.6",
@@ -53,7 +54,10 @@
   "main": "ivy-playground/lib/index.js",
   "repository": "ivy-lang/ivy-bitcoin",
   "scripts": {
-    "build": "cd ivy-playground && tsc && cp -a src/static lib/static && mkdir -p lib/templates/util && cp src/templates/util/ivymode.js lib/templates/util/ivymode.js && cd ..",
+    "compile-typescript": "cd ivy-playground && tsc && cp -a src/static lib/static && mkdir -p lib/templates/util && cp src/templates/util/ivymode.js lib/templates/util/ivymode.js && cd ..",
+    "compile-webpack": "cd ivy-playground && webpack --config webpack.production.config.js",
+    "deploy": "npm run compile-webpack && aws s3 cp ivy-playground/public s3://ivy-lang.org/static --recursive",
+    "start": "cd ivy-playground && webpack-dev-server --content-base public --inline --hot",
     "test": ""
   }
 }

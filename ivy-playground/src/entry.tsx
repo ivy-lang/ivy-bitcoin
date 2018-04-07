@@ -37,24 +37,21 @@ const store = createStore(
   )
 )
 
-export const IvyProvider = () => (<Provider store={store}>
-<DocumentTitle title="Ivy Playground for Bitcoin">
-  <ConnectedRouter history={history}>
-    <app.components.Root>
-      <Switch>
-        <Route exact path={"/unlock"} component={LockedValue} />
-        <Route path={"/unlock/:contractId"} component={Unlock} />
-        <Route path={"*"} component={Lock} />
-      </Switch>
-    </app.components.Root>
-  </ConnectedRouter>
-</DocumentTitle>
-</Provider>)
-
-
 const selected = templates.selectors.getSelectedTemplate(store.getState())
 store.dispatch(templates.actions.loadTemplate(selected) as any)
 render(
-  <IvyProvider />,
+  <Provider store={store}>
+    <DocumentTitle title="Ivy Playground for Bitcoin">
+      <ConnectedRouter history={history}>
+        <app.components.Root>
+          <Switch>
+            <Route exact path={"/unlock"} component={LockedValue} />
+            <Route path={"/unlock/:contractId"} component={Unlock} />
+            <Route path={"*"} component={Lock} />
+          </Switch>
+        </app.components.Root>
+      </ConnectedRouter>
+    </DocumentTitle>
+  </Provider>,
   document.getElementById("root")
 )

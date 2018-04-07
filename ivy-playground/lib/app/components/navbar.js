@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 // internal imports
 import Reset from "./reset";
+import { getAppState } from "../../app/selectors";
 const logo = require("../../static/images/logo.png");
 const mapStateToProps = state => {
-    const location = state.routing.location;
+    const location = getAppState(state).routing.location;
     if (!location) {
         return { path: "lock" };
     }
