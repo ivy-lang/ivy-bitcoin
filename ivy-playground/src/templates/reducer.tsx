@@ -85,6 +85,7 @@ export default function reducer(
         error: action.error
       }
     }
+    case "ADD_PLUGIN":
     case UPDATE_COMPILED: {
       const compiled = action.compiled
       const inputMap = generateInputMap(compiled)
