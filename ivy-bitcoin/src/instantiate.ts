@@ -1,13 +1,7 @@
 import { Template } from "./template"
 
-import {
-  address as Address,
-  crypto,
-  mtx as Mtx,
-  opcode as Opcode,
-  outpoint as Outpoint,
-  script as Script
-} from "bcoin"
+import { Address, MTX as Mtx, Opcode, Outpoint, Script } from "bcoin"
+import * as crypto from "bcrypto"
 import { BugError } from "./errors"
 
 interface ScriptObject {

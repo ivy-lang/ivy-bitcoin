@@ -1,12 +1,13 @@
 {
   "name": "ivy-bitcoin",
   "description": "Compiler for Ivy, Chain's smart contract language.",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "homepage": "https://www.github.com/ivy-lang/ivy-bitcoin",
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "bcoin": "danrobinson/bcoin#compat",
+    "bcoin": "bcoin-org/bcoin",
+    "bcrypto": "github:bcoin-org/bcrypto",
     "level-js": "^2.2.4"
   },
   "devDependencies": {

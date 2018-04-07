@@ -3,18 +3,19 @@ import { Template } from "./template"
 import { Contract, Transaction } from "./instantiate"
 
 import {
-  address as Address,
-  crypto,
-  keyring,
-  mtx as Mtx,
-  opcode as Opcode,
-  outpoint as Outpoint,
-  script as Script,
-  tx as Tx,
-  witness as Witness
+  Address,
+  KeyRing as keyring,
+  MTX as Mtx,
+  Opcode,
+  Outpoint,
+  Script,
+  TX as Tx,
+  Witness
 } from "bcoin"
 
-import { fromSecret, sign } from "./crypto"
+import * as crypto from "bcrypto"
+
+import { KeyRing, sign } from "./crypto"
 
 export const toSighash = (
   instantiated: Contract,
@@ -103,8 +104,9 @@ const sigHashType = Buffer.from([1])
 export const createSignature = (sigHash: Buffer, secret: string) => {
   let privKey
   try {
-    privKey = fromSecret(secret).getPrivateKey()
+    privKey = KeyRing.fromSecret(secret).getPrivateKey()
   } catch (e) {
+    console.log(e)
     return undefined
   }
   const sig = sign(sigHash, privKey) as Buffer

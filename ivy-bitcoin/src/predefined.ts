@@ -1,6 +1,6 @@
 // Predefined contract templates
 
-import { opcode as Opcode } from "bcoin"
+import { Opcode } from "bcoin"
 import { compile } from "./compile"
 import { instantiate } from "./instantiate"
 import { spend } from "./spend"

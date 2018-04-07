@@ -1,4 +1,4 @@
-import { hd, keyring } from "bcoin"
+import { hd, KeyRing } from "bcoin"
 import * as crypto from "bcrypto"
 
 export const sha1 = crypto.sha1
@@ -8,6 +8,4 @@ export const sign = crypto.secp256k1.signDER
 export const fromDER = crypto.secp256k1.fromDER
 export const randomBytes = crypto.randomBytes
 export const privateKey = hd.PrivateKey
-export const fromSecret = keyring.fromSecret
-export const fromPublic = keyring.fromPublic
-export const fromPrivate = keyring.fromPrivate
+export { KeyRing }
