@@ -87,7 +87,7 @@ export function validateInput(input) {
         case "generatePrivateKeyInput":
         case "providePrivateKeyInput":
             try {
-                const kr = crypto.fromSecret(input.value);
+                const kr = crypto.KeyRing.fromSecret(input.value);
                 return true;
             }
             catch (e) {
@@ -104,7 +104,7 @@ export function validateInput(input) {
         case "providePublicKeyInput":
             try {
                 const buf = Buffer.from(input.value, "hex");
-                const kr = crypto.fromPublic(buf);
+                const kr = crypto.KeyRing.fromPublic(buf);
                 return true;
             }
             catch (e) {
@@ -276,7 +276,7 @@ export function getData(inputId, inputsById, sigHash) {
 }
 export function getPublicKeyValue(inputId, inputsById) {
     const privateKeyValue = getPrivateKeyValue(inputId, inputsById);
-    const kr = crypto.fromSecret(privateKeyValue);
+    const kr = crypto.KeyRing.fromSecret(privateKeyValue);
     return kr.getPublicKey("hex");
 }
 export function getPrivateKeyValue(inputId, inputsById) {
@@ -308,7 +308,7 @@ function getGenerateAddressValue(inputId, inputsById) {
     if (privateKeyInput === undefined) {
         throw new Error("private key input unexpectedly missing");
     }
-    const kr = crypto.fromSecret(privateKeyInput.value);
+    const kr = crypto.KeyRing.fromSecret(privateKeyInput.value);
     return kr.getAddress("base58");
 }
 export function computeDataForInput(inputId, inputsById) {
@@ -350,7 +350,7 @@ export function getDefaultContractParameterValue(inputType) {
             return "";
         case "generatePrivateKeyInput":
             const key = crypto.privateKey.generate();
-            const kr = crypto.fromPrivate(key.privateKey);
+            const kr = crypto.KeyRing.fromPrivate(key.privateKey);
             return kr.toSecret();
         case "bytesInput":
             return "generateBytesInput";
@@ -421,7 +421,7 @@ export function getDefaultClauseParameterValue(inputType) {
             return "";
         case "generatePrivateKeyInput":
             const key = crypto.privateKey.generate();
-            const kr = crypto.fromPrivate(key.privateKey);
+            const kr = crypto.KeyRing.fromPrivate(key.privateKey);
             return kr.toSecret();
         case "bytesInput":
             return "provideBytesInput";
