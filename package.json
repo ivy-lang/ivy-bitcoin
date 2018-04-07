@@ -53,7 +53,7 @@
   "main": "ivy-playground/lib/index.js",
   "repository": "ivy-lang/ivy-bitcoin",
   "scripts": {
-    "build": "cd ivy-playground && tsc && mkdir -p lib/templates/util && cp src/templates/util/ivymode.js lib/templates/util/ivymode.js && cd ..",
+    "build": "cd ivy-playground && tsc && cp -a src/static lib/static && mkdir -p lib/templates/util && cp src/templates/util/ivymode.js lib/templates/util/ivymode.js && cd ..",
     "test": ""
   }
 }

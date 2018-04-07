@@ -2,4 +2,6 @@ import reducer from "./app/reducer"
 
 import Root from "./app/components/root"
 
-export { reducer, Root }
+import { IvyProvider } from "./entry"
+
+export { reducer, Root, IvyProvider }
