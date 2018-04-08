@@ -9,8 +9,8 @@ import { Bytecode } from "./opcodes";
 import { getContractParameters, getError, getInstantiated, getSource } from "../selectors";
 import Editor from "./editor";
 import LockButton from "./lockButton";
-// import css
-import '../../static/playground.css';
+// import ivy-plugin css
+import '../../static/ivy-plugin.css';
 const mapStateToProps = state => {
     const source = getSource(state);
     const contractParameters = getContractParameters(state);

@@ -20,8 +20,8 @@ import {
 import Editor from "./editor"
 import LockButton from "./lockButton"
 
-// import css
-import '../../static/playground.css'
+// import ivy-plugin css
+import '../../static/ivy-plugin.css'
 
 const mapStateToProps = state => {
   const source = getSource(state)

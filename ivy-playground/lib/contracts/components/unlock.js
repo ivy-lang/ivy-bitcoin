@@ -13,6 +13,8 @@ import { DisplayInstructions, DisplaySpendContract } from "./display";
 import { ClauseParameters } from "./parameters";
 import UnlockButton from "./unlockButton";
 import { TransactionDetails } from "./transactionDetailInputs";
+// import ivy-plugin css
+import '../../static/ivy-plugin.css';
 const mapStateToProps = state => {
     const error = getError(state);
     const map = getContractMap(state);
