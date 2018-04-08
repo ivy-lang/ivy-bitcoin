@@ -27,6 +27,6 @@ render(React.createElement(Provider, { store: store },
         React.createElement(ConnectedRouter, { history: history },
             React.createElement(app.components.Root, null,
                 React.createElement(Switch, null,
-                    React.createElement(Route, { exact: true, path: "/unlock", component: LockedValue }),
-                    React.createElement(Route, { path: "/unlock/:contractId", component: Unlock }),
+                    React.createElement(Route, { exact: true, path: "/ivy-plugin-view", component: LockedValue }),
+                    React.createElement(Route, { path: "/ivy-plugin-view/:contractId", component: Unlock }),
                     React.createElement(Route, { path: "*", component: Lock })))))), document.getElementById("root"));

@@ -42,7 +42,7 @@ export default connect(state => ({
 
 const UnlockButton = (props: { contractId: string }) => {
   return (
-    <Link to={"/unlock/" + props.contractId}>
+    <Link to={"/ivy-plugin-view/" + props.contractId}>
       <button className="btn btn-primary">Unlock</button>
     </Link>
   )

@@ -200,7 +200,7 @@ export default function reducer(
         return state
       }
       const pathId = path.pop()
-      if (path.pop() === "unlock") {
+      if (path.pop() === "ivy-plugin-view") {
         return {
           ...state,
           spendContractId: pathId,

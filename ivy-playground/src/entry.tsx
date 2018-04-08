@@ -45,8 +45,8 @@ render(
       <ConnectedRouter history={history}>
         <app.components.Root>
           <Switch>
-            <Route exact path={"/unlock"} component={LockedValue} />
-            <Route path={"/unlock/:contractId"} component={Unlock} />
+            <Route exact path={"/ivy-plugin-view"} component={LockedValue} />
+            <Route path={"/ivy-plugin-view/:contractId"} component={Unlock} />
             <Route path={"*"} component={Lock} />
           </Switch>
         </app.components.Root>

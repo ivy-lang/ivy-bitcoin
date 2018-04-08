@@ -104,9 +104,8 @@ export const create = () => {
       dispatch(timeoutLockError())
       return
     }
-    const withdrawalAddress = "whatever"// account.receiveAddress
+    const withdrawalAddress = account.receiveAddress
     const instantiated: Contract = {
-      fundingTransaction,
       ...partialInstantiated
     }
     dispatch({
@@ -116,7 +115,7 @@ export const create = () => {
       inputMap,
       withdrawalAddress
     })
-    dispatch(push("/unlock"))
+    dispatch(push("/ivy-plugin-view"))
   }
 }
 
@@ -146,7 +145,7 @@ export const spend = () => {
       // console.log(result)
     }
 
-    dispatch(push("/unlock"))
+    dispatch(push("/ivy-plugin-view"))
   }
 }
 
