@@ -82,18 +82,19 @@ export const create = () => {
       client
     )
     const account = await client.createAccount("primary", "ivy", { witness: true })
+    const withdrawalAddress = account.receiveAddress
     console.log(account)
     console.log(fundingTransaction)
-    const instantiated = {
+    const instantiated: Contract = {
       fundingTransaction,
-      withdrawAddress: account.receiveAddress,
       ...partialInstantiated
     }
     dispatch({
       type: CREATE_CONTRACT,
       instantiated,
       template,
-      inputMap
+      inputMap,
+      withdrawalAddress
     })
     dispatch(push("/unlock"))
   }

@@ -113,6 +113,7 @@ export default function reducer(
         throw new Error("did not expect funding transaction to be undefined")
       }
       const template: Template = action.template
+      const withdrawAddress: string = action.withdrawAddress
       const spendInputMap = generateSpendInputMap(template)
       const clauseNames = template.clauses.map(clause => clause.name)
       const clauseMap = generateClauseMap(template)
@@ -123,7 +124,8 @@ export default function reducer(
         spendInputMap,
         unlockTxid: undefined,
         clauseMap,
-        instantiated
+        instantiated,
+        withdrawAddress
       }
       const contractId = contract.id
       return {

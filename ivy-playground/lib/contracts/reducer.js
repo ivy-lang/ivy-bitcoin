@@ -51,6 +51,7 @@ export default function reducer(state = INITIAL_STATE, action) {
                 throw new Error("did not expect funding transaction to be undefined");
             }
             const template = action.template;
+            const withdrawAddress = action.withdrawAddress;
             const spendInputMap = generateSpendInputMap(template);
             const clauseNames = template.clauses.map(clause => clause.name);
             const clauseMap = generateClauseMap(template);
@@ -61,7 +62,8 @@ export default function reducer(state = INITIAL_STATE, action) {
                 spendInputMap,
                 unlockTxid: undefined,
                 clauseMap,
-                instantiated
+                instantiated,
+                withdrawAddress
             };
             const contractId = contract.id;
             return Object.assign({}, state, { contractMap: Object.assign({}, state.contractMap, { [contractId]: contract }), idList: [...state.idList, contractId] });

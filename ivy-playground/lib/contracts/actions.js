@@ -52,14 +52,16 @@ export const create = () => {
         console.log("client", client);
         const fundingTransaction = yield sendFundingTransaction(partialInstantiated.simnetAddress, partialInstantiated.amount, client);
         const account = yield client.createAccount("primary", "ivy", { witness: true });
+        const withdrawalAddress = account.receiveAddress;
         console.log(account);
         console.log(fundingTransaction);
-        const instantiated = Object.assign({ fundingTransaction, withdrawAddress: account.receiveAddress }, partialInstantiated);
+        const instantiated = Object.assign({ fundingTransaction }, partialInstantiated);
         dispatch({
             type: CREATE_CONTRACT,
             instantiated,
             template,
-            inputMap
+            inputMap,
+            withdrawalAddress
         });
         dispatch(push("/unlock"));
     });

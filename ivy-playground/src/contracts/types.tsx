@@ -22,6 +22,8 @@ export interface Contract {
     [s: string]: TemplateClause
   }
   instantiated: IvyContract
+
+  withdrawAddress: string
 }
 
 export interface ContractMap {

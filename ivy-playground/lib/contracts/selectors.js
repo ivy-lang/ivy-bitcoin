@@ -67,8 +67,8 @@ export const getClauseParameterIds = createSelector(getClauseName, getClausePara
 });
 export const getInstantiated = createSelector(getSpendContract, contract => contract.instantiated);
 export const getSpendSourceTransaction = createSelector(getSpendContract, spendContract => spendContract.instantiated.fundingTransaction);
-export const getSpendDestinationAddress = createSelector(getSpendInputMap, spendingInputsById => {
-    return ""; // getAddressValue(spendingInputsById)
+export const getSpendDestinationAddress = createSelector(getSpendContract, spendContract => {
+    return spendContract.withdrawAddress;
 });
 export const getSpendingLocktime = createSelector(getSpendInputMap, spendInputMap => {
     try {

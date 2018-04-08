@@ -172,9 +172,9 @@ export const getSpendSourceTransaction = createSelector(
 )
 
 export const getSpendDestinationAddress = createSelector(
-  getSpendInputMap,
-  spendingInputsById => {
-    return "" // getAddressValue(spendingInputsById)
+  getSpendContract,
+  spendContract => {
+    return spendContract.withdrawAddress
   }
 )
 
