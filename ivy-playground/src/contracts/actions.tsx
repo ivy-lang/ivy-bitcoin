@@ -126,7 +126,7 @@ export const create = () => {
       dispatch(timeoutLockError())
       return
     }
-    const tx = await client.getTX(fundingTransaction.hash)
+    const tx = await client.getTX("primary", fundingTransaction.hash)
 
     const withdrawalAddress = account.receiveAddress
     dispatch({

@@ -101,7 +101,7 @@ export const create = () => {
             dispatch(timeoutLockError());
             return;
         }
-        const tx = yield client.getTX(fundingTransaction.hash);
+        const tx = yield client.getTX("primary", fundingTransaction.hash);
         const withdrawalAddress = account.receiveAddress;
         dispatch({
             type: CREATE_CONTRACT,
