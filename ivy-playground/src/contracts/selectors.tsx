@@ -20,6 +20,8 @@ import {
   isValidInput
 } from "../inputs/data"
 
+import { static as Immutable } from "seamless-immutable"
+
 import { getAppState } from "../app/selectors"
 
 import { createSignature, fulfill, spend, toSighash } from "ivy-bitcoin"
@@ -319,10 +321,11 @@ export const getFulfilledSpendTransaction = createSelector(
     ) {
       return undefined
     }
+    
     const spendTransaction = fulfill(
       instantiated,
       unfulfilledSpendTransaction,
-      witnessArgs,
+      Immutable.asMutable(witnessArgs, { deep: true }),
       spendClauseArgument
     )
     return spendTransaction

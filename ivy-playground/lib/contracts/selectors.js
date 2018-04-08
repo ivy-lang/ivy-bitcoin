@@ -1,6 +1,7 @@
 // external imports
 import { createSelector } from "reselect";
 import { addParameterInput, getData, getPrivateKeyValue, getSequence } from "../inputs/data";
+import { static as Immutable } from "seamless-immutable";
 import { getAppState } from "../app/selectors";
 import { createSignature, fulfill, spend, toSighash } from "ivy-bitcoin";
 export const getState = createSelector(getAppState, (state) => state.contracts);
@@ -132,7 +133,7 @@ export const getFulfilledSpendTransaction = createSelector(getInstantiated, getS
         witnessArgs === undefined) {
         return undefined;
     }
-    const spendTransaction = fulfill(instantiated, unfulfilledSpendTransaction, witnessArgs, spendClauseArgument);
+    const spendTransaction = fulfill(instantiated, unfulfilledSpendTransaction, Immutable.asMutable(witnessArgs, { deep: true }), spendClauseArgument);
     return spendTransaction;
 });
 export function getSpendInput(state, id) {
