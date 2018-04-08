@@ -20,9 +20,7 @@ import {
   isValidInput
 } from "../inputs/data"
 
-import {
-  getAppState
-} from '../app/selectors'
+import { getAppState } from "../app/selectors"
 
 import { createSignature, fulfill, spend, toSighash } from "ivy-bitcoin"
 

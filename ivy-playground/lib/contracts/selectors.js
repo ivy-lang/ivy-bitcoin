@@ -1,7 +1,7 @@
 // external imports
 import { createSelector } from "reselect";
 import { addParameterInput, getData, getPrivateKeyValue, getSequence } from "../inputs/data";
-import { getAppState } from '../app/selectors';
+import { getAppState } from "../app/selectors";
 import { createSignature, fulfill, spend, toSighash } from "ivy-bitcoin";
 export const getState = createSelector(getAppState, (state) => state.contracts);
 export const getContractIds = createSelector(getState, (state) => state.idList);

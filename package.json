@@ -19,6 +19,7 @@
     "brace": "^0.10.0",
     "css-loader": "^0.28.1",
     "file-loader": "~0.9.0",
+    "ivy-bitcoin": "~0.0.19",
     "json-loader": "^0.5.4",
     "moment": "^2.19.1",
     "pegjs": "^0.10.0",
@@ -56,10 +57,14 @@
   "main": "ivy-playground/lib/index.js",
   "repository": "ivy-lang/ivy-bitcoin",
   "scripts": {
-    "compile-typescript": "cd ivy-playground && tsc && cp -a src/static lib/static && mkdir -p lib/templates/util && cp src/templates/util/ivymode.js lib/templates/util/ivymode.js && cd ..",
-    "compile-webpack": "cd ivy-playground && webpack --config webpack.production.config.js",
-    "deploy": "npm run compile-webpack && aws s3 cp ivy-playground/public s3://ivy-lang.org/static --recursive",
-    "start": "cd ivy-playground && webpack-dev-server --content-base public --inline --hot",
+    "compile-typescript":
+      "cd ivy-playground && tsc && cp -a src/static lib/static && mkdir -p lib/templates/util && cp src/templates/util/ivymode.js lib/templates/util/ivymode.js && cd ..",
+    "compile-webpack":
+      "cd ivy-playground && webpack --config webpack.production.config.js",
+    "deploy":
+      "npm run compile-webpack && aws s3 cp ivy-playground/public s3://ivy-lang.org/static --recursive",
+    "start":
+      "cd ivy-playground && webpack-dev-server --content-base public --inline --hot",
     "test": ""
   }
 }

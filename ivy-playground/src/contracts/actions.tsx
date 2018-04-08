@@ -13,11 +13,11 @@ import {
   getSource
 } from "../templates/selectors"
 
-import { compile, sendFundingTransaction } from "ivy-bitcoin"
+import { compile } from "ivy-bitcoin"
 
 import { bwalletClient } from "@bpanel/bpanel-utils"
 
-import { WalletClient } from "bclient"
+import { NodeClient, WalletClient } from "bclient"
 
 // internal imports
 import {
@@ -29,6 +29,21 @@ import {
 } from "./selectors"
 
 import { Contract } from "ivy-bitcoin"
+
+export async function sendFundingTransaction(
+  address: string,
+  amount: number,
+  client: any
+): Promise<any> {
+  return await client.send("primary", {
+    outputs: [
+      {
+        address,
+        value: amount
+      }
+    ]
+  })
+}
 
 export const SHOW_UNLOCK_INPUT_ERRORS = "contracts/SHOW_UNLOCK_INPUT_ERRORS"
 
@@ -84,7 +99,7 @@ export const create = () => {
 export const SPEND_CONTRACT = "contracts/SPEND_CONTRACT"
 
 export const spend = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState()
     const contract = getSpendContract(state)
 
@@ -92,7 +107,11 @@ export const spend = () => {
 
     const result = getResult(state)
 
+    const client = new NodeClient({ port: 5000, path: "/bcoin" })
+
     if (result.success) {
+      await client.execute("sendrawtransaction", spendTx.hash())
+
       dispatch({
         type: SPEND_CONTRACT,
         unlockTxid: spendTx.hash("hex"),

@@ -9,10 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // external imports
 import { push } from "react-router-redux";
 import { getCompiled, getInputMap, getInstantiated } from "../templates/selectors";
-import { sendFundingTransaction } from "ivy-bitcoin";
-import { WalletClient } from "bclient";
+import { NodeClient, WalletClient } from "bclient";
 // internal imports
 import { getFulfilledSpendTransaction, getResult, getSpendContract, getSpendContractId } from "./selectors";
+export function sendFundingTransaction(address, amount, client) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield client.send("primary", {
+            outputs: [
+                {
+                    address,
+                    value: amount
+                }
+            ]
+        });
+    });
+}
 export const SHOW_UNLOCK_INPUT_ERRORS = "contracts/SHOW_UNLOCK_INPUT_ERRORS";
 export const showUnlockInputErrors = (result) => {
     return {
@@ -53,12 +64,14 @@ export const create = () => {
 };
 export const SPEND_CONTRACT = "contracts/SPEND_CONTRACT";
 export const spend = () => {
-    return (dispatch, getState) => {
+    return (dispatch, getState) => __awaiter(this, void 0, void 0, function* () {
         const state = getState();
         const contract = getSpendContract(state);
         const spendTx = getFulfilledSpendTransaction(state);
         const result = getResult(state);
+        const client = new NodeClient({ port: 5000, path: "/bcoin" });
         if (result.success) {
+            yield client.execute("sendrawtransaction", spendTx.hash());
             dispatch({
                 type: SPEND_CONTRACT,
                 unlockTxid: spendTx.hash("hex"),
@@ -70,7 +83,7 @@ export const spend = () => {
             // console.log(result)
         }
         dispatch(push("/unlock"));
-    };
+    });
 };
 export const SET_CLAUSE_INDEX = "contracts/SET_CLAUSE_INDEX";
 export const setClauseIndex = (selectedClauseIndex) => {

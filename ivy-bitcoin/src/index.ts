@@ -12,7 +12,7 @@ export {
 
 export { isHash, typeToString, isList, Type, HashFunction } from "./btc/types"
 
-export { instantiate, sendFundingTransaction, Contract, Transaction } from "./instantiate"
+export { instantiate, Contract, Transaction } from "./instantiate"
 
 export { DEMO_CONTRACTS, DEMO_ID_LIST } from "./predefined"
 

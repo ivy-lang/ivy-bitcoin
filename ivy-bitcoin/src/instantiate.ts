@@ -96,21 +96,6 @@ function createFundingTransaction(
   return tx.toJSON()
 }
 
-export async function sendFundingTransaction(
-  address: string,
-  amount: number,
-  client: any
-): Promise<TransactionJSON> {
-  return await client.send("primary", {
-    outputs: [
-      {
-        address,
-        value: amount
-      }
-    ]
-  })
-}
-
 export function argToPushData(arg: Buffer | number | string) {
   if (typeof arg === "number") {
     return Opcode.fromInt(arg)
