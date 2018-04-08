@@ -102,11 +102,13 @@ export const create = () => {
       account = await client.createAccount("primary", "ivy", { witness: true }) 
     }
     let fundingTransaction
+    const network = state.node.node.network
+    const address = network === "simnet" ? instantiated.simnetAddress : (network === "testnet" ? instantiated.testnetAddress : instantiated.mainnetAddress)
     try {
       fundingTransaction = await client.send("primary", {
         outputs: [
           {
-            address: instantiated.simnetAddress,
+            address,
             value: instantiated.amount
           }
         ]
