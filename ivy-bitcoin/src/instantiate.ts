@@ -1,4 +1,3 @@
-import { static as Immutable } from "seamless-immutable"
 import { Template } from "./template"
 
 import {
