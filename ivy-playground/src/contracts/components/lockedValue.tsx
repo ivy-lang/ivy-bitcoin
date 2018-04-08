@@ -20,7 +20,6 @@ import '../../static/ivy-plugin.css'
 
 // import js deps
 import 'bootstrap'
-import $ from 'jquery'
 
 function amountFromSatoshis(amountInSatoshis: number) {
   const amount = amountInSatoshis / 100000000

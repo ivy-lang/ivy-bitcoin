@@ -26,7 +26,6 @@ import '../../static/ivy-plugin.css'
 
 // import js deps
 import 'bootstrap'
-import $ from 'jquery'
 
 const mapStateToProps = state => {
   const source = getSource(state)
