@@ -16,6 +16,8 @@ import { TransactionDetails } from "./transactionDetailInputs";
 // import ivy-plugin css
 import '../../static/bootstrap.css';
 import '../../static/ivy-plugin.css';
+// import js deps
+import 'bootstrap';
 const mapStateToProps = state => {
     const error = getError(state);
     const map = getContractMap(state);

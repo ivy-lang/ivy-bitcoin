@@ -10,6 +10,8 @@ import { getContract, getContractIds, getSpentContractIds } from "../selectors";
 // import ivy-plugin css
 import '../../static/bootstrap.css';
 import '../../static/ivy-plugin.css';
+// import js deps
+import 'bootstrap';
 function amountFromSatoshis(amountInSatoshis) {
     const amount = amountInSatoshis / 100000000;
     return amount;

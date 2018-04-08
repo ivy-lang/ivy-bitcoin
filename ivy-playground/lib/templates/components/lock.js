@@ -12,6 +12,8 @@ import LockButton from "./lockButton";
 // import ivy-plugin css
 import '../../static/bootstrap.css';
 import '../../static/ivy-plugin.css';
+// import js deps
+import 'bootstrap';
 const mapStateToProps = state => {
     const source = getSource(state);
     const contractParameters = getContractParameters(state);
