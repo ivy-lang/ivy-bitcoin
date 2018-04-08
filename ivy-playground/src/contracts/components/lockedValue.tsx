@@ -18,9 +18,6 @@ import { setUnlockContract } from "../actions"
 import '../../static/bootstrap.css'
 import '../../static/ivy-plugin.css'
 
-// import js deps
-import 'bootstrap'
-
 function amountFromSatoshis(amountInSatoshis: number) {
   const amount = amountInSatoshis / 100000000
   return amount
