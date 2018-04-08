@@ -103,11 +103,11 @@ export const create = () => {
             inputMap,
             withdrawalAddress
         });
-        setInterval(() => {
+        setInterval(() => __awaiter(this, void 0, void 0, function* () {
             const nClient = bpanelClient();
-            const tx = nClient.getTX(fundingTransaction.tx);
+            const tx = yield nClient.getTX(fundingTransaction.tx);
             console.log('tx details', tx);
-        }, 5000);
+        }), 5000);
         dispatch(push("/ivy-plugin-view"));
     });
 };
