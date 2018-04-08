@@ -13,6 +13,7 @@ import { getContract, getContractIds, getSpentContractIds } from "../selectors"
 import { Contract } from "../types"
 
 // import ivy-plugin css
+import '../../static/bootstrap.css'
 import '../../static/ivy-plugin.css'
 
 function amountFromSatoshis(amountInSatoshis: number) {

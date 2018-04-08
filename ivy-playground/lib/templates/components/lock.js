@@ -10,6 +10,7 @@ import { getContractParameters, getError, getInstantiated, getSource } from "../
 import Editor from "./editor";
 import LockButton from "./lockButton";
 // import ivy-plugin css
+import '../../static/bootstrap.css';
 import '../../static/ivy-plugin.css';
 const mapStateToProps = state => {
     const source = getSource(state);
