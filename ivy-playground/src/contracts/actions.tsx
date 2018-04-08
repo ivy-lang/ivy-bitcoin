@@ -145,7 +145,7 @@ export const spend = () => {
     const client = bpanelClient()
 
     if (result.success) {
-      await client.execute("sendrawtransaction", spendTx.hash())
+      await client.execute("sendrawtransaction", [spendTx.hash('hex')])
 
       dispatch({
         type: SPEND_CONTRACT,
