@@ -56,12 +56,13 @@ export const create = () => {
             throw new Error("instantiated unexpectedly undefined");
         }
         const client = bwalletClient();
-        // let account
-        // try {
-        //   account = await client.getAccount("primary", "ivy")
-        // } catch(e) {
-        //   account = await client.createAccount("primary", "ivy", { witness: true }) 
-        // }
+        let account;
+        try {
+            account = yield client.getAccount("primary", "ivy");
+        }
+        catch (e) {
+            account = yield client.createAccount("primary", "ivy", { witness: true });
+        }
         let fundingTransaction;
         try {
             fundingTransaction = yield client.send("primary", {
@@ -81,19 +82,16 @@ export const create = () => {
             dispatch(timeoutLockError());
             return;
         }
-        // const withdrawalAddress = "whatever"// account.receiveAddress
-        // const instantiated: Contract = {
-        //   fundingTransaction,
-        //   ...partialInstantiated
-        // }
-        // dispatch({
-        //   type: CREATE_CONTRACT,
-        //   instantiated,
-        //   template,
-        //   inputMap,
-        //   withdrawalAddress
-        // })
-        // dispatch(push("/unlock"))
+        const withdrawalAddress = "whatever"; // account.receiveAddress
+        const instantiated = Object.assign({ fundingTransaction }, partialInstantiated);
+        dispatch({
+            type: CREATE_CONTRACT,
+            instantiated,
+            template,
+            inputMap,
+            withdrawalAddress
+        });
+        dispatch(push("/unlock"));
     });
 };
 export const SPEND_CONTRACT = "contracts/SPEND_CONTRACT";
