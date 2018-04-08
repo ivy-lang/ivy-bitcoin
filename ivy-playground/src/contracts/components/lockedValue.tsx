@@ -23,7 +23,7 @@ const LockedValueDisplay = (props: {
 }) => {
   return (
     <DocumentTitle title="Unlock Contract">
-      <div>
+      <div className="ivy-plugin">
         <LockedValue contractIds={props.contractIds} />
         <History spentContractIds={props.spentContractIds} />
       </div>

@@ -52,7 +52,7 @@ const Lock = ({ source, contractParameters, error, bytecode }) => {
   let instantiate
   if (contractParameters !== undefined) {
     instantiate = (
-      <div>
+      <div className="ivy-plugin">
         {contractParameters.length > 0 ? (
           <Section name="Contract Arguments">
             <div className="form-wrapper">
