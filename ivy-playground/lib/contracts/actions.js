@@ -59,6 +59,9 @@ export const create = () => {
         let account;
         try {
             account = yield client.getAccount("primary", "ivy");
+            if (account === null) {
+                throw new Error("404");
+            }
         }
         catch (e) {
             account = yield client.createAccount("primary", "ivy", { witness: true });

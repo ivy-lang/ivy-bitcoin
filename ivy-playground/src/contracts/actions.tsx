@@ -83,6 +83,9 @@ export const create = () => {
     let account
     try {
       account = await client.getAccount("primary", "ivy")
+      if (account === null) {
+        throw new Error("404")
+      }
     } catch(e) {
       account = await client.createAccount("primary", "ivy", { witness: true }) 
     }

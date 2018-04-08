@@ -31,7 +31,7 @@ const Navbar = (props) => {
                 React.createElement("li", null,
                     React.createElement("a", { href: "https://docs.ivy-lang.org/bitcoin/" }, "Docs")),
                 React.createElement("li", null,
-                    React.createElement(Link, { to: "/ivy-plugin-create" }, "Create Contract")),
+                    React.createElement(Link, { to: "/ivy-plugin-lock" }, "Create Contract")),
                 React.createElement("li", null,
                     React.createElement(Link, { to: "/ivy-plugin-view" }, "Unlock Contract")),
                 React.createElement(Reset, null)))));
