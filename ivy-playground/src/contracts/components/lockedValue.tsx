@@ -12,6 +12,10 @@ import Section from "../../app/components/section"
 import { getContract, getContractIds, getSpentContractIds } from "../selectors"
 import { Contract } from "../types"
 
+// import ivy-plugin css
+import '../../static/bootstrap.css'
+import '../../static/ivy-plugin.css'
+
 function amountFromSatoshis(amountInSatoshis: number) {
   const amount = amountInSatoshis / 100000000
   return amount
@@ -23,7 +27,7 @@ const LockedValueDisplay = (props: {
 }) => {
   return (
     <DocumentTitle title="Unlock Contract">
-      <div>
+      <div className="ivy-plugin">
         <LockedValue contractIds={props.contractIds} />
         <History spentContractIds={props.spentContractIds} />
       </div>

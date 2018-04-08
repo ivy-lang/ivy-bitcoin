@@ -9,8 +9,9 @@ import { Bytecode } from "./opcodes";
 import { getContractParameters, getError, getInstantiated, getSource } from "../selectors";
 import Editor from "./editor";
 import LockButton from "./lockButton";
-// import css
-import '../../static/playground.css';
+// import ivy-plugin css
+import '../../static/bootstrap.css';
+import '../../static/ivy-plugin.css';
 const mapStateToProps = state => {
     const source = getSource(state);
     const contractParameters = getContractParameters(state);
@@ -27,7 +28,7 @@ const ErrorAlert = (props) => {
 const Lock = ({ source, contractParameters, error, bytecode }) => {
     let instantiate;
     if (contractParameters !== undefined) {
-        instantiate = (React.createElement("div", null,
+        instantiate = (React.createElement("div", { className: "ivy-plugin" },
             contractParameters.length > 0 ? (React.createElement(Section, { name: "Contract Arguments" },
                 React.createElement("div", { className: "form-wrapper" },
                     React.createElement(ContractParameters, null)),

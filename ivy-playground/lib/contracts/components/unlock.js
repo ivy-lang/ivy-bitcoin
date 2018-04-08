@@ -13,6 +13,9 @@ import { DisplayInstructions, DisplaySpendContract } from "./display";
 import { ClauseParameters } from "./parameters";
 import UnlockButton from "./unlockButton";
 import { TransactionDetails } from "./transactionDetailInputs";
+// import ivy-plugin css
+import '../../static/bootstrap.css';
+import '../../static/ivy-plugin.css';
 const mapStateToProps = state => {
     const error = getError(state);
     const map = getContractMap(state);
@@ -59,7 +62,7 @@ export const Unlock = ({ error, display, result }) => {
                     React.createElement(UnlockButton, null)))));
     }
     return (React.createElement(DocumentTitle, { title: "Unlock Contract" },
-        React.createElement("div", null,
+        React.createElement("div", { className: "ivy-plugin" },
             React.createElement(Section, { name: "Contract Summary" }, summary),
             details,
             display && React.createElement(TransactionDetails, null),

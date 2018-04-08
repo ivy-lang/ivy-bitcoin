@@ -24,6 +24,10 @@ import UnlockButton from "./unlockButton"
 
 import { TransactionDetails } from "./transactionDetailInputs"
 
+// import ivy-plugin css
+import '../../static/bootstrap.css'
+import '../../static/ivy-plugin.css'
+
 const mapStateToProps = state => {
   const error = getError(state)
   const map = getContractMap(state)
@@ -107,7 +111,7 @@ export const Unlock = ({ error, display, result }) => {
   }
   return (
     <DocumentTitle title="Unlock Contract">
-      <div>
+      <div className="ivy-plugin">
         <Section name="Contract Summary">{summary}</Section>
         {details}
         {display && <TransactionDetails />}

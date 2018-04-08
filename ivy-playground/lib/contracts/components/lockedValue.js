@@ -7,13 +7,16 @@ import { Link } from "react-router-dom";
 import Section from "../../app/components/section";
 // internal imports
 import { getContract, getContractIds, getSpentContractIds } from "../selectors";
+// import ivy-plugin css
+import '../../static/bootstrap.css';
+import '../../static/ivy-plugin.css';
 function amountFromSatoshis(amountInSatoshis) {
     const amount = amountInSatoshis / 100000000;
     return amount;
 }
 const LockedValueDisplay = (props) => {
     return (React.createElement(DocumentTitle, { title: "Unlock Contract" },
-        React.createElement("div", null,
+        React.createElement("div", { className: "ivy-plugin" },
             React.createElement(LockedValue, { contractIds: props.contractIds }),
             React.createElement(History, { spentContractIds: props.spentContractIds }))));
 };

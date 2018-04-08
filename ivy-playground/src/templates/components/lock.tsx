@@ -20,8 +20,9 @@ import {
 import Editor from "./editor"
 import LockButton from "./lockButton"
 
-// import css
-import '../../static/playground.css'
+// import ivy-plugin css
+import '../../static/bootstrap.css'
+import '../../static/ivy-plugin.css'
 
 const mapStateToProps = state => {
   const source = getSource(state)
@@ -52,7 +53,7 @@ const Lock = ({ source, contractParameters, error, bytecode }) => {
   let instantiate
   if (contractParameters !== undefined) {
     instantiate = (
-      <div>
+      <div className="ivy-plugin">
         {contractParameters.length > 0 ? (
           <Section name="Contract Arguments">
             <div className="form-wrapper">
