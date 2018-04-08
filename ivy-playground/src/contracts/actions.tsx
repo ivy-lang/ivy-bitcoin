@@ -81,6 +81,8 @@ export const create = () => {
       partialInstantiated.amount,
       client
     )
+    const account = await client.createAccount("ivy")
+    console.log(account)
     console.log(fundingTransaction)
     const instantiated: Contract = {
       fundingTransaction,
