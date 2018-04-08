@@ -14,7 +14,8 @@ const mapStateToOpcodesProps = state => {
 
 const mapStateToBytecodeProps = state => {
   const instantiated = getInstantiated(state)
-  return { instantiated }
+  const network = state.node.node.network
+  return { instantiated, network }
 }
 
 const OpcodesUnconnected = ({ opcodes }) => {
@@ -27,8 +28,20 @@ const OpcodesUnconnected = ({ opcodes }) => {
 }
 
 const BytecodeUnconnected = ({
-  instantiated: { publicKey, witnessScript, redeemScript, testnetAddress }
+  instantiated: {
+    publicKey,
+    witnessScript,
+    redeemScript,
+    testnetAddress,
+    mainnetAddress,
+    simnetAddress
+  },
+  network
 }) => {
+  const address =
+    network === "simnet"
+      ? simnetAddress
+      : network === "testnet" ? testnetAddress : mainnetAddress
   const witnessScriptMessage =
     "The compiled script (in hex), which will \
 later be revealed in the witness of the spending transaction and evaluated \
@@ -41,7 +54,7 @@ against some arguments to validate the transaction."
     (publicKey ? "public key" : "witness script") +
     " and which will later be used in the scriptSig of the spending transaction."
   const addressMessage =
-    "The testnet address (in Base58) that you would use to fund this contract. \
+    "The address (in Base58) that you would use to fund this contract. \
  It appears in one of the outputs of the funding transactions."
   return (
     <div className="panel-body inner">
@@ -51,8 +64,7 @@ against some arguments to validate the transaction."
       <a href="https://bitcoincore.org/en/segwit_wallet_dev/">here</a>.
       <br />
       <br />
-      The generated address is a testnet address, but do not actually send any
-      testnet Bitcoin to it. It may be difficult or impossible to withdraw.
+      Do not use this address on mainnet, or outside of this plugin.
       <br />
       <br />
       {publicKey ? (
@@ -83,7 +95,7 @@ against some arguments to validate the transaction."
       <pre className="wrap">{redeemScript}</pre>
       <br />
       <h1>
-        Address (testnet) <HelpIcon identifier="address" />
+        Address<HelpIcon identifier="address" />
       </h1>
       <HelpMessage identifier="address" message={addressMessage} />
       <pre className="wrap">{testnetAddress}</pre>

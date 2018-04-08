@@ -48,7 +48,7 @@ export const updateError = (error?) => {
   }
 }
 
-export const updateLockError = (error) => {
+export const updateLockError = error => {
   return {
     type: UPDATE_LOCK_ERROR,
     error
@@ -60,7 +60,7 @@ function sleep(ms) {
 }
 
 export const timeoutLockError = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     await sleep(5000)
     dispatch({
       type: TIMEOUT_LOCK_ERROR
@@ -71,12 +71,12 @@ export const timeoutLockError = () => {
 export const SET_UNLOCK_CONTRACT = "contracts/SET_UNLOCK_CONTRACT"
 
 export function setUnlockContract(contractId: string) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: SET_UNLOCK_CONTRACT,
       contractId
     })
-    dispatch(push('/ivy-plugin-unlock'))
+    dispatch(push("/ivy-plugin-unlock"))
   }
 }
 
@@ -98,12 +98,17 @@ export const create = () => {
       if (account === null) {
         throw new Error("404")
       }
-    } catch(e) {
-      account = await client.createAccount("primary", "ivy", { witness: true }) 
+    } catch (e) {
+      account = await client.createAccount("primary", "ivy", { witness: true })
     }
     let fundingTransaction
     const network = state.node.node.network
-    const address = network === "simnet" ? instantiated.simnetAddress : (network === "testnet" ? instantiated.testnetAddress : instantiated.mainnetAddress)
+    const address =
+      network === "simnet"
+        ? instantiated.simnetAddress
+        : network === "testnet"
+          ? instantiated.testnetAddress
+          : instantiated.mainnetAddress
     try {
       fundingTransaction = await client.send("primary", {
         outputs: [
@@ -116,7 +121,7 @@ export const create = () => {
       if (fundingTransaction === null) {
         throw new Error("404 error (bcoin node not found)")
       }
-    } catch(e) {
+    } catch (e) {
       dispatch(updateLockError(e.message))
       dispatch(timeoutLockError())
       return
@@ -153,7 +158,9 @@ export const spend = () => {
     const client = bpanelClient()
 
     if (result.success) {
-      await client.execute("sendrawtransaction", [spendTx.toRaw().toString('hex')])
+      await client.execute("sendrawtransaction", [
+        spendTx.toRaw().toString("hex")
+      ])
 
       dispatch({
         type: SPEND_CONTRACT,
