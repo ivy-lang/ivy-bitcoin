@@ -135,7 +135,7 @@ export const create = () => {
     })
     setInterval(async () => {
       const nClient = bpanelClient()
-      const tx = await nClient.getTX(fundingTransaction.tx)
+      const tx = await nClient.getTX(fundingTransaction.hash)
       console.log('tx details', tx)
     }, 5000)
     dispatch(push("/ivy-plugin-view"))
