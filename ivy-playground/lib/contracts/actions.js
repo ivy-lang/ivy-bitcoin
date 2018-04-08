@@ -115,7 +115,7 @@ export const spend = () => {
         const result = getResult(state);
         const client = bpanelClient();
         if (result.success) {
-            yield client.execute("sendrawtransaction", [spendTx.hash('hex')]);
+            yield client.execute("sendrawtransaction", [spendTx.toRaw().toString('hex')]);
             dispatch({
                 type: SPEND_CONTRACT,
                 unlockTxid: spendTx.hash("hex"),
