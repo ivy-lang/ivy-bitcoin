@@ -84,8 +84,9 @@ export const create = () => {
     const account = await client.createAccount("primary", "ivy", { witness: true })
     console.log(account)
     console.log(fundingTransaction)
-    const instantiated: Contract = {
+    const instantiated = {
       fundingTransaction,
+      withdrawAddress: account.receiveAddress,
       ...partialInstantiated
     }
     dispatch({

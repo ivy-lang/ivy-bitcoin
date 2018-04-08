@@ -54,7 +54,7 @@ export const create = () => {
         const account = yield client.createAccount("primary", "ivy", { witness: true });
         console.log(account);
         console.log(fundingTransaction);
-        const instantiated = Object.assign({ fundingTransaction }, partialInstantiated);
+        const instantiated = Object.assign({ fundingTransaction, withdrawAddress: account.receiveAddress }, partialInstantiated);
         dispatch({
             type: CREATE_CONTRACT,
             instantiated,
