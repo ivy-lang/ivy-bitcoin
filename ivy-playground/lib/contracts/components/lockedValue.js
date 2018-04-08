@@ -58,7 +58,8 @@ const LockedValueRowUnconnected = (props) => {
     return (React.createElement("tr", null,
         React.createElement("td", null, contract.instantiated.template.name),
         React.createElement("td", null, amountFromSatoshis(contract.instantiated.amount)),
-        React.createElement("td", { style: { wordWrap: "break-word" } }, hash),
+        React.createElement("td", null,
+            React.createElement("div", { style: { overflow: "scroll" } }, hash)),
         React.createElement("td", { className: "td-button" },
             React.createElement(UnlockButton, { contractId: contract.id }))));
 };
@@ -88,7 +89,8 @@ const HistoryRowUnconnected = (props) => {
     return (React.createElement("tr", null,
         React.createElement("td", null, contract.instantiated.template.name),
         React.createElement("td", null, amountFromSatoshis(contract.instantiated.amount)),
-        React.createElement("td", { style: { wordWrap: "break-word" } }, contract.unlockTxid),
+        React.createElement("td", null,
+            React.createElement("div", { style: { overflow: "scroll" } }, contract.unlockTxid)),
         React.createElement("td", null)));
 };
 const HistoryRow = connect((state, ownProps) => {
