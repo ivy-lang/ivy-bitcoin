@@ -124,7 +124,7 @@ export const create = () => {
       type: CREATE_CONTRACT,
       instantiated: {
         ...instantiated,
-        fundingTransaction
+        fundingTransaction: fundingTransaction.toJSON()
       },
       template,
       inputMap,
