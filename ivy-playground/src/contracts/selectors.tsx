@@ -20,6 +20,8 @@ import {
   isValidInput
 } from "../inputs/data"
 
+import { TX } from "bcoin"
+
 import { static as Immutable } from "seamless-immutable"
 
 import { getAppState } from "../app/selectors"
@@ -223,16 +225,25 @@ export const getSpendTransaction = createSelector(
     locktime,
     sequenceNumber
   ) => {
-    if (locktime === undefined || sequenceNumber === undefined) {
+    if (
+      locktime === undefined ||
+      sequenceNumber === undefined ||
+      spendSourceTransaction === undefined
+    ) {
       return undefined
     }
-    return Immutable.asMutable(spend(
-      spendSourceTransaction,
-      spendDestinationAddress,
-      amount,
-      locktime as number,
-      sequenceNumber
-    ), { deep: true })
+    return Immutable.asMutable(
+      spend(
+        TX.fromRaw(
+          Buffer.from((spendSourceTransaction as any).tx, "hex")
+        ).toJSON(),
+        spendDestinationAddress,
+        amount,
+        locktime as number,
+        sequenceNumber
+      ),
+      { deep: true }
+    )
   }
 )
 
@@ -260,9 +271,9 @@ export const getSpendInputValues = createSelector(
   getSpendTransactionSigHash,
   (clauseParameterIds, spendInputMap, sigHash) => {
     try {
-      const spendInputValues = Immutable.asMutable(clauseParameterIds, { deep: true }).map(id =>
-        getData(id, spendInputMap, sigHash)
-      )
+      const spendInputValues = Immutable.asMutable(clauseParameterIds, {
+        deep: true
+      }).map(id => getData(id, spendInputMap, sigHash))
       if (!spendInputValues.every(el => el !== undefined)) {
         return undefined
       }
@@ -321,7 +332,7 @@ export const getFulfilledSpendTransaction = createSelector(
     ) {
       return undefined
     }
-    
+
     const spendTransaction = fulfill(
       instantiated,
       unfulfilledSpendTransaction,
