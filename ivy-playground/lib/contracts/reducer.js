@@ -1,7 +1,8 @@
 import { addParameterInput } from "../inputs/data";
+import { UPDATE_COMPILED } from "../templates/actions";
 import { addDefaultInput } from "../inputs/data";
 // internal imports
-import { CREATE_CONTRACT, SET_CLAUSE_INDEX, SHOW_UNLOCK_INPUT_ERRORS, SPEND_CONTRACT, UPDATE_CLAUSE_INPUT, UPDATE_ERROR } from "./actions";
+import { CREATE_CONTRACT, SET_CLAUSE_INDEX, SHOW_UNLOCK_INPUT_ERRORS, SPEND_CONTRACT, TIMEOUT_LOCK_ERROR, UPDATE_CLAUSE_INPUT, UPDATE_ERROR, UPDATE_INPUT, UPDATE_LOCK_ERROR } from "./actions";
 export const INITIAL_STATE = {
     contractMap: {},
     idList: [],
@@ -45,6 +46,11 @@ export default function reducer(state = INITIAL_STATE, action) {
         case SHOW_UNLOCK_INPUT_ERRORS: {
             return Object.assign({}, state, { showUnlockInputErrors: action.result });
         }
+        case UPDATE_COMPILED:
+        case TIMEOUT_LOCK_ERROR:
+        case UPDATE_INPUT: {
+            return Object.assign({}, state, { lockError: undefined });
+        }
         case CREATE_CONTRACT: {
             const instantiated = action.instantiated;
             if (instantiated.fundingTransaction === undefined) {
@@ -85,6 +91,9 @@ export default function reducer(state = INITIAL_STATE, action) {
         }
         case UPDATE_ERROR: {
             return Object.assign({}, state, { error: action.error });
+        }
+        case UPDATE_LOCK_ERROR: {
+            return Object.assign({}, state, { lockError: action.error });
         }
         case "@@router/LOCATION_CHANGE":
             const path = action.payload.pathname.split("/");

@@ -193,6 +193,7 @@ export const getSpendContractTemplate = createSelector(getSpendContract, contrac
 export const getSpendContractSource = createSelector(getSpendContractTemplate, template => template.source);
 export const getSpendContractInstructions = createSelector(getSpendContractTemplate, template => template.instructions.join(" "));
 export const getError = createSelector(getState, state => state.error);
+export const getLockError = createSelector(getState, state => state.lockError);
 export const generateInputMap = (compiled) => {
     const inputs = [];
     for (const param of compiled.params) {

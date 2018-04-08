@@ -1,7 +1,7 @@
 // external imports
 import { instantiate, Template } from "ivy-bitcoin"
 import { createSelector } from "reselect"
-import { getContract } from "../contracts/selectors"
+import { getContract, getLockError } from "../contracts/selectors"
 
 // ivy imports
 import { AppState } from "../app/types"
@@ -191,7 +191,8 @@ export const getCreateability = createSelector(
   getCompiled,
   areInputsValid,
   getError,
-  (source, sourceMap, compiled, inputsAreValid, error) => {
+  getLockError,
+  (source, sourceMap, compiled, inputsAreValid, error, lockError) => {
     if (compiled === undefined) {
       return {
         createable: false,
@@ -202,6 +203,12 @@ export const getCreateability = createSelector(
       return {
         createable: false,
         error: "Contract template is not valid Ivy."
+      }
+    }
+    if (lockError) {
+      return {
+        createable: false,
+        error: lockError
       }
     }
     if (!inputsAreValid) {

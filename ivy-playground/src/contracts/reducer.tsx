@@ -6,6 +6,7 @@ import {
   Input,
   InputMap
 } from "../inputs/types"
+import { UPDATE_COMPILED } from "../templates/actions"
 import { getParameterIds } from "../templates/selectors"
 import { getInputMap } from "../templates/selectors"
 import { Template } from "../templates/types"
@@ -23,8 +24,11 @@ import {
   SET_CLAUSE_INDEX,
   SHOW_UNLOCK_INPUT_ERRORS,
   SPEND_CONTRACT,
+  TIMEOUT_LOCK_ERROR,
   UPDATE_CLAUSE_INPUT,
-  UPDATE_ERROR
+  UPDATE_ERROR,
+  UPDATE_INPUT,
+  UPDATE_LOCK_ERROR
 } from "./actions"
 
 import {
@@ -107,6 +111,14 @@ export default function reducer(
         showUnlockInputErrors: action.result
       }
     }
+    case UPDATE_COMPILED:
+    case TIMEOUT_LOCK_ERROR:
+    case UPDATE_INPUT: {
+      return {
+        ...state,
+        lockError: undefined
+      }
+    }
     case CREATE_CONTRACT: {
       const instantiated: IvyContract = action.instantiated
       if (instantiated.fundingTransaction === undefined) {
@@ -174,6 +186,12 @@ export default function reducer(
       return {
         ...state,
         error: action.error
+      }
+    }
+    case UPDATE_LOCK_ERROR: {
+      return {
+        ...state,
+        lockError: action.error
       }
     }
     case "@@router/LOCATION_CHANGE":

@@ -12,18 +12,6 @@ import { getCompiled, getInputMap, getInstantiated } from "../templates/selector
 import { bpanelClient, bwalletClient } from "@bpanel/bpanel-utils";
 // internal imports
 import { getFulfilledSpendTransaction, getResult, getSpendContract, getSpendContractId } from "./selectors";
-export function sendFundingTransaction(address, amount, client) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield client.send("primary", {
-            outputs: [
-                {
-                    address,
-                    value: amount
-                }
-            ]
-        });
-    });
-}
 export const SHOW_UNLOCK_INPUT_ERRORS = "contracts/SHOW_UNLOCK_INPUT_ERRORS";
 export const showUnlockInputErrors = (result) => {
     return {
@@ -32,11 +20,30 @@ export const showUnlockInputErrors = (result) => {
     };
 };
 export const UPDATE_ERROR = "contracts/UPDATE_ERROR";
+export const UPDATE_LOCK_ERROR = "contracts/UPDATE_LOCK_ERROR";
+export const TIMEOUT_LOCK_ERROR = "contracts/TIMEOUT_LOCK_ERROR";
 export const updateError = (error) => {
     return {
         type: UPDATE_ERROR,
         error
     };
+};
+export const updateLockError = (error) => {
+    return {
+        type: UPDATE_LOCK_ERROR,
+        error
+    };
+};
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+export const timeoutLockError = () => {
+    return (dispatch) => __awaiter(this, void 0, void 0, function* () {
+        yield sleep(5000);
+        dispatch({
+            type: TIMEOUT_LOCK_ERROR
+        });
+    });
 };
 export const CREATE_CONTRACT = "contracts/CREATE_CONTRACT";
 export const create = () => {
@@ -49,21 +56,44 @@ export const create = () => {
             throw new Error("instantiated unexpectedly undefined");
         }
         const client = bwalletClient();
-        const fundingTransaction = yield sendFundingTransaction(partialInstantiated.simnetAddress, partialInstantiated.amount, client);
-        let account;
-        account = yield client.get(`/wallet/primary/account/ivy`, {});
-        const withdrawalAddress = account.receiveAddress;
-        console.log(account);
-        console.log(fundingTransaction);
-        const instantiated = Object.assign({ fundingTransaction }, partialInstantiated);
-        dispatch({
-            type: CREATE_CONTRACT,
-            instantiated,
-            template,
-            inputMap,
-            withdrawalAddress
-        });
-        dispatch(push("/unlock"));
+        // let account
+        // try {
+        //   account = await client.getAccount("primary", "ivy")
+        // } catch(e) {
+        //   account = await client.createAccount("primary", "ivy", { witness: true }) 
+        // }
+        let fundingTransaction;
+        try {
+            fundingTransaction = yield client.send("primary", {
+                outputs: [
+                    {
+                        address: partialInstantiated.simnetAddress,
+                        value: partialInstantiated.amount
+                    }
+                ]
+            });
+            if (fundingTransaction === null) {
+                throw new Error("404 error (bcoin node not found)");
+            }
+        }
+        catch (e) {
+            dispatch(updateLockError(e.message));
+            dispatch(timeoutLockError());
+            return;
+        }
+        // const withdrawalAddress = "whatever"// account.receiveAddress
+        // const instantiated: Contract = {
+        //   fundingTransaction,
+        //   ...partialInstantiated
+        // }
+        // dispatch({
+        //   type: CREATE_CONTRACT,
+        //   instantiated,
+        //   template,
+        //   inputMap,
+        //   withdrawalAddress
+        // })
+        // dispatch(push("/unlock"))
     });
 };
 export const SPEND_CONTRACT = "contracts/SPEND_CONTRACT";
