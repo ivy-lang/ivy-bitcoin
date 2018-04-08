@@ -150,14 +150,9 @@ export function instantiate(
   const scriptSig: ScriptObject = Script.fromArray([
     argToPushData(redeemScript.toRaw())
   ])
-  const testnetAddress = Address.fromScripthash(
-    redeemScript.hash160(),
-    "testnet"
-  )
-  const simnetAddress = Address.fromScripthash(redeemScript.hash160(), "simnet")
-  const mainnetAddress = Address.fromScripthash(redeemScript.hash160())
+  const address = Address.fromScripthash(redeemScript.hash160())
   const fundingTransaction = createFundingTransaction(
-    testnetAddress,
+    address.toBase58(),
     valueArgs,
     seed
   )
@@ -165,9 +160,9 @@ export function instantiate(
     witnessScript: witnessScript.toJSON(),
     redeemScript: redeemScript.toJSON(),
     scriptSig: scriptSig.toJSON(),
-    testnetAddress: testnetAddress.toBase58(),
-    mainnetAddress: mainnetAddress.toBase58(),
-    simnetAddress: simnetAddress.toBase58(),
+    testnetAddress: address.toBase58("testnet"),
+    mainnetAddress: address.toBase58(),
+    simnetAddress: address.toBase58("simnet"),
     fundingTransaction,
     publicKey: witnessScript.isPubkey()
       ? (args[0] as Buffer).toString("hex")
