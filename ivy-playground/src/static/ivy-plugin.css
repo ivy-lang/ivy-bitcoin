@@ -89,6 +89,7 @@
 .ivy-plugin .panel-default {
   margin-bottom: 30px;
   border-radius: 2px;
+  color: black;
 }
 
 .ivy-plugin .panel-default > .panel-heading {
@@ -132,7 +133,6 @@
 
 .ivy-plugin .panel-body.inner {
   padding-top: 5px;
-  color: black;
 }
 
 .ivy-plugin .panel-body.inner h1 {
