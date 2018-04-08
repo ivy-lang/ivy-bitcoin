@@ -232,7 +232,7 @@ export const getSpendTransaction = createSelector(
     ) {
       return undefined
     }
-    const oldTransaction = spendSourceTransaction.toJSON()
+    const oldTransaction = spendSourceTransaction
     const newTransaction = TX.fromRaw(
       Buffer.from((spendSourceTransaction as any).tx, "hex")
     ).toJSON()
