@@ -83,9 +83,9 @@ export const create = () => {
     )
     let account
     try {
-      account = await client.createAccount("primary", "ivy", { witness: true })
-    } catch(e) {
       account = await client.getAccount("primary", "ivy")
+    } catch(e) {
+      account = await client.createAccount("primary", "ivy", { witness: true })
     }
     const withdrawalAddress = account.receiveAddress
     console.log(account)
