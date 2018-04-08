@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // external imports
 import { push } from "react-router-redux";
 import { getCompiled, getInputMap, getInstantiated } from "../templates/selectors";
-import { bwalletClient } from "@bpanel/bpanel-utils";
+import { bpanelClient, bwalletClient } from "@bpanel/bpanel-utils";
 // internal imports
 import { getFulfilledSpendTransaction, getResult, getSpendContract, getSpendContractId } from "./selectors";
 export function sendFundingTransaction(address, amount, client) {
@@ -73,7 +73,7 @@ export const spend = () => {
         const contract = getSpendContract(state);
         const spendTx = getFulfilledSpendTransaction(state);
         const result = getResult(state);
-        const client = new NodeClient({ port: 5000, path: "/bcoin" });
+        const client = bpanelClient();
         if (result.success) {
             yield client.execute("sendrawtransaction", spendTx.hash());
             dispatch({

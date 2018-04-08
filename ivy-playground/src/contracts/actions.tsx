@@ -15,7 +15,7 @@ import {
 
 import { compile } from "ivy-bitcoin"
 
-import { bwalletClient } from "@bpanel/bpanel-utils"
+import { bpanelClient, bwalletClient } from "@bpanel/bpanel-utils"
 
 // internal imports
 import {
@@ -109,7 +109,7 @@ export const spend = () => {
 
     const result = getResult(state)
 
-    const client = new NodeClient({ port: 5000, path: "/bcoin" })
+    const client = bpanelClient()
 
     if (result.success) {
       await client.execute("sendrawtransaction", spendTx.hash())
