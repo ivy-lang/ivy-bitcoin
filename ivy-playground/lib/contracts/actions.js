@@ -98,7 +98,7 @@ export const create = () => {
         const withdrawalAddress = account.receiveAddress;
         dispatch({
             type: CREATE_CONTRACT,
-            instantiated,
+            instantiated: Object.assign({}, instantiated, { fundingTransaction }),
             template,
             inputMap,
             withdrawalAddress

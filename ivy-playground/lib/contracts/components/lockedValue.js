@@ -40,6 +40,7 @@ function LockedValue(props) {
                 React.createElement("tr", null,
                     React.createElement("th", null, "Contract Template"),
                     React.createElement("th", null, "Amount"),
+                    React.createElement("th", null, "Transaction Hash"),
                     React.createElement("th", null))),
             React.createElement("tbody", null, props.contractIds.map(id => (React.createElement(LockedValueRow, { key: id, contractId: id }))))));
     }
@@ -47,9 +48,14 @@ function LockedValue(props) {
 }
 const LockedValueRowUnconnected = (props) => {
     const contract = props.contract;
+    if (contract.instantiated.fundingTransaction === undefined) {
+        throw new Error("funding transaction unexpectedly undefined");
+    }
+    const hash = contract.instantiated.fundingTransaction.hash;
     return (React.createElement("tr", null,
         React.createElement("td", null, contract.instantiated.template.name),
         React.createElement("td", null, amountFromSatoshis(contract.instantiated.amount)),
+        React.createElement("td", null, hash),
         React.createElement("td", { className: "td-button" },
             React.createElement(UnlockButton, { contractId: contract.id }))));
 };
@@ -68,7 +74,8 @@ const History = (props) => {
                 React.createElement("thead", null,
                     React.createElement("tr", null,
                         React.createElement("th", null, "Contract Template"),
-                        React.createElement("th", null, "Amount"))),
+                        React.createElement("th", null, "Amount"),
+                        React.createElement("th", null, "Spending Transaction"))),
                 React.createElement("tbody", null, props.spentContractIds.map(id => (React.createElement(HistoryRow, { key: id, contractId: id })))))));
     }
     return React.createElement(Section, { name: "History" }, content);
@@ -78,6 +85,7 @@ const HistoryRowUnconnected = (props) => {
     return (React.createElement("tr", null,
         React.createElement("td", null, contract.instantiated.template.name),
         React.createElement("td", null, amountFromSatoshis(contract.instantiated.amount)),
+        React.createElement("td", null, contract.unlockTxid),
         React.createElement("td", null)));
 };
 const HistoryRow = connect((state, ownProps) => {

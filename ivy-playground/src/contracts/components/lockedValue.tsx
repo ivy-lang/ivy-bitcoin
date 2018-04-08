@@ -66,6 +66,7 @@ function LockedValue(props: { contractIds: string[] }) {
           <tr>
             <th>Contract Template</th>
             <th>Amount</th>
+            <th>Transaction Hash</th>
             <th />
           </tr>
         </thead>
@@ -85,10 +86,15 @@ const LockedValueRowUnconnected = (props: {
   contract: Contract
 }) => {
   const contract = props.contract
+  if (contract.instantiated.fundingTransaction === undefined) {
+    throw new Error("funding transaction unexpectedly undefined")
+  }
+  const hash = contract.instantiated.fundingTransaction.hash
   return (
     <tr>
       <td>{contract.instantiated.template.name}</td>
       <td>{amountFromSatoshis(contract.instantiated.amount)}</td>
+      <td>{hash}</td>
       <td className="td-button">
         <UnlockButton contractId={contract.id} />
       </td>
@@ -112,8 +118,9 @@ const History = (props: { spentContractIds: string[] }) => {
         <table className="table contracts-table">
           <thead>
             <tr>
-              <th>Contract Template</th>
-              <th>Amount</th>
+            <th>Contract Template</th>
+            <th>Amount</th>
+            <th>Spending Transaction</th>
             </tr>
           </thead>
           <tbody>
@@ -134,6 +141,7 @@ const HistoryRowUnconnected = (props: { string; contract: Contract }) => {
     <tr>
       <td>{contract.instantiated.template.name}</td>
       <td>{amountFromSatoshis(contract.instantiated.amount)}</td>
+      <td>{contract.unlockTxid}</td>
       <td />
     </tr>
   )
