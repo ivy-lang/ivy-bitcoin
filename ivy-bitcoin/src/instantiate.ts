@@ -26,6 +26,7 @@ export interface Contract {
   scriptSig: string
   testnetAddress: string
   mainnetAddress: string
+  simnetAddress: string
   publicKey?: string
   fundingTransaction?: TransactionJSON
   amount: number
@@ -154,6 +155,7 @@ export function instantiate(
     redeemScript.hash160(),
     "testnet"
   )
+  const simnetAddress = Address.fromScripthash(redeemScript.hash160(), "simnet")
   const mainnetAddress = Address.fromScripthash(redeemScript.hash160())
   const fundingTransaction = createFundingTransaction(
     testnetAddress,
@@ -166,6 +168,7 @@ export function instantiate(
     scriptSig: scriptSig.toJSON(),
     testnetAddress: testnetAddress.toBase58(),
     mainnetAddress: mainnetAddress.toBase58(),
+    simnetAddress: simnetAddress.toBase58(),
     fundingTransaction,
     publicKey: witnessScript.isPubkey()
       ? (args[0] as Buffer).toString("hex")

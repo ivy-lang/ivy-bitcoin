@@ -50,7 +50,7 @@ export const create = () => {
         }
         const client = new WalletClient({ port: 5000, path: "/bwallet" });
         console.log("client", client);
-        const fundingTransaction = yield sendFundingTransaction(partialInstantiated.testnetAddress, partialInstantiated.amount, client);
+        const fundingTransaction = yield sendFundingTransaction(partialInstantiated.simnetAddress, partialInstantiated.amount, client);
         console.log(fundingTransaction);
         const instantiated = Object.assign({ fundingTransaction }, partialInstantiated);
         dispatch({

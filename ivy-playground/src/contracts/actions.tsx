@@ -77,7 +77,7 @@ export const create = () => {
     const client = new WalletClient({ port: 5000, path: "/bwallet" })
     console.log("client", client)
     const fundingTransaction = await sendFundingTransaction(
-      partialInstantiated.testnetAddress,
+      partialInstantiated.simnetAddress,
       partialInstantiated.amount,
       client
     )
