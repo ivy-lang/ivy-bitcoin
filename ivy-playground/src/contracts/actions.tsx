@@ -81,7 +81,12 @@ export const create = () => {
       partialInstantiated.amount,
       client
     )
-    const account = await client.createAccount("primary", "ivy", { witness: true })
+    let account
+    try {
+      account = await client.createAccount("primary", "ivy", { witness: true })
+    } catch(e) {
+      account = await client.getAccount("primary", "ivy")
+    }
     const withdrawalAddress = account.receiveAddress
     console.log(account)
     console.log(fundingTransaction)
