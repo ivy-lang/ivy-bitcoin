@@ -52,13 +52,7 @@ export const create = () => {
         console.log("client", client);
         const fundingTransaction = yield sendFundingTransaction(partialInstantiated.simnetAddress, partialInstantiated.amount, client);
         let account;
-        try {
-            account = yield client.get(`/wallet/primary/account/ivy`, {});
-        }
-        catch (e) {
-            console.log(e);
-            account = yield client.createAccount("primary", "ivy", { witness: true });
-        }
+        account = yield client.get(`/wallet/primary/account/ivy`, {});
         const withdrawalAddress = account.receiveAddress;
         console.log(account);
         console.log(fundingTransaction);
