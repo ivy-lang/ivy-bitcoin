@@ -62,7 +62,7 @@ export const Unlock = ({ error, display, result }) => {
                     React.createElement(UnlockButton, null)))));
     }
     return (React.createElement(DocumentTitle, { title: "Unlock Contract" },
-        React.createElement("div", { className: "ivy-plugin" },
+        React.createElement("div", null,
             React.createElement(Section, { name: "Contract Summary" }, summary),
             details,
             display && React.createElement(TransactionDetails, null),

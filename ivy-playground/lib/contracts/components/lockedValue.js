@@ -16,7 +16,7 @@ function amountFromSatoshis(amountInSatoshis) {
 }
 const LockedValueDisplay = (props) => {
     return (React.createElement(DocumentTitle, { title: "Unlock Contract" },
-        React.createElement("div", { className: "ivy-plugin" },
+        React.createElement("div", null,
             React.createElement(LockedValue, { contractIds: props.contractIds }),
             React.createElement(History, { spentContractIds: props.spentContractIds }))));
 };

@@ -111,7 +111,7 @@ export const Unlock = ({ error, display, result }) => {
   }
   return (
     <DocumentTitle title="Unlock Contract">
-      <div className="ivy-plugin">
+      <div>
         <Section name="Contract Summary">{summary}</Section>
         {details}
         {display && <TransactionDetails />}

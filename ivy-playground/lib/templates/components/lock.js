@@ -28,7 +28,7 @@ const ErrorAlert = (props) => {
 const Lock = ({ source, contractParameters, error, bytecode }) => {
     let instantiate;
     if (contractParameters !== undefined) {
-        instantiate = (React.createElement("div", { className: "ivy-plugin" },
+        instantiate = (React.createElement("div", null,
             contractParameters.length > 0 ? (React.createElement(Section, { name: "Contract Arguments" },
                 React.createElement("div", { className: "form-wrapper" },
                     React.createElement(ContractParameters, null)),
