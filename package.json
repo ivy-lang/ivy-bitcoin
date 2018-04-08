@@ -6,6 +6,9 @@
     "url": "https://github.com/ivy-lang/ivy-bitcoin/issues",
     "email": "ivy@chain.com"
   },
+  "peerDependencies": {
+    "react": "16.0.0"
+  },
   "dependencies": {
     "@bpanel/bpanel-utils": "0.0.7",
     "@types/node": "^7.0.46",
@@ -25,7 +28,6 @@
     "pegjs": "^0.10.0",
     "pegjs-loader": "^0.5.1",
     "prettier": "^1.7.4",
-    "react": "16.0.0",
     "react-ace": "5.5.0",
     "react-bootstrap": "^0.31.5",
     "react-datetime": "github:danrobinson/react-datetime",
