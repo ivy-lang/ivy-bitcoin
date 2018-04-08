@@ -43,7 +43,7 @@ export const spend = (
   locktime: number,
   sequenceNumber: { sequence: number; seconds: boolean }
 ) => {
-  const sourceTransaction = Tx.fromJSON(spendSourceTransaction)
+  const sourceTransaction = Tx.fromRaw(spendSourceTransaction.tx)
   const m = new Mtx()
   m.addTX(sourceTransaction, 0)
   m.addOutput({
