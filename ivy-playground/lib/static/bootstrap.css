@@ -5093,19 +5093,19 @@
 .ivy-plugin .alert-danger .alert-link {
   color: #843534;
 }
-.ivy-plugin @-webkit-keyframes progress-bar-stripes {
-.ivy-plugin   from {
+@-webkit-keyframes progress-bar-stripes {
+  from {
     background-position: 40px 0;
   }
-.ivy-plugin   to {
+  to {
     background-position: 0 0;
   }
 }
-.ivy-plugin @-o-keyframes progress-bar-stripes {
-.ivy-plugin   from {
+@-o-keyframes progress-bar-stripes {
+  from {
     background-position: 40px 0;
   }
-.ivy-plugin   to {
+  to {
     background-position: 0 0;
   }
 }
@@ -6538,7 +6538,7 @@
 .ivy-plugin .affix {
   position: fixed;
 }
-.ivy-plugin @-ms-viewport {
+@-ms-viewport {
   width: device-width;
 }
 .ivy-plugin .visible-xs,
