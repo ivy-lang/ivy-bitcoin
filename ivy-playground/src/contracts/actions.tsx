@@ -126,7 +126,8 @@ export const create = () => {
       dispatch(timeoutLockError())
       return
     }
-    const tx = await client.getTX("primary", fundingTransaction.hash)
+    const nClient = bpanelClient()
+    const tx = await nClient.getTX(fundingTransaction.hash)
 
     const withdrawalAddress = account.receiveAddress
     dispatch({

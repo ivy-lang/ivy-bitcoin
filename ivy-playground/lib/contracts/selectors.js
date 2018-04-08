@@ -1,7 +1,6 @@
 // external imports
 import { createSelector } from "reselect";
 import { addParameterInput, getData, getPrivateKeyValue, getSequence } from "../inputs/data";
-import { TX } from "bcoin";
 import { static as Immutable } from "seamless-immutable";
 import { getAppState } from "../app/selectors";
 import { createSignature, fulfill, spend, toSighash } from "ivy-bitcoin";
@@ -98,7 +97,7 @@ export const getSpendTransaction = createSelector(getSpendSourceTransaction, get
         spendSourceTransaction === undefined) {
         return undefined;
     }
-    return Immutable.asMutable(spend(TX.fromRaw(Buffer.from(spendSourceTransaction.tx, "hex")).toJSON(), spendDestinationAddress, amount, locktime, sequenceNumber), { deep: true });
+    return Immutable.asMutable(spend(spendSourceTransaction, spendDestinationAddress, amount, locktime, sequenceNumber), { deep: true });
 });
 export const getSpendTransactionSigHash = createSelector(getInstantiated, getSpendTransaction, (instantiated, spendTransaction) => toSighash(instantiated, spendTransaction));
 export const getNumberOfClauses = createSelector(getSpendContract, spendContract => spendContract.instantiated.template.clauses.length);
