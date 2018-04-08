@@ -79,6 +79,9 @@ export const getInstantiated = createSelector(getCompiled, getContractArgs, (tem
     if (template === undefined || contractArgs === undefined) {
         return undefined;
     }
+    if (template.asMutable !== undefined) {
+        template = template.asMutable({ deep: true });
+    }
     return instantiate(template, contractArgs);
 });
 export const getSelectedTemplate = createSelector(getCompiled, getSourceMap, (compiled, sourceMap) => {

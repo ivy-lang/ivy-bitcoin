@@ -1,5 +1,5 @@
 // external imports
-import { instantiate } from "ivy-bitcoin"
+import { instantiate, Template } from "ivy-bitcoin"
 import { createSelector } from "reselect"
 import { getContract } from "../contracts/selectors"
 
@@ -134,6 +134,9 @@ export const getInstantiated = createSelector(
   (template, contractArgs) => {
     if (template === undefined || contractArgs === undefined) {
       return undefined
+    }
+    if ((template as any).asMutable !== undefined) {
+      template = (template as any).asMutable({ deep: true }) as Template
     }
     return instantiate(template, contractArgs)
   }
