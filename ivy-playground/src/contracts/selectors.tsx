@@ -226,13 +226,13 @@ export const getSpendTransaction = createSelector(
     if (locktime === undefined || sequenceNumber === undefined) {
       return undefined
     }
-    return spend(
+    return Immutable.asMutable(spend(
       spendSourceTransaction,
       spendDestinationAddress,
       amount,
       locktime as number,
       sequenceNumber
-    )
+    ), { deep: true })
   }
 )
 
@@ -260,7 +260,7 @@ export const getSpendInputValues = createSelector(
   getSpendTransactionSigHash,
   (clauseParameterIds, spendInputMap, sigHash) => {
     try {
-      const spendInputValues = clauseParameterIds.map(id =>
+      const spendInputValues = Immutable.asMutable(clauseParameterIds, { deep: true }).map(id =>
         getData(id, spendInputMap, sigHash)
       )
       if (!spendInputValues.every(el => el !== undefined)) {

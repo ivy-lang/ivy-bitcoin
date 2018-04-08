@@ -95,7 +95,7 @@ export const getSpendTransaction = createSelector(getSpendSourceTransaction, get
     if (locktime === undefined || sequenceNumber === undefined) {
         return undefined;
     }
-    return spend(spendSourceTransaction, spendDestinationAddress, amount, locktime, sequenceNumber);
+    return Immutable.asMutable(spend(spendSourceTransaction, spendDestinationAddress, amount, locktime, sequenceNumber), { deep: true });
 });
 export const getSpendTransactionSigHash = createSelector(getInstantiated, getSpendTransaction, (instantiated, spendTransaction) => toSighash(instantiated, spendTransaction));
 export const getNumberOfClauses = createSelector(getSpendContract, spendContract => spendContract.instantiated.template.clauses.length);
@@ -104,7 +104,7 @@ export const getSpendClauseArgument = createSelector(getSelectedClause, selected
 });
 export const getSpendInputValues = createSelector(getClauseParameterIds, getSpendInputMap, getSpendTransactionSigHash, (clauseParameterIds, spendInputMap, sigHash) => {
     try {
-        const spendInputValues = clauseParameterIds.map(id => getData(id, spendInputMap, sigHash));
+        const spendInputValues = Immutable.asMutable(clauseParameterIds, { deep: true }).map(id => getData(id, spendInputMap, sigHash));
         if (!spendInputValues.every(el => el !== undefined)) {
             return undefined;
         }
