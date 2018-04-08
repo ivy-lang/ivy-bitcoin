@@ -45,14 +45,24 @@ export const timeoutLockError = () => {
         });
     });
 };
+export const SET_UNLOCK_CONTRACT = "contracts/SET_UNLOCK_CONTRACT";
+export function setUnlockContract(contractId) {
+    return (dispatch) => {
+        dispatch({
+            type: SET_UNLOCK_CONTRACT,
+            contractId
+        });
+        dispatch(push('/ivy-plugin-unlock'));
+    };
+}
 export const CREATE_CONTRACT = "contracts/CREATE_CONTRACT";
 export const create = () => {
     return (dispatch, getState) => __awaiter(this, void 0, void 0, function* () {
         const state = getState();
         const inputMap = getInputMap(state);
         const template = getCompiled(state);
-        const partialInstantiated = getInstantiated(state);
-        if (partialInstantiated === undefined) {
+        const instantiated = getInstantiated(state);
+        if (instantiated === undefined) {
             throw new Error("instantiated unexpectedly undefined");
         }
         const client = bwalletClient();
@@ -71,8 +81,8 @@ export const create = () => {
             fundingTransaction = yield client.send("primary", {
                 outputs: [
                     {
-                        address: partialInstantiated.simnetAddress,
-                        value: partialInstantiated.amount
+                        address: instantiated.simnetAddress,
+                        value: instantiated.amount
                     }
                 ]
             });
@@ -86,7 +96,6 @@ export const create = () => {
             return;
         }
         const withdrawalAddress = account.receiveAddress;
-        const instantiated = Object.assign({}, partialInstantiated);
         dispatch({
             type: CREATE_CONTRACT,
             instantiated,

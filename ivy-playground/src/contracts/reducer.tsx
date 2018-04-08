@@ -22,6 +22,7 @@ import { Contract } from "./types"
 import {
   CREATE_CONTRACT,
   SET_CLAUSE_INDEX,
+  SET_UNLOCK_CONTRACT,
   SHOW_UNLOCK_INPUT_ERRORS,
   SPEND_CONTRACT,
   TIMEOUT_LOCK_ERROR,
@@ -194,20 +195,13 @@ export default function reducer(
         lockError: action.error
       }
     }
-    case "@@router/LOCATION_CHANGE":
-      const path = action.payload.pathname.split("/")
-      if (path.length < 2) {
-        return state
+    case SET_UNLOCK_CONTRACT: {
+      return {
+        ...state,
+        spendContractId: action.contractId,
+        selectedClauseIndex: 0
       }
-      const pathId = path.pop()
-      if (path.pop() === "ivy-plugin-view") {
-        return {
-          ...state,
-          spendContractId: pathId,
-          selectedClauseIndex: 0
-        }
-      }
-      return state
+    }
     default:
       return state
   }
