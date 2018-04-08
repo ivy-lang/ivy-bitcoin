@@ -5109,7 +5109,7 @@
     background-position: 0 0;
   }
 }
-.ivy-plugin @keyframes progress-bar-stripes {
+@keyframes progress-bar-stripes {
 .ivy-plugin   from {
     background-position: 40px 0;
   }
