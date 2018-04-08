@@ -12,6 +12,8 @@ import Section from "../../app/components/section"
 import { getContract, getContractIds, getSpentContractIds } from "../selectors"
 import { Contract } from "../types"
 
+import { setUnlockContract } from "../actions"
+
 // import ivy-plugin css
 import '../../static/bootstrap.css'
 import '../../static/ivy-plugin.css'
@@ -40,13 +42,20 @@ export default connect(state => ({
   spentContractIds: getSpentContractIds(state)
 }))(LockedValueDisplay)
 
-const UnlockButton = (props: { contractId: string }) => {
+const UnlockButtonUnconnected = (props: { contractId: string, unlock: () => undefined }) => {
   return (
-    <Link to={"/ivy-plugin-view/" + props.contractId}>
-      <button className="btn btn-primary">Unlock</button>
-    </Link>
+    <button onClick={props.unlock} className="btn btn-primary">Unlock</button>
   )
 }
+
+const UnlockButton = connect(
+  undefined,
+  (dispatch, ownProps) => {
+    return {
+      unlock: () => dispatch(setUnlockContract(ownProps.contractId))
+    }
+  }
+)(UnlockButtonUnconnected)
 
 function LockedValue(props: { contractIds: string[] }) {
   let content = <div className="table-placeholder">No Contracts</div>

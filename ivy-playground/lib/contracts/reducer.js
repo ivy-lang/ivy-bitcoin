@@ -2,7 +2,7 @@ import { addParameterInput } from "../inputs/data";
 import { UPDATE_COMPILED } from "../templates/actions";
 import { addDefaultInput } from "../inputs/data";
 // internal imports
-import { CREATE_CONTRACT, SET_CLAUSE_INDEX, SHOW_UNLOCK_INPUT_ERRORS, SPEND_CONTRACT, TIMEOUT_LOCK_ERROR, UPDATE_CLAUSE_INPUT, UPDATE_ERROR, UPDATE_INPUT, UPDATE_LOCK_ERROR } from "./actions";
+import { CREATE_CONTRACT, SET_CLAUSE_INDEX, SET_UNLOCK_CONTRACT, SHOW_UNLOCK_INPUT_ERRORS, SPEND_CONTRACT, TIMEOUT_LOCK_ERROR, UPDATE_CLAUSE_INPUT, UPDATE_ERROR, UPDATE_INPUT, UPDATE_LOCK_ERROR } from "./actions";
 export const INITIAL_STATE = {
     contractMap: {},
     idList: [],
@@ -95,16 +95,9 @@ export default function reducer(state = INITIAL_STATE, action) {
         case UPDATE_LOCK_ERROR: {
             return Object.assign({}, state, { lockError: action.error });
         }
-        case "@@router/LOCATION_CHANGE":
-            const path = action.payload.pathname.split("/");
-            if (path.length < 2) {
-                return state;
-            }
-            const pathId = path.pop();
-            if (path.pop() === "ivy-plugin-view") {
-                return Object.assign({}, state, { spendContractId: pathId, selectedClauseIndex: 0 });
-            }
-            return state;
+        case SET_UNLOCK_CONTRACT: {
+            return Object.assign({}, state, { spendContractId: action.contractId, selectedClauseIndex: 0 });
+        }
         default:
             return state;
     }
