@@ -47,10 +47,10 @@ const Navbar = (props: { path: string }) => {
             <a href="https://docs.ivy-lang.org/bitcoin/">Docs</a>
           </li>
           <li>
-            <Link to="/create">Create Contract</Link>
+            <Link to="/ivy-plugin-create">Create Contract</Link>
           </li>
           <li>
-            <Link to="/unlock">Unlock Contract</Link>
+            <Link to="/ivy-plugin-view">Unlock Contract</Link>
           </li>
           <Reset />
         </ul>

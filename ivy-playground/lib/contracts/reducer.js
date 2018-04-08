@@ -101,7 +101,7 @@ export default function reducer(state = INITIAL_STATE, action) {
                 return state;
             }
             const pathId = path.pop();
-            if (path.pop() === "unlock") {
+            if (path.pop() === "ivy-plugin-view") {
                 return Object.assign({}, state, { spendContractId: pathId, selectedClauseIndex: 0 });
             }
             return state;

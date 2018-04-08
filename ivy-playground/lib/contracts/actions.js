@@ -82,8 +82,8 @@ export const create = () => {
             dispatch(timeoutLockError());
             return;
         }
-        const withdrawalAddress = "whatever"; // account.receiveAddress
-        const instantiated = Object.assign({ fundingTransaction }, partialInstantiated);
+        const withdrawalAddress = account.receiveAddress;
+        const instantiated = Object.assign({}, partialInstantiated);
         dispatch({
             type: CREATE_CONTRACT,
             instantiated,
@@ -91,7 +91,7 @@ export const create = () => {
             inputMap,
             withdrawalAddress
         });
-        dispatch(push("/unlock"));
+        dispatch(push("/ivy-plugin-view"));
     });
 };
 export const SPEND_CONTRACT = "contracts/SPEND_CONTRACT";
@@ -114,7 +114,7 @@ export const spend = () => {
             throw Error("spend called with invalid contract");
             // console.log(result)
         }
-        dispatch(push("/unlock"));
+        dispatch(push("/ivy-plugin-view"));
     });
 };
 export const SET_CLAUSE_INDEX = "contracts/SET_CLAUSE_INDEX";

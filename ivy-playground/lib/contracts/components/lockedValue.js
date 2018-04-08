@@ -25,7 +25,7 @@ export default connect(state => ({
     spentContractIds: getSpentContractIds(state)
 }))(LockedValueDisplay);
 const UnlockButton = (props) => {
-    return (React.createElement(Link, { to: "/unlock/" + props.contractId },
+    return (React.createElement(Link, { to: "/ivy-plugin-view/" + props.contractId },
         React.createElement("button", { className: "btn btn-primary" }, "Unlock")));
 };
 function LockedValue(props) {
