@@ -232,6 +232,12 @@ export const getSpendTransaction = createSelector(
     ) {
       return undefined
     }
+    const oldTransaction = spendSourceTransaction.toJSON()
+    const newTransaction = TX.fromRaw(
+      Buffer.from((spendSourceTransaction as any).tx, "hex")
+    ).toJSON()
+    console.log(oldTransaction)
+    console.log(newTransaction)
     return Immutable.asMutable(
       spend(
         TX.fromRaw(
