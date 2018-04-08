@@ -17,8 +17,6 @@ import { compile } from "ivy-bitcoin"
 
 import { bwalletClient } from "@bpanel/bpanel-utils"
 
-import { NodeClient, WalletClient } from "bclient"
-
 // internal imports
 import {
   getFulfilledSpendTransaction,
@@ -74,8 +72,7 @@ export const create = () => {
     if (partialInstantiated === undefined) {
       throw new Error("instantiated unexpectedly undefined")
     }
-    const client = new WalletClient({ port: 5000, path: "/bwallet" })
-    console.log("client", client)
+    const client = bwalletClient()
     const fundingTransaction = await sendFundingTransaction(
       partialInstantiated.simnetAddress,
       partialInstantiated.amount,

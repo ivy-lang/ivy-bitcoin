@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // external imports
 import { push } from "react-router-redux";
 import { getCompiled, getInputMap, getInstantiated } from "../templates/selectors";
-import { NodeClient, WalletClient } from "bclient";
+import { bwalletClient } from "@bpanel/bpanel-utils";
 // internal imports
 import { getFulfilledSpendTransaction, getResult, getSpendContract, getSpendContractId } from "./selectors";
 export function sendFundingTransaction(address, amount, client) {
@@ -48,8 +48,7 @@ export const create = () => {
         if (partialInstantiated === undefined) {
             throw new Error("instantiated unexpectedly undefined");
         }
-        const client = new WalletClient({ port: 5000, path: "/bwallet" });
-        console.log("client", client);
+        const client = bwalletClient();
         const fundingTransaction = yield sendFundingTransaction(partialInstantiated.simnetAddress, partialInstantiated.amount, client);
         let account;
         account = yield client.get(`/wallet/primary/account/ivy`, {});
