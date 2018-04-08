@@ -1,4 +1,5 @@
 import { Template } from "./template"
+import { static as Immutable } from "seamless-immutable"
 
 import {
   Address,
@@ -136,7 +137,7 @@ export function instantiate(
   const valueArgs = args.filter(
     (_, i) => template.params[i].valueType === "Value"
   ) as number[]
-  const instructions = template.instructions
+  const instructions = Immutable.asMutable(template.instructions, {deep: true});
   const argMap = new Map<string, any>()
   template.params.map((param, i) => {
     if (param.valueType !== "Value") {
