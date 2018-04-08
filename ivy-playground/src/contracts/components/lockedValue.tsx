@@ -57,6 +57,10 @@ const UnlockButton = connect(
   }
 )(UnlockButtonUnconnected)
 
+function shorten(hash: string) {
+  return hash.slice(0, 10) + "..."
+}
+
 function LockedValue(props: { contractIds: string[] }) {
   let content = <div className="table-placeholder">No Contracts</div>
   if (props.contractIds.length > 0) {
@@ -94,7 +98,7 @@ const LockedValueRowUnconnected = (props: {
     <tr>
       <td>{contract.instantiated.template.name}</td>
       <td>{amountFromSatoshis(contract.instantiated.amount)}</td>
-      <td>{hash}</td>
+      <td>{shorten(hash)}</td>
       <td className="td-button">
         <UnlockButton contractId={contract.id} />
       </td>
@@ -141,7 +145,7 @@ const HistoryRowUnconnected = (props: { string; contract: Contract }) => {
     <tr>
       <td>{contract.instantiated.template.name}</td>
       <td>{amountFromSatoshis(contract.instantiated.amount)}</td>
-      <td>{contract.unlockTxid}</td>
+      <td>{shorten(contract.unlockTxid || "")}</td>
       <td />
     </tr>
   )

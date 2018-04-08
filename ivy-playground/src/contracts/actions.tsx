@@ -119,25 +119,20 @@ export const create = () => {
       dispatch(timeoutLockError())
       return
     }
+    const nClient = bpanelClient()
+    const tx = await nClient.getTX(fundingTransaction.hash)
+
     const withdrawalAddress = account.receiveAddress
     dispatch({
       type: CREATE_CONTRACT,
       instantiated: {
         ...instantiated,
-        fundingTransaction: {
-          ...fundingTransaction,
-          version: 1
-        }
+        fundingTransaction: tx
       },
       template,
       inputMap,
       withdrawalAddress
     })
-    setInterval(async () => {
-      const nClient = bpanelClient()
-      const tx = await nClient.getTX(fundingTransaction.hash)
-      console.log('tx details', tx)
-    }, 5000)
     dispatch(push("/ivy-plugin-view"))
   }
 }

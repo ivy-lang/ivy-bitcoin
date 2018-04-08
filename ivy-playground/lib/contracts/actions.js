@@ -95,19 +95,16 @@ export const create = () => {
             dispatch(timeoutLockError());
             return;
         }
+        const nClient = bpanelClient();
+        const tx = yield nClient.getTX(fundingTransaction.hash);
         const withdrawalAddress = account.receiveAddress;
         dispatch({
             type: CREATE_CONTRACT,
-            instantiated: Object.assign({}, instantiated, { fundingTransaction: Object.assign({}, fundingTransaction, { version: 1 }) }),
+            instantiated: Object.assign({}, instantiated, { fundingTransaction: tx }),
             template,
             inputMap,
             withdrawalAddress
         });
-        setInterval(() => __awaiter(this, void 0, void 0, function* () {
-            const nClient = bpanelClient();
-            const tx = yield nClient.getTX(fundingTransaction.hash);
-            console.log('tx details', tx);
-        }), 5000);
         dispatch(push("/ivy-plugin-view"));
     });
 };

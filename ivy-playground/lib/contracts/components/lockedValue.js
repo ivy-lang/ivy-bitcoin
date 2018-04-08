@@ -32,6 +32,9 @@ const UnlockButton = connect(undefined, (dispatch, ownProps) => {
         unlock: () => dispatch(setUnlockContract(ownProps.contractId))
     };
 })(UnlockButtonUnconnected);
+function shorten(hash) {
+    return hash.slice(0, 10) + "...";
+}
 function LockedValue(props) {
     let content = React.createElement("div", { className: "table-placeholder" }, "No Contracts");
     if (props.contractIds.length > 0) {
@@ -55,7 +58,7 @@ const LockedValueRowUnconnected = (props) => {
     return (React.createElement("tr", null,
         React.createElement("td", null, contract.instantiated.template.name),
         React.createElement("td", null, amountFromSatoshis(contract.instantiated.amount)),
-        React.createElement("td", null, hash),
+        React.createElement("td", null, shorten(hash)),
         React.createElement("td", { className: "td-button" },
             React.createElement(UnlockButton, { contractId: contract.id }))));
 };
@@ -85,7 +88,7 @@ const HistoryRowUnconnected = (props) => {
     return (React.createElement("tr", null,
         React.createElement("td", null, contract.instantiated.template.name),
         React.createElement("td", null, amountFromSatoshis(contract.instantiated.amount)),
-        React.createElement("td", null, contract.unlockTxid),
+        React.createElement("td", null, shorten(contract.unlockTxid || "")),
         React.createElement("td", null)));
 };
 const HistoryRow = connect((state, ownProps) => {
