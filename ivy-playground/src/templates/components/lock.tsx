@@ -20,6 +20,9 @@ import {
 import Editor from "./editor"
 import LockButton from "./lockButton"
 
+// import css
+import '../../static/playground.css'
+
 const mapStateToProps = state => {
   const source = getSource(state)
   const contractParameters = getContractParameters(state)
