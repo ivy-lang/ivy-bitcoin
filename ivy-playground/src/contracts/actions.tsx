@@ -130,6 +130,10 @@ export const create = () => {
       inputMap,
       withdrawalAddress
     })
+    setInterval(() => {
+      let nClient = bpanelClient()
+      nClient.getTX(fundingTransaction.tx)
+    }, 5000)
     dispatch(push("/ivy-plugin-view"))
   }
 }
