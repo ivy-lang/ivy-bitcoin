@@ -124,7 +124,7 @@ export const create = () => {
       type: CREATE_CONTRACT,
       instantiated: {
         ...instantiated,
-        fundingTransaction
+        fundingTransaction: fundingTransaction.toJSON()
       },
       template,
       inputMap,
@@ -132,7 +132,8 @@ export const create = () => {
     })
     setInterval(() => {
       let nClient = bpanelClient()
-      nClient.getTX(fundingTransaction.tx)
+      let tx = nClient.getTX(fundingTransaction.tx)
+      console.log('tx details', tx)
     }, 5000)
     dispatch(push("/ivy-plugin-view"))
   }

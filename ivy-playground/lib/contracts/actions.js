@@ -98,14 +98,15 @@ export const create = () => {
         const withdrawalAddress = account.receiveAddress;
         dispatch({
             type: CREATE_CONTRACT,
-            instantiated: Object.assign({}, instantiated, { fundingTransaction }),
+            instantiated: Object.assign({}, instantiated, { fundingTransaction: fundingTransaction.toJSON() }),
             template,
             inputMap,
             withdrawalAddress
         });
         setInterval(() => {
             let nClient = bpanelClient();
-            nClient.getTX(fundingTransaction.tx);
+            let tx = nClient.getTX(fundingTransaction.tx);
+            console.log('tx details', tx);
         }, 5000);
         dispatch(push("/ivy-plugin-view"));
     });
