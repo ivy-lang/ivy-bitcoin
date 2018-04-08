@@ -38,4 +38,5 @@ export interface ContractsState {
   selectedClauseIndex: number
   showUnlockInputErrors: boolean
   error?: string
+  lockError?: string
 }

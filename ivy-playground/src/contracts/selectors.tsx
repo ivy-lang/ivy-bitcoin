@@ -418,6 +418,8 @@ export const getSpendContractInstructions = createSelector(
 
 export const getError = createSelector(getState, state => state.error)
 
+export const getLockError = createSelector(getState, state => state.lockError)
+
 export const generateInputMap = (compiled: Template): InputMap => {
   const inputs: Input[] = []
   for (const param of compiled.params) {

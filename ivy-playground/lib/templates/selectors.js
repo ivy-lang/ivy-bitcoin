@@ -1,6 +1,7 @@
 // external imports
 import { instantiate } from "ivy-bitcoin";
 import { createSelector } from "reselect";
+import { getLockError } from "../contracts/selectors";
 import { getData, isValidInput } from "../inputs/data";
 // internal imports
 import { getAppState } from "../app/selectors";
@@ -117,7 +118,7 @@ export const getSaveability = createSelector(getCompiled, getSourceMap, getError
         error: ""
     };
 });
-export const getCreateability = createSelector(getSource, getSourceMap, getCompiled, areInputsValid, getError, (source, sourceMap, compiled, inputsAreValid, error) => {
+export const getCreateability = createSelector(getSource, getSourceMap, getCompiled, areInputsValid, getError, getLockError, (source, sourceMap, compiled, inputsAreValid, error, lockError) => {
     if (compiled === undefined) {
         return {
             createable: false,
@@ -128,6 +129,12 @@ export const getCreateability = createSelector(getSource, getSourceMap, getCompi
         return {
             createable: false,
             error: "Contract template is not valid Ivy."
+        };
+    }
+    if (lockError) {
+        return {
+            createable: false,
+            error: lockError
         };
     }
     if (!inputsAreValid) {
