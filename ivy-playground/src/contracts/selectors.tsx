@@ -235,14 +235,12 @@ export const getSpendTransaction = createSelector(
     const oldTransaction = spendSourceTransaction
     const newTransaction = TX.fromRaw(
       Buffer.from((spendSourceTransaction as any).tx, "hex")
-    ).toJSON()
-    console.log(oldTransaction)
-    console.log(newTransaction)
+    ).getJSON("testnet")
+    console.log("oldTx", oldTransaction)
+    console.log("newTx", newTransaction)
     return Immutable.asMutable(
       spend(
-        TX.fromRaw(
-          Buffer.from((spendSourceTransaction as any).tx, "hex")
-        ).toJSON(),
+        newTransaction,
         spendDestinationAddress,
         amount,
         locktime as number,

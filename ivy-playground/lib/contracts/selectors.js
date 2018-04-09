@@ -99,10 +99,10 @@ export const getSpendTransaction = createSelector(getSpendSourceTransaction, get
         return undefined;
     }
     const oldTransaction = spendSourceTransaction;
-    const newTransaction = TX.fromRaw(Buffer.from(spendSourceTransaction.tx, "hex")).toJSON();
-    console.log(oldTransaction);
-    console.log(newTransaction);
-    return Immutable.asMutable(spend(TX.fromRaw(Buffer.from(spendSourceTransaction.tx, "hex")).toJSON(), spendDestinationAddress, amount, locktime, sequenceNumber), { deep: true });
+    const newTransaction = TX.fromRaw(Buffer.from(spendSourceTransaction.tx, "hex")).getJSON("testnet");
+    console.log("oldTx", oldTransaction);
+    console.log("newTx", newTransaction);
+    return Immutable.asMutable(spend(newTransaction, spendDestinationAddress, amount, locktime, sequenceNumber), { deep: true });
 });
 export const getSpendTransactionSigHash = createSelector(getInstantiated, getSpendTransaction, (instantiated, spendTransaction) => toSighash(instantiated, spendTransaction));
 export const getNumberOfClauses = createSelector(getSpendContract, spendContract => spendContract.instantiated.template.clauses.length);
