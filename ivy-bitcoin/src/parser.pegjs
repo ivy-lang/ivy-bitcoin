@@ -36,10 +36,9 @@ Assertion
 Unlock
   = "unlock" _ value:VariableExpression __ { return { type: "unlock", location: location(), value: value } }
 
-// need to handle precedence
 
 Expression1 "expression"
-  = ComparisonExpression
+  = OrExpression
   / Expression2
 
 Expression2
@@ -51,16 +50,50 @@ Expression2
 Literal
   = ListLiteral
   / BooleanLiteral
-  / IntegerLiteral
+  / NumberLiteral
 
-IntegerLiteral "integer"
-  = [-]?[0-9]+ { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
+NumberLiteral "integer"
+  = 0|[1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
-ComparisonExpression // not associative
-  = left:Expression2 __ operator:ComparisonOperator __ right:Expression2 { return createBinaryExpression([{left: left, operator: operator}], right) }
+UnaryExpression
+  = Expression2 | operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression)}
+
+MultiplicativeExpression
+  = head:UnaryExpression tail:(_ MultiplicativeOperator _ MultiplicativeExpression)* {return createBinaryExpression([head], tail)}
+
+ArithmeticExpression
+  head:MultiplicativeExpression tail:(_ ArithemeticOperator _ MultiplicativeExpression)* {return createBinaryExpression([head], tail)}
+
+BitwiseExpression
+ = head:ArithmeticExpression tail:(_ BitwiseOperator _ ArithmeticExpression)* {return createBinaryExpression([head], tail)}
+
+AndExpression
+  = head:ComparisonExpression tail:(_ AndOperator _ ComparisonExpression)* {return createBinaryExpression([head],tail)}
+
+OrExpression
+  = head:AndExpression tail:(_ OrOperator _ AndExpression)* {return createBinaryExpression([head], tail)}
+
+OrOperator
+  = "||"
+
+AndOperator
+  = "&&"
+
+BitwiseOperator
+  = "^" / "&" / "|"
+
+ArithemeticOperator
+  = "+" / "-"
+
+MultiplicativeOperator
+  = "*" / "/" / "%"
+
+UnaryOperator
+  = "-" / "!"
 
 ComparisonOperator
-  = (operator:Operator & { return isComparisonOperator(operator) }) { return text() }
+  = "==" / "!=" / "<" / ">" / "<=" / ">="
+
 
 CallExpression
   = name:FunctionIdentifier "(" args:Expressions ")" { return createInstructionExpression("callExpression", location(), name, args) }
