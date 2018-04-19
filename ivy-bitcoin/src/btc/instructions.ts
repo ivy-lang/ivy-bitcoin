@@ -4,6 +4,22 @@ import { BugError } from "../errors"
 
 export type ComparisonOperator = "==" | "!="
 
+export type MultiplicativeOperator = "==" | "!="
+
+export type OrOperator = "||"
+
+export type AndOperator = "&&"
+
+export type BitwiseOperator = "^" | "&" | "|"
+
+export type ArithemeticOperator = "+" | "-"
+
+export type MultiplicativeOperator = "*" | "|" | "%"
+
+export type UnaryOperator = "-" | "!"
+
+export type ComparisonOperator = "==" | "!=" | "<" | ">" | "<=" | ">="
+
 export function isComparisonOperator(str: string): str is ComparisonOperator {
   return ["==", "!="].indexOf(str) !== -1
 }
@@ -22,8 +38,13 @@ export type FunctionName =
 export type Opcode = string // for now
 
 export type BinaryOperator = ComparisonOperator
+                            | MultiplicativeOperator
+                            | ArithmeticOperator
+                            | BitwiseOperator
+                            | AndOperator
+                            | OrOperator
 
-export type Instruction = BinaryOperator | FunctionName
+export type Instruction = BinaryOperator | FunctionName | UnaryOperator
 
 // slightly hackish runtime type guard
 

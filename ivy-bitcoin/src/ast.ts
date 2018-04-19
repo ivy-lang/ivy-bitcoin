@@ -7,7 +7,7 @@ export interface Location {
   end: { column: number; line: number }
 }
 
-export type InstructionExpressionType = "binaryExpression" | "callExpression"
+export type InstructionExpressionType = "binaryExpression" | "callExpression" | "unaryExpression"
 
 export interface Parameter {
   type: "parameter"
@@ -105,25 +105,29 @@ export interface PartialExpression {
   left: Expression
 }
 
-export function createBinaryExpression(
-  partials: PartialExpression[],
-  right: Expression
-): Expression {
-  const last = partials.pop()
-  if (last === undefined) {
-    throw new BugError("partials list must not be empty")
-  }
-  const operator = last.operator
-  const left = partials.length
-    ? createBinaryExpression(partials, last.left)
-    : last.left
+export function createUnaryExpression(
+  operator: string,
+  expression: Expression,
+  location: Location
+):
   return createInstructionExpression(
-    "binaryExpression",
-    left.location,
-    operator,
-    [right, left]
-  )
-}
+      "unaryExpression",
+      location,
+      operator,
+      [expression]
+  );
+
+export function createBinaryExpression(
+  head: Expression,
+  tail: Expression[]
+): tail.reduce(function(result, element){
+  return createInstructionExpression(
+      "binaryExpression",
+      result.location,
+      element[1],
+      [element[3], result]
+    )
+}, head);
 
 export function createInstructionExpression(
   expressionType: InstructionExpressionType,

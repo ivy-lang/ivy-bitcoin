@@ -53,25 +53,25 @@ Literal
   / NumberLiteral
 
 NumberLiteral "integer"
-  = 0|[1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
+  = [1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
 UnaryExpression
-  = Expression2 | operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression)}
+  = Expression2 | operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression, location())}
 
 MultiplicativeExpression
-  = head:UnaryExpression tail:(_ MultiplicativeOperator _ MultiplicativeExpression)* {return createBinaryExpression([head], tail)}
+  = head:UnaryExpression tail:(_ MultiplicativeOperator _ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
 
 ArithmeticExpression
-  head:MultiplicativeExpression tail:(_ ArithemeticOperator _ MultiplicativeExpression)* {return createBinaryExpression([head], tail)}
+  head:MultiplicativeExpression tail:(_ ArithmeticOperator _ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
 
 BitwiseExpression
- = head:ArithmeticExpression tail:(_ BitwiseOperator _ ArithmeticExpression)* {return createBinaryExpression([head], tail)}
+ = head:ArithmeticExpression tail:(_ BitwiseOperator _ ArithmeticExpression)* {return createBinaryExpression(head, tail)}
 
 AndExpression
-  = head:ComparisonExpression tail:(_ AndOperator _ ComparisonExpression)* {return createBinaryExpression([head],tail)}
+  = head:ComparisonExpression tail:(_ AndOperator _ ComparisonExpression)* {return createBinaryExpression(head, tail)}
 
 OrExpression
-  = head:AndExpression tail:(_ OrOperator _ AndExpression)* {return createBinaryExpression([head], tail)}
+  = head:AndExpression tail:(_ OrOperator _ AndExpression)* {return createBinaryExpression(head, tail)}
 
 OrOperator
   = "||"
@@ -82,7 +82,7 @@ AndOperator
 BitwiseOperator
   = "^" / "&" / "|"
 
-ArithemeticOperator
+ArithmeticOperator
   = "+" / "-"
 
 MultiplicativeOperator
@@ -131,11 +131,11 @@ Type "type"
 PrimitiveType
   = (id:Identifier & { return isPrimitive(id) }) { return text() }
 
-HashFunctionType = 
+HashFunctionType =
   (hashType:Identifier & { return isHashTypeName(hashType) }) { return text() }
 
 HashType
-  = hashFunctionType:HashFunctionType "(" inputType:HashableType ")" { return { type: "hashType", 
+  = hashFunctionType:HashFunctionType "(" inputType:HashableType ")" { return { type: "hashType",
                                                                                 hashFunction: typeNameToHashFunction(hashFunctionType),
                                                                                 inputType: inputType
                                                                                } }
