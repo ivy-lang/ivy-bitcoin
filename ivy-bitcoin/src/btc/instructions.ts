@@ -2,17 +2,13 @@ import { createTypeSignature, TypeSignature } from "./types"
 
 import { BugError } from "../errors"
 
-export type ComparisonOperator = "==" | "!="
-
-export type MultiplicativeOperator = "==" | "!="
-
 export type OrOperator = "||"
 
 export type AndOperator = "&&"
 
 export type BitwiseOperator = "^" | "&" | "|"
 
-export type ArithemeticOperator = "+" | "-"
+export type ArithmeticOperator = "+" | "-"
 
 export type MultiplicativeOperator = "*" | "|" | "%"
 
@@ -79,6 +75,8 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return []
     case "size":
       return ["SIZE", "SWAP", "DROP"]
+    default:
+      throw new Error("getOpcodes Error")
   }
 }
 
@@ -109,5 +107,7 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
       throw new Error("should not call getTypeSignature on hash function")
     case "bytes":
       throw new Error("should not call getTypeSignature on bytes function")
+    default:
+      throw new Error("getTypeSignature Error")
   }
 }

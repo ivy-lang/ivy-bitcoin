@@ -53,19 +53,22 @@ Literal
   / NumberLiteral
 
 NumberLiteral "integer"
-  = [1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
+  = "0"/[1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
 UnaryExpression
-  = Expression2 | operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression, location())}
+  = Expression2 / operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression, location())}
 
 MultiplicativeExpression
   = head:UnaryExpression tail:(_ MultiplicativeOperator _ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
 
 ArithmeticExpression
-  head:MultiplicativeExpression tail:(_ ArithmeticOperator _ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
+  = head:MultiplicativeExpression tail:(_ ArithmeticOperator _ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
 
 BitwiseExpression
  = head:ArithmeticExpression tail:(_ BitwiseOperator _ ArithmeticExpression)* {return createBinaryExpression(head, tail)}
+
+ComparisonExpression
+= head:BitwiseExpression tail:(_ ComparisonOperator _ BitwiseExpression)* {return createBinaryExpression(head, tail)}
 
 AndExpression
   = head:ComparisonExpression tail:(_ AndOperator _ ComparisonExpression)* {return createBinaryExpression(head, tail)}

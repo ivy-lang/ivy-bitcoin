@@ -109,25 +109,27 @@ export function createUnaryExpression(
   operator: string,
   expression: Expression,
   location: Location
-):
+) {
   return createInstructionExpression(
       "unaryExpression",
       location,
       operator,
       [expression]
   );
+}
 
 export function createBinaryExpression(
   head: Expression,
   tail: Expression[]
-): tail.reduce(function(result, element){
-  return createInstructionExpression(
-      "binaryExpression",
-      result.location,
-      element[1],
-      [element[3], result]
-    )
-}, head);
+) {
+  return tail.reduce(function(result, element) {
+    return  createInstructionExpression(
+        "binaryExpression",
+        result.location,
+        element[1],
+        [element[3], result])
+    }, head);
+}
 
 export function createInstructionExpression(
   expressionType: InstructionExpressionType,
@@ -221,6 +223,8 @@ function instructionExpressionToString(expression: InstructionExpression) {
         expression.args.map(exp => expressionToString(exp)).join(", ") +
         ")"
       )
+    default:
+      throw new Error("instructionExpressionToString Error")
   }
 }
 
