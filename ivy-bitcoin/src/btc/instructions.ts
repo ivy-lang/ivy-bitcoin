@@ -10,7 +10,7 @@ export type BitwiseOperator = "^" | "&" | "|"
 
 export type ArithmeticOperator = "+" | "-"
 
-export type MultiplicativeOperator = "*" | "|" | "%"
+export type MultiplicativeOperator = "*" | "/" | "%"
 
 export type UnaryOperator = "-" | "!"
 
@@ -71,6 +71,36 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["EQUAL"]
     case "!=":
       return ["EQUAL", "NOT"]
+    case "<":
+      return ["LESS"]
+    case "<":
+      return ["GREATER"]
+    case "<=":
+      return ["LESS", "EQUAL"]
+    case "<=":
+      return ["GREATER", "EQUAL"]
+    case "||":
+      return ["OR"]
+    case "&&":
+      return ["AND"]
+    case "^":
+      return ["XOR"]
+    case "&":
+      return ["AND"]
+    case "|":
+      return ["OR"]
+    case "+":
+      return ["ADD"]
+    case "-":
+      return ["SUB"]
+    case "*":
+      return ["MUL"]
+    case "/":
+      return ["DIV"]
+    case "%":
+      return ["MOD"]
+    case "!":
+      return ["NOT"]
     case "bytes":
       return []
     case "size":

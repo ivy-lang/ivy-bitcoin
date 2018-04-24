@@ -928,13 +928,13 @@ function peg$parse(input, options) {
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
-      s4 = peg$parse_();
+      s4 = peg$parse__();
       if (s4 !== peg$FAILED) {
         s5 = peg$parseMultiplicativeOperator();
         if (s5 !== peg$FAILED) {
-          s6 = peg$parse_();
+          s6 = peg$parse__();
           if (s6 !== peg$FAILED) {
-            s7 = peg$parseMultiplicativeExpression();
+            s7 = peg$parseUnaryExpression();
             if (s7 !== peg$FAILED) {
               s4 = [s4, s5, s6, s7];
               s3 = s4;
@@ -957,13 +957,13 @@ function peg$parse(input, options) {
       while (s3 !== peg$FAILED) {
         s2.push(s3);
         s3 = peg$currPos;
-        s4 = peg$parse_();
+        s4 = peg$parse__();
         if (s4 !== peg$FAILED) {
           s5 = peg$parseMultiplicativeOperator();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parse_();
+            s6 = peg$parse__();
             if (s6 !== peg$FAILED) {
-              s7 = peg$parseMultiplicativeExpression();
+              s7 = peg$parseUnaryExpression();
               if (s7 !== peg$FAILED) {
                 s4 = [s4, s5, s6, s7];
                 s3 = s4;
@@ -1008,11 +1008,11 @@ function peg$parse(input, options) {
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
-      s4 = peg$parse_();
+      s4 = peg$parse__();
       if (s4 !== peg$FAILED) {
         s5 = peg$parseArithmeticOperator();
         if (s5 !== peg$FAILED) {
-          s6 = peg$parse_();
+          s6 = peg$parse__();
           if (s6 !== peg$FAILED) {
             s7 = peg$parseMultiplicativeExpression();
             if (s7 !== peg$FAILED) {
@@ -1037,11 +1037,11 @@ function peg$parse(input, options) {
       while (s3 !== peg$FAILED) {
         s2.push(s3);
         s3 = peg$currPos;
-        s4 = peg$parse_();
+        s4 = peg$parse__();
         if (s4 !== peg$FAILED) {
           s5 = peg$parseArithmeticOperator();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parse_();
+            s6 = peg$parse__();
             if (s6 !== peg$FAILED) {
               s7 = peg$parseMultiplicativeExpression();
               if (s7 !== peg$FAILED) {
@@ -1088,11 +1088,11 @@ function peg$parse(input, options) {
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
-      s4 = peg$parse_();
+      s4 = peg$parse__();
       if (s4 !== peg$FAILED) {
         s5 = peg$parseBitwiseOperator();
         if (s5 !== peg$FAILED) {
-          s6 = peg$parse_();
+          s6 = peg$parse__();
           if (s6 !== peg$FAILED) {
             s7 = peg$parseArithmeticExpression();
             if (s7 !== peg$FAILED) {
@@ -1117,11 +1117,11 @@ function peg$parse(input, options) {
       while (s3 !== peg$FAILED) {
         s2.push(s3);
         s3 = peg$currPos;
-        s4 = peg$parse_();
+        s4 = peg$parse__();
         if (s4 !== peg$FAILED) {
           s5 = peg$parseBitwiseOperator();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parse_();
+            s6 = peg$parse__();
             if (s6 !== peg$FAILED) {
               s7 = peg$parseArithmeticExpression();
               if (s7 !== peg$FAILED) {
@@ -1168,11 +1168,11 @@ function peg$parse(input, options) {
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
-      s4 = peg$parse_();
+      s4 = peg$parse__();
       if (s4 !== peg$FAILED) {
         s5 = peg$parseComparisonOperator();
         if (s5 !== peg$FAILED) {
-          s6 = peg$parse_();
+          s6 = peg$parse__();
           if (s6 !== peg$FAILED) {
             s7 = peg$parseBitwiseExpression();
             if (s7 !== peg$FAILED) {
@@ -1197,11 +1197,11 @@ function peg$parse(input, options) {
       while (s3 !== peg$FAILED) {
         s2.push(s3);
         s3 = peg$currPos;
-        s4 = peg$parse_();
+        s4 = peg$parse__();
         if (s4 !== peg$FAILED) {
           s5 = peg$parseComparisonOperator();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parse_();
+            s6 = peg$parse__();
             if (s6 !== peg$FAILED) {
               s7 = peg$parseBitwiseExpression();
               if (s7 !== peg$FAILED) {
@@ -1248,11 +1248,11 @@ function peg$parse(input, options) {
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
-      s4 = peg$parse_();
+      s4 = peg$parse__();
       if (s4 !== peg$FAILED) {
         s5 = peg$parseAndOperator();
         if (s5 !== peg$FAILED) {
-          s6 = peg$parse_();
+          s6 = peg$parse__();
           if (s6 !== peg$FAILED) {
             s7 = peg$parseComparisonExpression();
             if (s7 !== peg$FAILED) {
@@ -1277,11 +1277,11 @@ function peg$parse(input, options) {
       while (s3 !== peg$FAILED) {
         s2.push(s3);
         s3 = peg$currPos;
-        s4 = peg$parse_();
+        s4 = peg$parse__();
         if (s4 !== peg$FAILED) {
           s5 = peg$parseAndOperator();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parse_();
+            s6 = peg$parse__();
             if (s6 !== peg$FAILED) {
               s7 = peg$parseComparisonExpression();
               if (s7 !== peg$FAILED) {
@@ -1328,11 +1328,11 @@ function peg$parse(input, options) {
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
-      s4 = peg$parse_();
+      s4 = peg$parse__();
       if (s4 !== peg$FAILED) {
         s5 = peg$parseOrOperator();
         if (s5 !== peg$FAILED) {
-          s6 = peg$parse_();
+          s6 = peg$parse__();
           if (s6 !== peg$FAILED) {
             s7 = peg$parseAndExpression();
             if (s7 !== peg$FAILED) {
@@ -1357,11 +1357,11 @@ function peg$parse(input, options) {
       while (s3 !== peg$FAILED) {
         s2.push(s3);
         s3 = peg$currPos;
-        s4 = peg$parse_();
+        s4 = peg$parse__();
         if (s4 !== peg$FAILED) {
           s5 = peg$parseOrOperator();
           if (s5 !== peg$FAILED) {
-            s6 = peg$parse_();
+            s6 = peg$parse__();
             if (s6 !== peg$FAILED) {
               s7 = peg$parseAndExpression();
               if (s7 !== peg$FAILED) {

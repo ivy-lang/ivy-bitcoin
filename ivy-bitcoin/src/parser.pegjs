@@ -59,22 +59,22 @@ UnaryExpression
   = Expression2 / operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression, location())}
 
 MultiplicativeExpression
-  = head:UnaryExpression tail:(_ MultiplicativeOperator _ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
+  = head:UnaryExpression tail:(__ MultiplicativeOperator __ UnaryExpression)* {return createBinaryExpression(head, tail)}
 
 ArithmeticExpression
-  = head:MultiplicativeExpression tail:(_ ArithmeticOperator _ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
+  = head:MultiplicativeExpression tail:(__ ArithmeticOperator __ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
 
 BitwiseExpression
- = head:ArithmeticExpression tail:(_ BitwiseOperator _ ArithmeticExpression)* {return createBinaryExpression(head, tail)}
+ = head:ArithmeticExpression tail:(__ BitwiseOperator __ ArithmeticExpression)* {return createBinaryExpression(head, tail)}
 
 ComparisonExpression
-= head:BitwiseExpression tail:(_ ComparisonOperator _ BitwiseExpression)* {return createBinaryExpression(head, tail)}
+= head:BitwiseExpression tail:(__ ComparisonOperator __ BitwiseExpression)* {return createBinaryExpression(head, tail)}
 
 AndExpression
-  = head:ComparisonExpression tail:(_ AndOperator _ ComparisonExpression)* {return createBinaryExpression(head, tail)}
+  = head:ComparisonExpression tail:(__ AndOperator __ ComparisonExpression)* {return createBinaryExpression(head, tail)}
 
 OrExpression
-  = head:AndExpression tail:(_ OrOperator _ AndExpression)* {return createBinaryExpression(head, tail)}
+  = head:AndExpression tail:(__ OrOperator __ AndExpression)* {return createBinaryExpression(head, tail)}
 
 OrOperator
   = "||"
