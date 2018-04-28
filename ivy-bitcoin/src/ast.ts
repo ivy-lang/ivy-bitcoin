@@ -7,7 +7,11 @@ export interface Location {
   end: { column: number; line: number }
 }
 
-export type InstructionExpressionType = "binaryExpression" | "callExpression" | "unaryExpression"
+export type InstructionExpressionType =
+  | "binaryExpression"
+  | "callExpression"
+  | "unaryExpression"
+  | "splitExpression"
 
 export interface Parameter {
   type: "parameter"
@@ -105,32 +109,6 @@ export interface PartialExpression {
   left: Expression
 }
 
-export function createUnaryExpression(
-  operator: string,
-  expression: Expression,
-  location: Location
-) {
-  return createInstructionExpression(
-      "unaryExpression",
-      location,
-      operator,
-      [expression]
-  );
-}
-
-export function createBinaryExpression(
-  head: Expression,
-  tail: Expression[]
-) {
-  return tail.reduce(function(result, element) {
-    return  createInstructionExpression(
-        "binaryExpression",
-        result.location,
-        element[1],
-        [element[3], result])
-    }, head);
-}
-
 export function createInstructionExpression(
   expressionType: InstructionExpressionType,
   location: Location,
@@ -149,6 +127,45 @@ export function createInstructionExpression(
     location,
     args
   }
+}
+
+export function createUnaryExpression(
+  operator: string,
+  expression: Expression,
+  location: Location
+) {
+  return createInstructionExpression(
+      "unaryExpression",
+      location,
+      operator,
+      [expression]
+  )
+}
+
+export function createBinaryExpression(
+  head: Expression,
+  tail: Expression[]
+) {
+
+  return tail.reduce((result, element)  => 
+      createInstructionExpression(
+        "binaryExpression",
+        result.location,
+        element[1],
+        [element[3], result]), head)
+}
+
+export function createSplitExpression(
+  variable: Variable,
+  start: Expression,
+  stop: Expression,
+) {
+  return createInstructionExpression(
+    "splitExpression",
+    variable.location,
+    "split",
+    [variable, start, stop]
+  )
 }
 
 export interface Variable {
@@ -216,11 +233,29 @@ function instructionExpressionToString(expression: InstructionExpression) {
         expressionToString(expression.args[1]) +
         ")"
       )
+    case "unaryExpression":
+      return (
+        expression.instruction +
+        "(" +
+        expressionToString(expression.args[0]) +
+        ")"
+      )
     case "callExpression":
       return (
         expression.instruction +
         "(" +
         expression.args.map(exp => expressionToString(exp)).join(", ") +
+        ")"
+      )
+    case "splitExpression":
+      return (
+        "(" +
+          expressionToString(expression.args[0]) +
+          "[" +
+          expressionToString(expression.args[1]) +
+          ":" +
+          expressionToString(expression.args[2]) +
+          "]" +
         ")"
       )
     default:

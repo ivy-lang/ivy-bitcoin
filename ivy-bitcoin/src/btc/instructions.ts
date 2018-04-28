@@ -2,19 +2,38 @@ import { createTypeSignature, TypeSignature } from "./types"
 
 import { BugError } from "../errors"
 
+export type SplitOperator = "split"
+
 export type OrOperator = "||"
 
 export type AndOperator = "&&"
 
-export type BitwiseOperator = "^" | "&" | "|"
+export type BitwiseOperator =
+  | "^"
+  | "&"
+  | "|"
 
-export type ArithmeticOperator = "+" | "-"
+export type ArithmeticOperator =
+  |"+"
+  | "-"
 
-export type MultiplicativeOperator = "*" | "/" | "%"
+export type MultiplicativeOperator =
+  | "*"
+  | "/"
+  | "%"
 
-export type UnaryOperator = "-" | "!"
+export type UnaryOperator =
+  | "-"
+  | "!"
 
-export type ComparisonOperator = "==" | "!=" | "<" | ">" | "<=" | ">="
+export type ComparisonOperator =
+  | "=="
+  | "!="
+  | "<"
+  | ">"
+  | "<="
+  | ">="
+
 
 export function isComparisonOperator(str: string): str is ComparisonOperator {
   return ["==", "!="].indexOf(str) !== -1
@@ -28,19 +47,28 @@ export type FunctionName =
   | "older"
   | "after"
   | "checkMultiSig"
+  | "min"
+  | "max"
+  | "within"
+  | "cat"
   | "bytes"
   | "size"
 
 export type Opcode = string // for now
 
-export type BinaryOperator = ComparisonOperator
-                            | MultiplicativeOperator
-                            | ArithmeticOperator
-                            | BitwiseOperator
-                            | AndOperator
-                            | OrOperator
+export type BinaryOperator =
+  | ComparisonOperator
+  | MultiplicativeOperator
+  | ArithmeticOperator
+  | BitwiseOperator
+  | AndOperator
+  | OrOperator
 
-export type Instruction = BinaryOperator | FunctionName | UnaryOperator
+export type Instruction =
+  | BinaryOperator
+  | FunctionName
+  | UnaryOperator
+  | SplitOperator
 
 // slightly hackish runtime type guard
 
@@ -67,18 +95,26 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["CHECKLOCKTIMEVERIFY", "DROP", "1"] // will get special treatment
     case "checkMultiSig":
       return ["CHECKMULTISIG"] // will get special treatment
+    case "min":
+      return ["MIN"]
+    case "max":
+      return ["MAX"]
+    case "within":
+      return ["WITHIN"]
+    case "cat":
+      return ["CAT"]
     case "==":
       return ["EQUAL"]
     case "!=":
       return ["EQUAL", "NOT"]
     case "<":
-      return ["LESS"]
-    case "<":
-      return ["GREATER"]
+      return ["LESSTHAN"]
+    case ">":
+      return ["GREATERTHAN"]
     case "<=":
-      return ["LESS", "EQUAL"]
-    case "<=":
-      return ["GREATER", "EQUAL"]
+      return ["LESSTHANOREQUAL"]
+    case ">=":
+      return ["GREATERTHANOREQUAL"]
     case "||":
       return ["OR"]
     case "&&":
@@ -92,7 +128,7 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
     case "+":
       return ["ADD"]
     case "-":
-      return ["SUB"]
+      return ["SUB", "NEGATE"]
     case "*":
       return ["MUL"]
     case "/":
@@ -101,6 +137,8 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["MOD"]
     case "!":
       return ["NOT"]
+    case "split":
+      return ["SPLIT"]
     case "bytes":
       return []
     case "size":

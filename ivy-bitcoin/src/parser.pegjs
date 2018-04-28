@@ -8,6 +8,8 @@ let instructions = require("./btc/instructions")
 
 let createInstructionExpression = ast.createInstructionExpression
 let createBinaryExpression = ast.createBinaryExpression
+let createUnaryExpression = ast.createUnaryExpression
+let createSplitExpression = ast.createSplitExpression
 
 let isPrimitive = types.isPrimitive
 let isHashTypeName = types.isHashTypeName
@@ -52,8 +54,6 @@ Literal
   / BooleanLiteral
   / NumberLiteral
 
-NumberLiteral "integer"
-  = "0"/[1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
 UnaryExpression
   = Expression2 / operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression, location())}
@@ -76,33 +76,16 @@ AndExpression
 OrExpression
   = head:AndExpression tail:(__ OrOperator __ AndExpression)* {return createBinaryExpression(head, tail)}
 
-OrOperator
-  = "||"
-
-AndOperator
-  = "&&"
-
-BitwiseOperator
-  = "^" / "&" / "|"
-
-ArithmeticOperator
-  = "+" / "-"
-
-MultiplicativeOperator
-  = "*" / "/" / "%"
-
-UnaryOperator
-  = "-" / "!"
-
-ComparisonOperator
-  = "==" / "!=" / "<" / ">" / "<=" / ">="
-
 
 CallExpression
   = name:FunctionIdentifier "(" args:Expressions ")" { return createInstructionExpression("callExpression", location(), name, args) }
 
 VariableExpression
-  = identifier:Identifier { return { type: "variable", location: location(), name: identifier} }
+  = SplitExpression
+  / identifier:Identifier { return { type: "variable", location: location(), name: identifier} }
+
+SplitExpression
+  = identifier:Identifier "[" __ start:(Expression1)? __ ":" stop:(Expression1)? __ "]" {return createSplitExpression({ type: "variable", location: location(), name: identifier}, start, stop)}
 
 Expressions "expressions"
   = __ first:Expression1 "," __ rest:Expressions { rest.unshift(first); return rest }
@@ -143,8 +126,32 @@ HashType
                                                                                 inputType: inputType
                                                                                } }
 
+OrOperator
+  = "||"
+
+AndOperator
+  = "&&"
+
+BitwiseOperator
+  = "^" / "&" / "|"
+
+ArithmeticOperator
+  = "+" / "-"
+
+MultiplicativeOperator
+  = "*" / "/" / "%"
+
+UnaryOperator
+  = "-" / "!"
+
+ComparisonOperator
+  = "==" / "!=" / "<" / ">" / "<=" / ">="
+
 HashableType
   = "Bytes" / "PublicKey" / HashType
+
+NumberLiteral "integer"
+  = "0"/[1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
 Identifier "identifier"
   = [_A-Za-z] [_A-Za-z0-9]* { return text() }
