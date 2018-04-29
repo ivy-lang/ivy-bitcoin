@@ -2,8 +2,6 @@ import { createTypeSignature, TypeSignature } from "./types"
 
 import { BugError } from "../errors"
 
-export type SplitOperator = "split"
-
 export type OrOperator = "||"
 
 export type AndOperator = "&&"
@@ -50,6 +48,7 @@ export type FunctionName =
   | "min"
   | "max"
   | "within"
+  | "substr"
   | "cat"
   | "bytes"
   | "size"
@@ -68,7 +67,6 @@ export type Instruction =
   | BinaryOperator
   | FunctionName
   | UnaryOperator
-  | SplitOperator
 
 // slightly hackish runtime type guard
 
@@ -137,7 +135,7 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["MOD"]
     case "!":
       return ["NOT"]
-    case "split":
+    case "substr":
       return ["SPLIT"]
     case "bytes":
       return []

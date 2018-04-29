@@ -11,7 +11,6 @@ export type InstructionExpressionType =
   | "binaryExpression"
   | "callExpression"
   | "unaryExpression"
-  | "splitExpression"
 
 export interface Parameter {
   type: "parameter"
@@ -147,7 +146,7 @@ export function createBinaryExpression(
   tail: Expression[]
 ) {
 
-  return tail.reduce((result, element)  => 
+  return tail.reduce((result, element)  =>
       createInstructionExpression(
         "binaryExpression",
         result.location,
@@ -155,18 +154,6 @@ export function createBinaryExpression(
         [element[3], result]), head)
 }
 
-export function createSplitExpression(
-  variable: Variable,
-  start: Expression,
-  stop: Expression,
-) {
-  return createInstructionExpression(
-    "splitExpression",
-    variable.location,
-    "split",
-    [variable, start, stop]
-  )
-}
 
 export interface Variable {
   type: "variable"
@@ -245,17 +232,6 @@ function instructionExpressionToString(expression: InstructionExpression) {
         expression.instruction +
         "(" +
         expression.args.map(exp => expressionToString(exp)).join(", ") +
-        ")"
-      )
-    case "splitExpression":
-      return (
-        "(" +
-          expressionToString(expression.args[0]) +
-          "[" +
-          expressionToString(expression.args[1]) +
-          ":" +
-          expressionToString(expression.args[2]) +
-          "]" +
         ")"
       )
     default:
