@@ -77,9 +77,9 @@ function unify(left: Type, right: Type, mapping: TypeMap) {
   if (typeClass !== getTypeClass(right)) {
     throw new IvyTypeError(
       "incompatible types: " +
-        typeToString(left) +
-        " and " +
-        typeToString(right)
+      typeToString(left) +
+      " and " +
+      typeToString(right)
     )
   }
   switch (typeClass) {
@@ -98,9 +98,9 @@ function unify(left: Type, right: Type, mapping: TypeMap) {
       if (leftHashFunction !== rightHashFunction) {
         throw new IvyTypeError(
           "incompatible hash functions: " +
-            leftHashFunction +
-            " and " +
-            rightHashFunction
+          leftHashFunction +
+          " and " +
+          rightHashFunction
         )
       }
       return unify((left as Hash).inputType, (right as Hash).inputType, mapping)
@@ -113,9 +113,9 @@ export function matchTypes(firstType: Type, secondType: Type) {
   if (typeClass !== getTypeClass(secondType)) {
     throw new IvyTypeError(
       "got " +
-        typeToString(secondType) +
-        ", expected " +
-        typeToString(firstType)
+      typeToString(secondType) +
+      ", expected " +
+      typeToString(firstType)
     )
   }
   switch (typeClass) {
@@ -123,9 +123,9 @@ export function matchTypes(firstType: Type, secondType: Type) {
       if (firstType !== secondType) {
         throw new IvyTypeError(
           "got " +
-            typeToString(secondType) +
-            ", expected " +
-            typeToString(firstType)
+          typeToString(secondType) +
+          ", expected " +
+          typeToString(firstType)
         )
       }
       return
@@ -136,9 +136,9 @@ export function matchTypes(firstType: Type, secondType: Type) {
       if (firstType.hashFunction !== secondType.hashFunction) {
         throw new IvyTypeError(
           "cannot match " +
-            typeToString(firstType) +
-            " with " +
-            typeToString(secondType)
+          typeToString(firstType) +
+          " with " +
+          typeToString(secondType)
         )
       }
       matchTypes(firstType.inputType, secondType.inputType)
@@ -165,9 +165,9 @@ export function unifyFunction(
   if (inputTypes.length !== typeSignature.inputs.length) {
     throw new IvyTypeError(
       "got " +
-        inputTypesToString(inputTypes) +
-        ", expected " +
-        inputTypesToString(typeSigInputs)
+      inputTypesToString(inputTypes) +
+      ", expected " +
+      inputTypesToString(typeSigInputs)
     )
   }
   for (let i = 0; i < inputTypes.length; i++) {
@@ -202,9 +202,33 @@ export function typeCheckExpression(expression: Expression): Type {
           inputType
         }
       }
+
+      // if (isByteFunctionName(expression.instruction)) {
+      //   switch (expression.instruction) {
+      //     case "cat":
+      //       if (inputTypes.length !== 2) {
+      //         throw new IvyTypeError("cat function expected 2 arguments, got " + inputTypes.length)
+      //       }
+      //       if (inputTypes[0] !== "Bytes" && inputTypes[1] !== "Bytes") {
+      //         throw new IvyTypeError("cannot cat items of types " + typeToString(inputTypes[0]) + ", " + typeToString(inputTypes[1]))
+      //       }
+      //       return "Bytes"
+      //     case "substr":
+      //       if (inputTypes.length !== 3) {
+      //         throw new IvyTypeError("cat function expected 3 arguments, got " + inputTypes.length)
+      //       }
+      //       if (inputTypes[0] !== "Bytes" && inputTypes[1] !== "Integer" && inputTypes[2] !== "Integer") {
+      //         throw new IvyTypeError("cannot substr " + inputTypes[0] + " -> " + inputTypes[1] + ", " + inputTypes[2])
+      //       }
+      //       return "Bytes"
+      //     default:
+      //       throw new BugError("unexpected byte function error")
+
+      //   }
+      // }
       switch (expression.instruction) {
         case "bytes":
-          if (inputTypes.length !== 1) { 
+          if (inputTypes.length !== 1) {
             throw new IvyTypeError("bytes function expected 1 argument, got " + inputTypes.length)
           }
           if (inputTypes[0] === "Value") {
@@ -257,7 +281,7 @@ export function typeCheckStatement(statement: Statement) {
       if (expressionType !== "Boolean") {
         throw new IvyTypeError(
           "verify statement expects a Boolean, got " +
-            typeToString(expressionType)
+          typeToString(expressionType)
         )
       }
       return
@@ -267,7 +291,7 @@ export function typeCheckStatement(statement: Statement) {
       if (expressionType !== "Value") {
         throw new IvyTypeError(
           "unlock statement expects a Value, got " +
-            typeToString(expressionType)
+          typeToString(expressionType)
         )
       }
       return
@@ -299,7 +323,7 @@ function checkMultiSigArgumentCounts(contract: RawContract) {
           if (parseInt(sigs.value, 10) > pubKeys.values.length) {
             throw new IvyTypeError(
               "number of public keys passed to checkMultiSig " +
-                "must be greater than or equal to number of signatures"
+              "must be greater than or equal to number of signatures"
             )
           }
         }
@@ -320,26 +344,28 @@ function isSignatureCheck(statement: Statement) {
   )
 }
 
-function checkValueFlow(rawContract: RawContract): RawContract {
-  // find if there's a clause that just checks some signatures
-  let sigCheckClause: undefined | Clause
-  mapOverAST((node: ASTNode) => {
-    switch (node.type) {
-      case "clause": {
-        if (
-          node.parameters.every(param => param.itemType === "Signature") &&
-          node.statements.every(isSignatureCheck) // conservative for now
-        ) {
-          sigCheckClause = node
-        }
-        return node
-      }
-      default:
-        return node
-    }
-  }, rawContract)
+// function checkValueFlow(rawContract: RawContract): RawContract {
+//   // find if there's a clause that just checks some signatures
+//   let sigCheckClause: undefined | Clause
+//   return mapOverAST((node: ASTNode) => {
+//     switch (node.type) {
+//       case "clause": {
+//         if (
+//           node.parameters.every(param => param.itemType === "Signature") &&
+//           node.statements.every(isSignatureCheck) // conservative for now
+//         ) {
+//           sigCheckClause = node
+//         }
+//         return node
+//       }
+//       default:
+//         return node
+//     }
+//   }, rawContract) as RawContract
+// }
 
-  // annotate clauses that include outputs with preapprovals
+
+function removeUnlock(rawContract: RawContract): RawContract {
   // and remove unlock statements while we're at it
   return mapOverAST((node: ASTNode) => {
     switch (node.type) {
@@ -393,5 +419,5 @@ export function typeCheckContract(rawContract: RawContract): RawContract {
 
   checkMultiSigArgumentCounts(rawContract)
 
-  return checkValueFlow(rawContract)
+  return removeUnlock(rawContract)
 }

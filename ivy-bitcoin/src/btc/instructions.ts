@@ -1,5 +1,6 @@
 import { createTypeSignature, TypeSignature } from "./types"
 
+import { create } from "domain"
 import { BugError } from "../errors"
 
 export type OrOperator = "||"
@@ -48,6 +49,7 @@ export type FunctionName =
   | "min"
   | "max"
   | "within"
+  | "abs"
   | "substr"
   | "cat"
   | "bytes"
@@ -99,6 +101,8 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["MAX"]
     case "within":
       return ["WITHIN"]
+    case "abs":
+      return ["ABS"]
     case "cat":
       return ["CAT"]
     case "==":
@@ -156,6 +160,17 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
       return createTypeSignature(["Time"], "Boolean")
     case "size":
       return createTypeSignature(["Bytes"], "Integer")
+    case "substr":
+      return createTypeSignature(["Bytes", "Integer", "Integer"], "Bytes")
+    case "cat":
+      return createTypeSignature(["Bytes", "Bytes"], "Bytes")
+    case "min":
+    case "max":
+      return createTypeSignature(["Integer", "Integer"], "Integer")
+    case "abs":
+      return createTypeSignature(["Integer"], "Integer")
+    case "within":
+      return createTypeSignature(["Integer", "Integer", "Integer"], "Boolean")
     case "checkMultiSig":
       return createTypeSignature(
         [
@@ -164,9 +179,27 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
         ],
         "Boolean"
       )
+      case "<":
+      case ">":
+      case "<=":
+      case ">=":
+        return createTypeSignature(["Integer", "Integer"], "Boolean")  
+      case "+":
+      case "-":
+      case "*":
+      case "/":
+      case "%":
+      return createTypeSignature(["Integer", "Integer"], "Integer")  
+      case "&":
+      case "|":
+      case "^":
+      return createTypeSignature(["Bytes", "Bytes"], "Bytes")  
+      case "&&":
+      case "||":
+      return createTypeSignature(["Boolean", "Boolean"], "Boolean")  
     case "==":
     case "!=":
-      throw new Error("should not call getTypeSignature on == or !=")
+      throw new Error("should not call getTypeSignature on " + instruction)
     case "ripemd160":
     case "sha1":
     case "sha256":

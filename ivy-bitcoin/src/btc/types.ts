@@ -1,6 +1,6 @@
 import { BugError } from "../errors"
 
-export type Type = Primitive | Hash | List
+export type Type = Primitive | Hash | List 
 
 export type Primitive =
   | "PublicKey"
@@ -13,6 +13,8 @@ export type Primitive =
   | "Integer"
 
 export type HashFunction = "sha1" | "sha256" | "ripemd160"
+
+export type ByteFunction = "cat" | "substr"
 
 export interface Hash {
   type: "hashType"
@@ -114,6 +116,16 @@ export function isHashFunctionName(str: string): str is HashFunction {
       return false
   }
 }
+
+// export function isByteFunctionName(str: string): str is ByteFunction {
+//   switch (str) {
+//     case "cat":
+//     case "substr":
+//       return true
+//     default:
+//     return false
+//   }
+// }
 
 export function hashFunctionToTypeName(hash: HashFunction): string {
   switch (hash) {
