@@ -134,10 +134,10 @@ export function createUnaryExpression(
   location: Location
 ) {
   return createInstructionExpression(
-      "unaryExpression",
-      location,
-      operator,
-      [expression]
+    "unaryExpression",
+    location,
+    operator,
+    [expression]
   )
 }
 
@@ -146,12 +146,12 @@ export function createBinaryExpression(
   tail: Expression[]
 ) {
 
-  return tail.reduce((result, element)  =>
-      createInstructionExpression(
-        "binaryExpression",
-        result.location,
-        element[1],
-        [element[3], result]), head)
+  return tail.reduce((result, element) =>
+    createInstructionExpression(
+      "binaryExpression",
+      result.location,
+      element[1],
+      [element[3], result]), head)
 }
 
 
