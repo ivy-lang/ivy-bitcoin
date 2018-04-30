@@ -202,30 +202,6 @@ export function typeCheckExpression(expression: Expression): Type {
           inputType
         }
       }
-
-      // if (isByteFunctionName(expression.instruction)) {
-      //   switch (expression.instruction) {
-      //     case "cat":
-      //       if (inputTypes.length !== 2) {
-      //         throw new IvyTypeError("cat function expected 2 arguments, got " + inputTypes.length)
-      //       }
-      //       if (inputTypes[0] !== "Bytes" && inputTypes[1] !== "Bytes") {
-      //         throw new IvyTypeError("cannot cat items of types " + typeToString(inputTypes[0]) + ", " + typeToString(inputTypes[1]))
-      //       }
-      //       return "Bytes"
-      //     case "substr":
-      //       if (inputTypes.length !== 3) {
-      //         throw new IvyTypeError("cat function expected 3 arguments, got " + inputTypes.length)
-      //       }
-      //       if (inputTypes[0] !== "Bytes" && inputTypes[1] !== "Integer" && inputTypes[2] !== "Integer") {
-      //         throw new IvyTypeError("cannot substr " + inputTypes[0] + " -> " + inputTypes[1] + ", " + inputTypes[2])
-      //       }
-      //       return "Bytes"
-      //     default:
-      //       throw new BugError("unexpected byte function error")
-
-      //   }
-      // }
       switch (expression.instruction) {
         case "bytes":
           if (inputTypes.length !== 1) {
