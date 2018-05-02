@@ -37,7 +37,7 @@ export interface RawContract {
 export interface Conditional {
   type: "conditional"
   condition: Expression
-  ifBlock: Block
+  ifBlock: Clause
   elseBlock?: Block
   location?: Location
 }
@@ -133,6 +133,11 @@ export function createUnaryExpression(
   expression: Expression,
   location: Location
 ) {
+  // Hackish desugar for distinguishing negation and subtraction.
+  if (operator === "-") {
+    operator = "neg"
+  }
+
   return createInstructionExpression(
     "unaryExpression",
     location,

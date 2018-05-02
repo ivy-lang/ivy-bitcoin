@@ -22,7 +22,7 @@ export type MultiplicativeOperator =
   | "%"
 
 export type UnaryOperator =
-  | "-"
+  | "neg"
   | "!"
 
 export type ComparisonOperator =
@@ -51,6 +51,8 @@ export type FunctionName =
   | "within"
   | "abs"
   | "substr"
+  | "suffix"
+  | "prefix"
   | "cat"
   | "bytes"
   | "size"
@@ -130,7 +132,9 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
     case "+":
       return ["ADD"]
     case "-":
-      return ["SUB", "NEGATE"]
+      return ["SUB"]
+    case "neg":
+      return ["NEGATE"]
     case "*":
       return ["MUL"]
     case "/":
@@ -139,8 +143,12 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["MOD"]
     case "!":
       return ["NOT"]
+    case "prefix":
+      return ["SWAP", "SPLIT", "DROP"]
+    case "suffix":
+      return ["SWAP", "SPLIT", "SWAP", "DROP"]
     case "substr":
-      return ["SPLIT"]
+      return ["OVER", "SPLIT", "SWAP", "DROP", "ROT", "SUB", "SPLIT", "DROP"]
     case "bytes":
       return []
     case "size":
@@ -162,6 +170,9 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
       return createTypeSignature(["Bytes"], "Integer")
     case "substr":
       return createTypeSignature(["Bytes", "Integer", "Integer"], "Bytes")
+    case "prefix":
+    case "suffix":
+      return createTypeSignature(["Bytes", "Integer"], "Bytes")
     case "cat":
       return createTypeSignature(["Bytes", "Bytes"], "Bytes")
     case "min":
@@ -190,6 +201,8 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
       case "/":
       case "%":
       return createTypeSignature(["Integer", "Integer"], "Integer")  
+      case "neg":
+        return createTypeSignature(["Integer"], "Integer")
       case "&":
       case "|":
       case "^":
@@ -197,6 +210,8 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
       case "&&":
       case "||":
       return createTypeSignature(["Boolean", "Boolean"], "Boolean")  
+      case "!":
+        return createTypeSignature(["Boolean"], "Boolean")
     case "==":
     case "!=":
       throw new Error("should not call getTypeSignature on " + instruction)
