@@ -134,7 +134,7 @@ ArithmeticOperator
   = "+" / "-"
 
 MultiplicativeOperator
-  = "*" / "/" / "%"
+  = "/" / "%"
 
 UnaryOperator
   = "-" / "!"

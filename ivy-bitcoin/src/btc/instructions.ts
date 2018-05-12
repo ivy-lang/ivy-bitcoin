@@ -17,7 +17,6 @@ export type ArithmeticOperator =
   | "-"
 
 export type MultiplicativeOperator =
-  | "*"
   | "/"
   | "%"
 
@@ -135,8 +134,6 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["SUB"]
     case "neg":
       return ["NEGATE"]
-    case "*":
-      return ["MUL"]
     case "/":
       return ["DIV"]
     case "%":
@@ -197,7 +194,6 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
         return createTypeSignature(["Integer", "Integer"], "Boolean")  
       case "+":
       case "-":
-      case "*":
       case "/":
       case "%":
       return createTypeSignature(["Integer", "Integer"], "Integer")  
