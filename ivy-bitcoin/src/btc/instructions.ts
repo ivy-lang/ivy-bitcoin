@@ -3,10 +3,6 @@ import { createTypeSignature, TypeSignature } from "./types"
 import { create } from "domain"
 import { BugError } from "../errors"
 
-export type OrOperator = "||"
-
-export type AndOperator = "&&"
-
 export type BitwiseOperator =
   | "^"
   | "&"
@@ -17,7 +13,6 @@ export type ArithmeticOperator =
   | "-"
 
 export type MultiplicativeOperator =
-  | "*"
   | "/"
   | "%"
 
@@ -64,8 +59,6 @@ export type BinaryOperator =
   | MultiplicativeOperator
   | ArithmeticOperator
   | BitwiseOperator
-  | AndOperator
-  | OrOperator
 
 export type Instruction =
   | BinaryOperator
@@ -119,10 +112,6 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["LESSTHANOREQUAL"]
     case ">=":
       return ["GREATERTHANOREQUAL"]
-    case "||":
-      return ["OR"]
-    case "&&":
-      return ["AND"]
     case "^":
       return ["XOR"]
     case "&":
@@ -135,8 +124,6 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["SUB"]
     case "neg":
       return ["NEGATE"]
-    case "*":
-      return ["MUL"]
     case "/":
       return ["DIV"]
     case "%":
@@ -197,7 +184,6 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
         return createTypeSignature(["Integer", "Integer"], "Boolean")  
       case "+":
       case "-":
-      case "*":
       case "/":
       case "%":
       return createTypeSignature(["Integer", "Integer"], "Integer")  
@@ -207,9 +193,6 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
       case "|":
       case "^":
       return createTypeSignature(["Bytes", "Bytes"], "Bytes")  
-      case "&&":
-      case "||":
-      return createTypeSignature(["Boolean", "Boolean"], "Boolean")  
       case "!":
         return createTypeSignature(["Boolean"], "Boolean")
     case "==":
