@@ -39,7 +39,7 @@ Unlock
 
 
 Expression1 "expression"
-  = OrExpression
+  = ComparisonExpression
   / Expression2
 
 Expression2
@@ -68,13 +68,6 @@ BitwiseExpression
 
 ComparisonExpression
 = head:BitwiseExpression tail:(__ ComparisonOperator __ BitwiseExpression)* {return createBinaryExpression(head, tail)}
-
-AndExpression
-  = head:ComparisonExpression tail:(__ AndOperator __ ComparisonExpression)* {return createBinaryExpression(head, tail)}
-
-OrExpression
-  = head:AndExpression tail:(__ OrOperator __ AndExpression)* {return createBinaryExpression(head, tail)}
-
 
 CallExpression
   = name:FunctionIdentifier "(" args:Expressions ")" { return createInstructionExpression("callExpression", location(), name, args) }
@@ -120,12 +113,6 @@ HashType
                                                                                 hashFunction: typeNameToHashFunction(hashFunctionType),
                                                                                 inputType: inputType
                                                                                } }
-
-OrOperator
-  = "||"
-
-AndOperator
-  = "&&"
 
 BitwiseOperator
   = "^" / "&" / "|"
