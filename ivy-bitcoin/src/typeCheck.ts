@@ -203,6 +203,17 @@ export function typeCheckExpression(expression: Expression): Type {
         }
       }
       switch (expression.instruction) {
+        case "boolean":
+          if (inputTypes.length !== 1){
+            throw new IvyTypeError("boolean function expected 1 argument, got " + inputTypes.length)
+          }
+          if (inputTypes[0] === "Value") {
+            throw new IvyTypeError("cannot call boolean on an item of type Value")
+          }
+          if (inputTypes[0] === "Boolean") {
+            throw new IvyTypeError("cannot call boolean on an item of type Boolean")
+          }
+          return "Boolean"
         case "bytes":
           if (inputTypes.length !== 1) {
             throw new IvyTypeError("bytes function expected 1 argument, got " + inputTypes.length)
