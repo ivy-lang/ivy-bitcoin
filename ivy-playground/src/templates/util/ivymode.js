@@ -114,7 +114,7 @@ ace.define(
       var keywordMapper = this.createKeywordMapper(
         {
           "variable.language":
-            "checkSig|checkMultiSig|sha256|sha1|ripemd160|older|after|bytes|substr|abs|min|max|within|prefix|suffix|size|integer|int2bytes|bytes2int|boolean",
+            "checkSig|checkMultiSig|sha256|sha1|ripemd160|older|after|bytes|substr|cat|abs|min|max|within|prefix|suffix|size|integer|int2bytes|bytes2int|boolean",
           keyword: "contract|clause|verify|unlock"
         },
         "identifier"
