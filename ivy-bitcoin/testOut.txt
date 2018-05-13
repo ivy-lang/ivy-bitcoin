@@ -1,0 +1,19 @@
+
+> ivy-bitcoin@0.0.17 test /Users/louis/dev/ivy-bitcoin/ivy-bitcoin
+> mocha -r ts-node/register src/test/typecheckTest.ts
+
+
+
+  Type check
+    1) 
+
+
+  0 passing (32ms)
+  1 failing
+
+  1) Type check :
+     AssertionError: expected { Object (type, location, ...) } to equal []
+      at Context.it (src/test/typecheckTest.ts:17:20)
+
+
+

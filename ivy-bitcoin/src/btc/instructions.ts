@@ -9,7 +9,7 @@ export type BitwiseOperator =
   | "|"
 
 export type ArithmeticOperator =
-  |"+"
+  | "+"
   | "-"
 
 export type MultiplicativeOperator =
@@ -50,6 +50,8 @@ export type FunctionName =
   | "prefix"
   | "cat"
   | "bytes"
+  | "int2bytes"
+  | "bytes2int"
   | "size"
 
 export type Opcode = string // for now
@@ -138,6 +140,10 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
       return ["OVER", "SPLIT", "SWAP", "DROP", "ROT", "SUB", "SPLIT", "DROP"]
     case "bytes":
       return []
+    case "int2bytes":
+      return ["BIN2NUM"]
+    case "bytes2int":
+      return ["NUM2BIN"]
     case "size":
       return ["SIZE", "SWAP", "DROP"]
     default:
@@ -177,24 +183,28 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
         ],
         "Boolean"
       )
-      case "<":
-      case ">":
-      case "<=":
-      case ">=":
-        return createTypeSignature(["Integer", "Integer"], "Boolean")  
-      case "+":
-      case "-":
-      case "/":
-      case "%":
-      return createTypeSignature(["Integer", "Integer"], "Integer")  
-      case "neg":
-        return createTypeSignature(["Integer"], "Integer")
-      case "&":
-      case "|":
-      case "^":
-      return createTypeSignature(["Bytes", "Bytes"], "Bytes")  
-      case "!":
-        return createTypeSignature(["Boolean"], "Boolean")
+    case "<":
+    case ">":
+    case "<=":
+    case ">=":
+      return createTypeSignature(["Integer", "Integer"], "Boolean")
+    case "+":
+    case "-":
+    case "/":
+    case "%":
+      return createTypeSignature(["Integer", "Integer"], "Integer")
+    case "neg":
+      return createTypeSignature(["Integer"], "Integer")
+    case "&":
+    case "|":
+    case "^":
+      return createTypeSignature(["Bytes", "Bytes"], "Bytes")
+    case "!":
+      return createTypeSignature(["Boolean"], "Boolean")
+    case "int2bytes":
+      return createTypeSignature(["Bytes", "Integer"], "Integer")
+    case "bytes2int":
+      return createTypeSignature(["Bytes"], "Integer")
     case "==":
     case "!=":
       throw new Error("should not call getTypeSignature on " + instruction)
