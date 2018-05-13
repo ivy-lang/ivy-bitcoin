@@ -202,7 +202,7 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
     case "!":
       return createTypeSignature(["Boolean"], "Boolean")
     case "int2bytes":
-      return createTypeSignature(["Bytes", "Integer"], "Integer")
+      return createTypeSignature(["Integer", "Integer"], "Bytes")
     case "bytes2int":
       return createTypeSignature(["Bytes"], "Integer")
     case "==":
