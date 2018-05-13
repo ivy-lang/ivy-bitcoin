@@ -144,9 +144,9 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
     case "boolean":
       return []
     case "int2bytes":
-      return ["BIN2NUM"]
-    case "bytes2int":
       return ["NUM2BIN"]
+    case "bytes2int":
+      return ["BIN2NUM"]
     case "size":
       return ["SIZE", "SWAP", "DROP"]
     default:
