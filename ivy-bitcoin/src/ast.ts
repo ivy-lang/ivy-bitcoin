@@ -7,7 +7,10 @@ export interface Location {
   end: { column: number; line: number }
 }
 
-export type InstructionExpressionType = "binaryExpression" | "callExpression"
+export type InstructionExpressionType =
+  | "binaryExpression"
+  | "callExpression"
+  | "unaryExpression"
 
 export interface Parameter {
   type: "parameter"
@@ -34,7 +37,7 @@ export interface RawContract {
 export interface Conditional {
   type: "conditional"
   condition: Expression
-  ifBlock: Block
+  ifBlock: Clause
   elseBlock?: Block
   location?: Location
 }
@@ -105,26 +108,6 @@ export interface PartialExpression {
   left: Expression
 }
 
-export function createBinaryExpression(
-  partials: PartialExpression[],
-  right: Expression
-): Expression {
-  const last = partials.pop()
-  if (last === undefined) {
-    throw new BugError("partials list must not be empty")
-  }
-  const operator = last.operator
-  const left = partials.length
-    ? createBinaryExpression(partials, last.left)
-    : last.left
-  return createInstructionExpression(
-    "binaryExpression",
-    left.location,
-    operator,
-    [right, left]
-  )
-}
-
 export function createInstructionExpression(
   expressionType: InstructionExpressionType,
   location: Location,
@@ -144,6 +127,38 @@ export function createInstructionExpression(
     args
   }
 }
+
+export function createUnaryExpression(
+  operator: string,
+  expression: Expression,
+  location: Location
+) {
+  // Hackish desugar for distinguishing negation and subtraction.
+  if (operator === "-") {
+    operator = "neg"
+  }
+
+  return createInstructionExpression(
+    "unaryExpression",
+    location,
+    operator,
+    [expression]
+  )
+}
+
+export function createBinaryExpression(
+  head: Expression,
+  tail: Expression[]
+) {
+
+  return tail.reduce((result, element) =>
+    createInstructionExpression(
+      "binaryExpression",
+      result.location,
+      element[1],
+      [element[3], result]), head)
+}
+
 
 export interface Variable {
   type: "variable"
@@ -210,6 +225,13 @@ function instructionExpressionToString(expression: InstructionExpression) {
         expressionToString(expression.args[1]) +
         ")"
       )
+    case "unaryExpression":
+      return (
+        expression.instruction +
+        "(" +
+        expressionToString(expression.args[0]) +
+        ")"
+      )
     case "callExpression":
       return (
         expression.instruction +
@@ -217,6 +239,8 @@ function instructionExpressionToString(expression: InstructionExpression) {
         expression.args.map(exp => expressionToString(exp)).join(", ") +
         ")"
       )
+    default:
+      throw new Error("instructionExpressionToString Error")
   }
 }
 

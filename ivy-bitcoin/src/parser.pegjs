@@ -8,6 +8,7 @@ let instructions = require("./btc/instructions")
 
 let createInstructionExpression = ast.createInstructionExpression
 let createBinaryExpression = ast.createBinaryExpression
+let createUnaryExpression = ast.createUnaryExpression
 
 let isPrimitive = types.isPrimitive
 let isHashTypeName = types.isHashTypeName
@@ -36,7 +37,6 @@ Assertion
 Unlock
   = "unlock" _ value:VariableExpression __ { return { type: "unlock", location: location(), value: value } }
 
-// need to handle precedence
 
 Expression1 "expression"
   = ComparisonExpression
@@ -51,16 +51,23 @@ Expression2
 Literal
   = ListLiteral
   / BooleanLiteral
-  / IntegerLiteral
+  / NumberLiteral
 
-IntegerLiteral "integer"
-  = [-]?[0-9]+ { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
-ComparisonExpression // not associative
-  = left:Expression2 __ operator:ComparisonOperator __ right:Expression2 { return createBinaryExpression([{left: left, operator: operator}], right) }
+UnaryExpression
+  = Expression2 / operator:UnaryOperator expression:UnaryExpression {return createUnaryExpression(operator, expression, location())}
 
-ComparisonOperator
-  = (operator:Operator & { return isComparisonOperator(operator) }) { return text() }
+MultiplicativeExpression
+  = head:UnaryExpression tail:(__ MultiplicativeOperator __ UnaryExpression)* {return createBinaryExpression(head, tail)}
+
+ArithmeticExpression
+  = head:MultiplicativeExpression tail:(__ ArithmeticOperator __ MultiplicativeExpression)* {return createBinaryExpression(head, tail)}
+
+BitwiseExpression
+ = head:ArithmeticExpression tail:(__ BitwiseOperator __ ArithmeticExpression)* {return createBinaryExpression(head, tail)}
+
+ComparisonExpression
+= head:BitwiseExpression tail:(__ ComparisonOperator __ BitwiseExpression)* {return createBinaryExpression(head, tail)}
 
 CallExpression
   = name:FunctionIdentifier "(" args:Expressions ")" { return createInstructionExpression("callExpression", location(), name, args) }
@@ -98,17 +105,36 @@ Type "type"
 PrimitiveType
   = (id:Identifier & { return isPrimitive(id) }) { return text() }
 
-HashFunctionType = 
+HashFunctionType =
   (hashType:Identifier & { return isHashTypeName(hashType) }) { return text() }
 
 HashType
-  = hashFunctionType:HashFunctionType "(" inputType:HashableType ")" { return { type: "hashType", 
+  = hashFunctionType:HashFunctionType "(" inputType:HashableType ")" { return { type: "hashType",
                                                                                 hashFunction: typeNameToHashFunction(hashFunctionType),
                                                                                 inputType: inputType
                                                                                } }
 
+BitwiseOperator
+  = "^" / "&" / "|"
+
+ArithmeticOperator
+  = "+" / "-"
+
+MultiplicativeOperator
+  = "/" / "%"
+
+UnaryOperator
+  = "-" / "!"
+
+ComparisonOperator
+  = "==" / "!=" / "<" / ">" / "<=" / ">="
+
 HashableType
   = "Bytes" / "PublicKey" / HashType
+
+NumberLiteral "integer"
+  = "0" { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
+  / [1-9][0-9]* { return { type: "literal", literalType: "Integer", location: location(), value: text() } }
 
 Identifier "identifier"
   = [_A-Za-z] [_A-Za-z0-9]* { return text() }

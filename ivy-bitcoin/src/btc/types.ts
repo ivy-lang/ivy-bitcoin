@@ -1,6 +1,6 @@
 import { BugError } from "../errors"
 
-export type Type = Primitive | Hash | List
+export type Type = Primitive | Hash | List 
 
 export type Primitive =
   | "PublicKey"

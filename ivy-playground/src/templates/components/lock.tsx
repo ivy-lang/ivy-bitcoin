@@ -24,7 +24,7 @@ const mapStateToProps = state => {
   const source = getSource(state)
   const contractParameters = getContractParameters(state)
   const error = getError(state)
-  const bytecode = getInstantiated(state)
+  const bytecode = null
   return { source, contractParameters, error, bytecode }
 }
 
@@ -46,37 +46,9 @@ const ErrorAlert = (props: { error: string }) => {
 }
 
 const Lock = ({ source, contractParameters, error, bytecode }) => {
-  let instantiate
-  if (contractParameters !== undefined) {
-    instantiate = (
-      <div>
-        {contractParameters.length > 0 ? (
-          <Section name="Contract Arguments">
-            <div className="form-wrapper">
-              <ContractParameters />
-            </div>
-            <div className="form-wrapper">
-              {error ? <ErrorAlert error={error} /> : <div />}
-            </div>
-          </Section>
-        ) : (
-          <div />
-        )}
-        {bytecode ? (
-          <Section name="Address">{error ? <div /> : <Bytecode />}</Section>
-        ) : (
-          <div />
-        )}
-        <LockButton />
-      </div>
-    )
-  } else {
-    instantiate = <div />
-  }
   return (
     <div>
       <Editor />
-      {instantiate}
     </div>
   )
 }
