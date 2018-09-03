@@ -7,6 +7,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "bcoin": "danrobinson/bcoin#compat",
+    "bcrypto": "^1.1.0",
     "level-js": "^2.2.4"
   },
   "devDependencies": {
