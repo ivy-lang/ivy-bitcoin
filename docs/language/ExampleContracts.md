@@ -281,9 +281,9 @@ contract HTLC(
 }
 ```
 
-HTLC is an implementation of a Hashed Timelock Contract, a construction that can be used to enable trustless exchanges of cryptocurrencies on completely different blockchain networks (such as trading Bitcoin for Ether), as well as multihop payments on the payment channel networks such as the Lightning Network.
+HTLC is an implementation of a Hashed Timelock Contract, a construction that can be used to enable trustless exchanges of cryptocurrencies on completely different blockchain networks (such as trading Bitcoin for Ether), as well as multihop payments on payment channel networks such as the Lightning Network.
 
-Before an HTLC is created, one party, the `recipient`, generates a secret preimage, hashes it, and provides the hash, `hash`, to the other party, `sender`.
+Before an HTLC is created, one party, the `recipient`, generates a secret `preimage`, hashes it, and provides the hash, `hash`, to the other party, `sender`.
 
 In the normal case, an HTLC can be completed by the `recipient`, by revealing the `preimage`, which allows them to receive the locked value. If they do not, the `sender` can cancel the HTLC after a predefined `expiration` time, recovering the locked value.
 
@@ -293,7 +293,7 @@ The power comes when you have  _two_ HTLCs that use the same preimage, and which
 
 This assurance, _atomicity_, is easy to achieve when both operations are occurring on the same ledger—you can just include both operations in a single atomic transaction. But HTLCs allow you to enforce atomicity of transactions across _multiple ledgers_, which do not need to know anything about each other (though they do each need to support hash locks and time locks.)
 
-These two ledgers can be separate blockchains, such as the Bitcoin and Ethereum networks, allowing trustless trades of cryptocurrencies on different blockchains.
+These two ledgers can be separate blockchains, such as the Bitcoin and Ethereum networks, which means HTLCs can be used to make trustless trades of cryptocurrencies on different blockchains.
 
 Alternatively, the two ledgers can be two different Bitcoin _payment channels_—off-chain bilateral ledgers which can be settled trustlessly to the main chain. (A simple payment channel is described [above](#transferwithtimeout).) This is how the Lightning Network allows multihop payments across a chain of payment channels—each routing node creates an HTLC _within_ their payment channels, and for that routing node, the HTLC in which they send BTC to the next node is guaranteed to execute if and only if the HTLC in which they receive BTC from the previous node executes. The mechanics of embedding HTLCs within payment channels are very complex, and beyond the scope of this document, but the principle of the underlying HTLC is essentially the same as the one shown above.
 
