@@ -18,7 +18,8 @@ export const DEMO_ID_LIST = [
   "LockDelay",
   "TransferWithTimeout",
   "EscrowWithDelay",
-  "VaultSpend"
+  "VaultSpend",
+  "HTLC"
 ]
 
 export const DEMO_CONTRACTS = {
@@ -126,6 +127,24 @@ export const DEMO_CONTRACTS = {
     unlock val
   }
 }`,
+  HTLC: `contract HTLC(
+  sender: PublicKey, 
+  recipient: PublicKey,
+  expiration: Time,
+  hash: Sha256(Bytes),
+  val: Value
+) {
+  clause complete(preimage: Bytes, sig: Signature) {
+    verify sha256(preimage) == hash
+    verify checkSig(recipient, sig)
+    unlock val
+  }
+  clause cancel(sig: Signature) {
+    verify after(expiration)
+    verify checkSig(sender, sig)
+    unlock val
+  }
+}`,
   RevealFixedPoint: `contract RevealFixedPoint(val: Value) {
   clause reveal(hash: Bytes) {
     verify bytes(sha256(hash)) == hash
@@ -186,10 +205,11 @@ export const TEST_CONTRACT_ARGS = {
   TransferWithTimeout: [PublicKeys[0], PublicKeys[1], 20, 0],
   EscrowWithDelay: [...PublicKeys, 20, 0],
   VaultSpend: [PublicKeys[0], PublicKeys[1], 20, 0],
+  HTLC: [PublicKeys[0], PublicKeys[1], 20, Sha256Bytes, 0],
   RevealFixedPoint: [0],
   HashOperations: [Sha256Bytes, Sha1Bytes, Ripemd160Bytes, 0],
   RevealNumber: [5, 0],
-  CheckSize: [0]
+  CheckSize: [0],
 }
 
 export const TEST_CONTRACT_CLAUSE_NAMES = {
@@ -203,10 +223,11 @@ export const TEST_CONTRACT_CLAUSE_NAMES = {
   TransferWithTimeout: "transfer",
   EscrowWithDelay: "timeout",
   VaultSpend: "complete",
+  HTLC: "complete",
   RevealFixedPoint: "reveal",
   HashOperations: "reveal",
   RevealNumber: "reveal",
-  CheckSize: "reveal"
+  CheckSize: "reveal",
 }
 
 export const TEST_CONTRACT_TIMES = {
@@ -300,7 +321,8 @@ export const TEST_SPEND_ARGUMENTS = {
   RevealFixedPoint: [Bytes], // this is supposed to fail
   HashOperations: [Bytes],
   RevealNumber: [5],
-  CheckSize: [Bytes]
+  CheckSize: [Bytes],
+  HTLC: [Bytes, generateSignature("HTLC", 1)]
 }
 
 export const ERRORS = {
