@@ -13,6 +13,7 @@ Below are some examples of contract templates written in Ivy. You can try out th
 * [TransferWithTimeout](#transferwithtimeout)
 * [EscrowWithDelay](#escrowwithdelay)
 * [VaultSpend](#vaultspend)
+* [HTLC](#htlc)
 
 These contracts demonstrate the following conditions supported by Bitcoin Script:
 
@@ -213,7 +214,8 @@ contract EscrowWithDelay(
     verify older(delay)
     unlock val
   }
-}```
+}
+```
 
 EscrowWithDelay implements a simple escrow contract. When it is instantiated, three keys are specified—one for the `sender` of the transfer, one for the `recipient`, and one for an `escrow` agent.
 
@@ -256,3 +258,43 @@ If an attacker compromises your server and steals the presigned transaction and 
 
 The [initial design](http://fc16.ifca.ai/bitcoin/papers/MES16.pdf) for vaults by Möser, Eyal, and Sirer depended on a feature, covenants, that is not yet supported in Bitcoin Script. The implementation of vaults described above makes use of only existing Bitcoin Script features, but has some key limitations. Most importantly, an attacker who surreptitiously steals the hot key could wait for the owner to attempt a hot-key withdrawal, then, after the delay has expired, spend the transaction before the owner is able to. Until Bitcoin adds support for covenants (if ever), it may not be possible to fully implement a vault.
 
+## HTLC
+
+```
+contract HTLC(
+  sender: PublicKey, 
+  recipient: PublicKey,
+  expiration: Time,
+  hash: Sha256(Bytes),
+  val: Value
+) {
+  clause complete(preimage: Bytes, sig: Signature) {
+    verify sha256(preimage) == hash
+    verify checkSig(recipient, sig)
+    unlock val
+  }
+  clause cancel(sig: Signature) {
+    verify after(expiration)
+    verify checkSig(sender, sig)
+    unlock val
+  }
+}
+```
+
+HTLC is an implementation of a Hashed Timelock Contract, a construction that can be used to enable trustless exchanges of cryptocurrencies on completely different blockchain networks (such as trading Bitcoin for Ether), as well as multihop payments on the payment channel networks such as the Lightning Network.
+
+Before an HTLC is created, one party, the `recipient`, generates a secret preimage, hashes it, and provides the hash, `hash`, to the other party, `sender`.
+
+In the normal case, an HTLC can be completed by the `recipient`, by revealing the `preimage`, which allows them to receive the locked value. If they do not, the `sender` can cancel the HTLC after a predefined `expiration` time, recovering the locked value.
+
+A single HTLC is not useful by itself—it is simply a construction that promises to reward a particular recipient for revealing a preimage before a particular time, which is a fairly esoteric challenge.
+
+The power comes when you have  _two_ HTLCs that use the same preimage, and which have staggered timeouts (so that a preimage that is revealed to complete the earlier-timeout HTLC can be used to complete the later-timeout HTLC). This allows parties to set up HTLCs so that both parties can be assured that either both HTLCs will complete, or neither will.
+
+This assurance, _atomicity_, is easy to achieve when both operations are occurring on the same ledger—you can just include both operations in a single atomic transaction. But HTLCs allow you to enforce atomicity of transactions across _multiple ledgers_, which do not need to know anything about each other (though they do each need to support hash locks and time locks.)
+
+These two ledgers can be separate blockchains, such as the Bitcoin and Ethereum networks, allowing trustless trades of cryptocurrencies on different blockchains.
+
+Alternatively, the two ledgers can be two different Bitcoin _payment channels_—off-chain bilateral ledgers which can be settled trustlessly to the main chain. (A simple payment channel is described [above](#transferwithtimeout).) This is how the Lightning Network allows multihop payments across a chain of payment channels—each routing node creates an HTLC _within_ their payment channels, and for that routing node, the HTLC in which they send BTC to the next node is guaranteed to execute if and only if the HTLC in which they receive BTC from the previous node executes. The mechanics of embedding HTLCs within payment channels are very complex, and beyond the scope of this document, but the principle of the underlying HTLC is essentially the same as the one shown above.
+
+You can also do atomic transacions between different combinations of ledgers, such as an atomic transaction between payment channels on different blockchains (which is what theoretically allows cross-blockchain payments on the Lightning Network), or an atomic transaction between a public ledger and a payment channel (known as a "[submarine swap](https://bitcoinmagazine.com/articles/pay-bitcoin-mainnet-lightning-and-back-submarine-swaps-are-now-live/)").
