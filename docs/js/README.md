@@ -28,7 +28,7 @@ const source = `contract LockWithPublicKey(publicKey: PublicKey, val: Value) {
   }
 }`
 const privateKey = "Kyw8s2qf2TxNnJMwfrKYhAsZ6eAmMMhAv4Ej4VVE8KpVsDvXurJK"
-const publicKey = crypto.fromSecret(privateKey).getPublicKey("hex")
+const publicKey = crypto.KeyRing.fromSecret(privateKey).getPublicKey("hex")
 const destinationAddress = ""
 const amount = 0
 const locktime = 0

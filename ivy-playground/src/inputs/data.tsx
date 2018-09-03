@@ -138,7 +138,7 @@ export function validateInput(input: Input): boolean {
     case "generatePrivateKeyInput":
     case "providePrivateKeyInput":
       try {
-        const kr = crypto.fromSecret(input.value)
+        const kr = crypto.KeyRing.fromSecret(input.value)
         return true
       } catch (e) {
         return false
@@ -153,7 +153,7 @@ export function validateInput(input: Input): boolean {
     case "providePublicKeyInput":
       try {
         const buf = Buffer.from(input.value, "hex")
-        const kr = crypto.fromPublic(buf)
+        const kr = crypto.KeyRing.fromPublic(buf)
         return true
       } catch (e) {
         return false
@@ -164,7 +164,7 @@ export function validateInput(input: Input): boolean {
       }
       const buf = Buffer.from(input.value.slice(0, -2), "hex")
       try {
-        const sig = crypto.fromDER(buf)
+        const sig = crypto.secp256k1.fromDER(buf)
         return true
       } catch (e) {
         return false
@@ -341,7 +341,7 @@ export function getPublicKeyValue(
   inputsById: { [s: string]: Input }
 ) {
   const privateKeyValue = getPrivateKeyValue(inputId, inputsById)
-  const kr = crypto.fromSecret(privateKeyValue)
+  const kr = crypto.KeyRing.fromSecret(privateKeyValue)
   return kr.getPublicKey("hex")
 }
 
@@ -386,7 +386,7 @@ function getGenerateAddressValue(
   if (privateKeyInput === undefined) {
     throw new Error("private key input unexpectedly missing")
   }
-  const kr = crypto.fromSecret(privateKeyInput.value)
+  const kr = crypto.KeyRing.fromSecret(privateKeyInput.value)
   return kr.getAddress("base58")
 }
 
@@ -435,7 +435,7 @@ export function getDefaultContractParameterValue(inputType: InputType): string {
       return ""
     case "generatePrivateKeyInput":
       const key = crypto.privateKey.generate()
-      const kr = crypto.fromPrivate(key.privateKey)
+      const kr = crypto.KeyRing.fromPrivate(key.privateKey)
       return kr.toSecret()
     case "bytesInput":
       return "generateBytesInput"
@@ -510,7 +510,7 @@ export function getDefaultClauseParameterValue(inputType: InputType): string {
       return ""
     case "generatePrivateKeyInput":
       const key = crypto.privateKey.generate()
-      const kr = crypto.fromPrivate(key.privateKey)
+      const kr = crypto.KeyRing.fromPrivate(key.privateKey)
       return kr.toSecret()
     case "bytesInput":
       return "provideBytesInput"

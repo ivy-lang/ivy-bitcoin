@@ -4,8 +4,6 @@ import { Contract, Transaction } from "./instantiate"
 
 import {
   address as Address,
-  crypto,
-  keyring,
   mtx as Mtx,
   opcode as Opcode,
   outpoint as Outpoint,
@@ -14,7 +12,9 @@ import {
   witness as Witness
 } from "bcoin"
 
-import { fromSecret, sign } from "./crypto"
+import * as crypto from "bcrypto"
+
+import { KeyRing, secp256k1 } from "./crypto"
 
 export const toSighash = (
   instantiated: Contract,
@@ -103,11 +103,11 @@ const sigHashType = Buffer.from([1])
 export const createSignature = (sigHash: Buffer, secret: string) => {
   let privKey
   try {
-    privKey = fromSecret(secret).getPrivateKey()
+    privKey = KeyRing.fromSecret(secret).getPrivateKey()
   } catch (e) {
     return undefined
   }
-  const sig = sign(sigHash, privKey) as Buffer
+  const sig = secp256k1.signDER(sigHash, privKey) as Buffer
   const fullSig = Buffer.concat([sig, sigHashType])
   return fullSig
 }
