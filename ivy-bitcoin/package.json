@@ -6,20 +6,21 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "bcoin": "danrobinson/bcoin#compat",
+    "bcoin": "github:danrobinson/bcoin#compat",
+    "bcrypto": "^1.1.0",
     "level-js": "^2.2.4"
   },
   "devDependencies": {
-    "@types/chai": "^4.0.4",
-    "@types/mocha": "^2.2.44",
-    "@types/node": "^7.0.46",
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^2.2.48",
+    "@types/node": "^7.0.70",
     "chai": "^4.1.2",
     "mocha": "^3.5.3",
     "pegjs": "^0.10.0",
     "ts-node": "^3.3.0",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.6.0",
-    "typescript": "^2.5.3"
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^2.9.2"
   },
   "scripts": {
     "build": "npm run compile-tsc && npm run compile-pegjs",
