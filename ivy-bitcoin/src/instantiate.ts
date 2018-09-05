@@ -1,14 +1,17 @@
 import { Template } from "./template"
 
 import {
-  address as Address,
-  crypto,
-  mtx as Mtx,
-  opcode as Opcode,
-  outpoint as Outpoint,
-  script as Script
+  Address,
+  primitives,
+  Opcode,
+  Outpoint,
+  Script
 } from "bcoin"
 import { BugError } from "./errors"
+
+import * as crypto from "bcrypto"
+
+const MTX = primitives.MTX
 
 interface ScriptObject {
   toJSON: () => string // encodes as hex string
@@ -65,7 +68,7 @@ function createFundingTransaction(
     return undefined
   }
 
-  const mtx = new Mtx()
+  const mtx = new MTX()
 
   valueArgs.forEach(amount => {
     mtx.addInput({
