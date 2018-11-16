@@ -10,6 +10,7 @@ export function isComparisonOperator(str: string): str is ComparisonOperator {
 
 export type FunctionName =
   | "checkSig"
+  | "checkDataSig"
   | "ripemd160"
   | "sha1"
   | "sha256"
@@ -38,6 +39,8 @@ export function getOpcodes(instruction: Instruction): Opcode[] {
   switch (instruction) {
     case "checkSig":
       return ["CHECKSIG"]
+    case "checkDataSig":
+      return ["CHECKDATASIG"]
     case "ripemd160":
       return ["RIPEMD160"]
     case "sha1":
@@ -65,6 +68,8 @@ export function getTypeSignature(instruction: Instruction): TypeSignature {
   switch (instruction) {
     case "checkSig":
       return createTypeSignature(["PublicKey", "Signature"], "Boolean")
+    case "checkDataSig":
+      return createTypeSignature(["PublicKey", "Bytes", "Signature"], "Boolean")
     case "older":
       return createTypeSignature(["Duration"], "Boolean")
     case "after":

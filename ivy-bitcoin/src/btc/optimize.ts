@@ -47,7 +47,7 @@ export function optimize(instructions: string[]): string[] {
     .replace(/ 1 SUB/g, " 1SUB")
     .replace(/ SWAP (EQUAL|ADD|BOOLAND|BOOLOR|MIN|MAX)/g, " $1")
     .replace(/ DUP 2 PICK (EQUAL|ADD|BOOLAND|BOOLOR|MIN|MAX)/g, " 2DUP $1")
-    .replace(/ (EQUAL|CHECKSIG|CHECKMULTISIG) VERIFY/g, " $1VERIFY")
+    .replace(/ (EQUAL|CHECKSIG|CHECKMULTISIG|CHECKDATASIG) VERIFY/g, " $1VERIFY")
     .replace(/ SHA256 RIPEMD160/g, " HASH160")
     .replace(/ SHA256 SHA256/g, " HASH256")
     .slice(1).split(" ")
