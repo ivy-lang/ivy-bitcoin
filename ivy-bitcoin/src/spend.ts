@@ -92,9 +92,9 @@ export const fulfill = (
     throw new Error("could not find clause: " + spendClauseName)
   }
   const numClauses = instantiated.template.clauses.length
-  const generatedArgs = clauseArgs.reverse().map(toBuf)
-  const maybeClauseArg = numClauses > 1 ? [toBuf(spendClauseIndex)] : []
-  const args = [...generatedArgs, ...maybeClauseArg, toBuf(script)]
+  const generatedArgs = clauseArgs.reverse().map(argToPushData)
+  const maybeClauseArg = numClauses > 1 ? [argToPushData(spendClauseIndex)] : []
+  const args = [...generatedArgs, ...maybeClauseArg, argToPushData(script)]
   const scriptSig = Script.fromArray(args)
   spendTransaction.inputs[0].script = scriptSig
   return spendTransaction
