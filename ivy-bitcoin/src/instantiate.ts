@@ -2,9 +2,9 @@ import { Template } from "./template"
 
 import {
   Address,
-  primitives,
   Opcode,
   Outpoint,
+  primitives,
   Script
 } from "bcoin"
 import { BugError } from "./errors"
@@ -15,16 +15,13 @@ const MTX = primitives.MTX
 
 interface ScriptObject {
   toJSON: () => string // encodes as hex string
-  forWitness: () => ScriptObject
   hash160: () => Buffer
   isPubkey: () => boolean
   toRaw: () => Buffer
 }
 
 export interface Contract {
-  witnessScript: string
-  redeemScript: string
-  scriptSig: string
+  script: string
   testnetAddress: string
   publicKey?: string
   fundingTransaction?: TransactionJSON
@@ -145,16 +142,12 @@ export function instantiate(
     }
   })
   const opcodes = instructions.map(inst => symbolToOpcode(inst, argMap))
-  const witnessScript: ScriptObject = Script.fromArray(opcodes)
-  const redeemScript: ScriptObject = witnessScript.forWitness()
-  const scriptSig: ScriptObject = Script.fromArray([
-    argToPushData(redeemScript.toRaw())
-  ])
+  const script: ScriptObject = Script.fromArray(opcodes)
   const testnetAddress = Address.fromScripthash(
-    redeemScript.hash160(),
+    script.hash160(),
     "testnet"
   )
-  const mainnetAddress = Address.fromScripthash(redeemScript.hash160())
+  const mainnetAddress = Address.fromScripthash(script.hash160())
   const tx = createFundingTransaction(testnetAddress, valueArgs, seed)
   // if (tx === undefined) {
   //   throw new Error(
@@ -162,12 +155,10 @@ export function instantiate(
   //   )
   // }
   const instantiated = {
-    witnessScript: witnessScript.toJSON(),
-    redeemScript: redeemScript.toJSON(),
-    scriptSig: scriptSig.toJSON(),
+    script: script.toJSON(),
     testnetAddress: testnetAddress.toBase58(),
     mainnetAddress: mainnetAddress.toBase58(),
-    publicKey: witnessScript.isPubkey()
+    publicKey: script.isPubkey()
       ? (args[0] as Buffer).toString("hex")
       : undefined,
     fundingTransaction: tx,

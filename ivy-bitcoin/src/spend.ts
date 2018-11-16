@@ -4,11 +4,11 @@ import { Contract, Transaction } from "./instantiate"
 
 import {
   Address,
-  primitives,
+  KeyRing,
   Opcode,
+  primitives,
   Script,
-  Witness,
-  KeyRing
+  Witness
 } from "bcoin"
 
 const MTX = primitives.MTX
@@ -30,7 +30,7 @@ export const toSighash = (
       ? Script.fromPubkeyhash(
           crypto.hash160(Buffer.from(instantiated.publicKey, "hex"))
         )
-      : Script.fromRaw(Buffer.from(instantiated.witnessScript, "hex"))
+      : Script.fromRaw(Buffer.from(instantiated.script, "hex"))
     return spendTransaction.signatureHash(0, script, instantiated.amount, 1, 1)
   } catch (e) {
     return undefined
@@ -71,16 +71,15 @@ export function toBuf(arg: Buffer | number | string) {
 export const fulfill = (
   instantiated: Contract,
   spendTx: any,
-  witnessArgs: any[],
+  clauseArgs: any[],
   spendClauseName: string
 ) => {
   const spendTransaction = spendTx.clone()
   // deal with a weird bug in the cloning
   spendTransaction.view = spendTx.view
-  const scriptSig = instantiated.scriptSig
-  const witnessScript = instantiated.publicKey
+  const script = instantiated.publicKey
     ? Buffer.from(instantiated.publicKey, "hex")
-    : Buffer.from(instantiated.witnessScript, "hex")
+    : Buffer.from(instantiated.script, "hex")
   const realClauses = instantiated.template.clauses
   const spendClauseIndex = realClauses
     .map(clause => clause.name)
@@ -89,14 +88,11 @@ export const fulfill = (
     throw new Error("could not find clause: " + spendClauseName)
   }
   const numClauses = instantiated.template.clauses.length
-  const generatedArgs = witnessArgs.reverse().map(toBuf)
+  const generatedArgs = clauseArgs.reverse().map(toBuf)
   const maybeClauseArg = numClauses > 1 ? [toBuf(spendClauseIndex)] : []
-  const allWitnessArgs = [...generatedArgs, ...maybeClauseArg, witnessScript]
-  const witness = Witness.fromArray(allWitnessArgs)
-  spendTransaction.inputs[0].script = Script.fromRaw(
-    Buffer.from(scriptSig, "hex")
-  )
-  spendTransaction.inputs[0].witness = witness
+  const args = [...generatedArgs, ...maybeClauseArg, script]
+  const scriptSig = Script.fromArray(args)
+  spendTransaction.inputs[0].script = scriptSig
   return spendTransaction
 }
 
