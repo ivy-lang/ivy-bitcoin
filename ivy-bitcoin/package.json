@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
-    "bcoin": "danrobinson/bcoin#new-compat",
+    "bcoin": "danrobinson/bcash",
     "bcrypto": "^1.1.0",
     "level-js": "^2.2.4"
   },
