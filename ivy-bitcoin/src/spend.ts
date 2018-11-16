@@ -11,6 +11,10 @@ import {
   Witness
 } from "bcoin"
 
+import {
+  argToPushData
+} from './instantiate'
+
 const MTX = primitives.MTX
 const TX = primitives.TX
 
@@ -90,7 +94,7 @@ export const fulfill = (
   const numClauses = instantiated.template.clauses.length
   const generatedArgs = clauseArgs.reverse().map(toBuf)
   const maybeClauseArg = numClauses > 1 ? [toBuf(spendClauseIndex)] : []
-  const args = [...generatedArgs, ...maybeClauseArg, script]
+  const args = [...generatedArgs, ...maybeClauseArg, toBuf(script)]
   const scriptSig = Script.fromArray(args)
   spendTransaction.inputs[0].script = scriptSig
   return spendTransaction
