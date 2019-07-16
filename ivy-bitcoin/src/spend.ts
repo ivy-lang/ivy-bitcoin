@@ -28,7 +28,7 @@ export const toSighash = (
   try {
     const script = instantiated.publicKey
       ? Script.fromPubkeyhash(
-          crypto.hash160(Buffer.from(instantiated.publicKey, "hex"))
+          crypto.Hash160.digest(Buffer.from(instantiated.publicKey, "hex"))
         )
       : Script.fromRaw(Buffer.from(instantiated.witnessScript, "hex"))
     return spendTransaction.signatureHash(0, script, instantiated.amount, 1, 1)
