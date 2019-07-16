@@ -52,3 +52,5 @@ ivy-playground/public/*.bundle.js
 
 # Built book
 docs/_book
+
+.DS_Store

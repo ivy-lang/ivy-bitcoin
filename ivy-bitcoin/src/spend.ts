@@ -3,18 +3,20 @@ import { Template } from "./template"
 import { Contract, Transaction } from "./instantiate"
 
 import {
-  address as Address,
-  mtx as Mtx,
-  opcode as Opcode,
-  outpoint as Outpoint,
-  script as Script,
-  tx as Tx,
-  witness as Witness
+  Address,
+  primitives,
+  Opcode,
+  Script,
+  Witness,
+  KeyRing
 } from "bcoin"
+
+const MTX = primitives.MTX
+const TX = primitives.TX
 
 import * as crypto from "bcrypto"
 
-import { KeyRing, secp256k1 } from "./crypto"
+import { secp256k1 } from "./crypto"
 
 export const toSighash = (
   instantiated: Contract,
@@ -42,8 +44,8 @@ export const spend = (
   locktime: number,
   sequenceNumber: { sequence: number; seconds: boolean }
 ) => {
-  const sourceTransaction = Tx.fromJSON(spendSourceTransaction)
-  const m = new Mtx()
+  const sourceTransaction = TX.fromJSON(spendSourceTransaction)
+  const m = new MTX()
   m.addTX(sourceTransaction, 0)
   m.addOutput({
     address: spendDestinationAddress,
@@ -105,6 +107,7 @@ export const createSignature = (sigHash: Buffer, secret: string) => {
   try {
     privKey = KeyRing.fromSecret(secret).getPrivateKey()
   } catch (e) {
+    console.log(e)
     return undefined
   }
   const sig = secp256k1.signDER(sigHash, privKey) as Buffer
