@@ -125,7 +125,7 @@ export function symbolToOpcode(sym: string, argMap: Map<string, any>) {
 export function instantiate(
   template: Template,
   args: Array<Buffer | number>,
-  seed = crypto.randomBytes(32)
+  seed = crypto.random.randomBytes(32)
 ): Contract {
   const numArgs = template.params.length
   if (numArgs !== args.length) {
