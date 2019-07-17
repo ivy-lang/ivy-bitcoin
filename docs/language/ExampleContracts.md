@@ -11,6 +11,7 @@ Below are some examples of contract templates written in Ivy. You can try out th
 * [LockUntil](#lockuntil)
 * [LockDelay](#lockdelay)
 * [TransferWithTimeout](#transferwithtimeout)
+* [ToLocal](#tolocal)
 * [EscrowWithDelay](#escrowwithdelay)
 * [VaultSpend](#vaultspend)
 * [HTLC](#htlc)
@@ -25,7 +26,7 @@ These contracts demonstrate the following conditions supported by Bitcoin Script
 
 * Waiting until after a specified block height or block time (see [LockUntil](#lockuntil), [TransferWithTimeout](#transferwithtimeout))
 
-* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](#lockdelay),  [EscrowWithDelay](#escrowwithdelay)), [VaultSpend](#vaultspend))
+* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](#lockdelay), [EscrowWithDelay](#escrowwithdelay), [VaultSpend](#vaultspend))
 
 
 
@@ -191,6 +192,31 @@ Alice can prefund this TransferWithTimeOut contract with 10 BTC, using her own p
 Alice can then send additional micropayments on this channel by creating new transactions that spend the same contract but send increasing amounts to Bob. Whenever Bob wants to close the channel, he signs and publishes only the *last* of those transactions, which sends Alice's total payment to him and returns the remaining change to her.
 
 What happens if Bob disappears, or refuses to sign any transactions? That's what the `timeout` clause is for. After the channel's expiration time, Alice can call the `timeout` clause to reclaim all of the Bitcoin she used to prefund the channel. This prevents Alice's money from being locked up forever if Bob refuses to cooperate.
+
+## ToLocal
+
+This contract can be used as part of a bidirectional payment channel similar to those used in the Lightning Network, as described [here](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output). This contract would be used as an output of a commitment transaction (which represents a state that the parties agree to off-chain).
+
+It is similar to the previous contract because it includes a timeout clause (the last one) with a single signature. However, this timeout is not for the depositor of the funds to claim them in case the other party is not cooperative, but is a time window left open for any disputes to be presented after one party tries to close the channel. Such a dispute can arise if the party that sent the on-chain transaction to close the channel is trying to propagate a state of the channel which is not valid anymore (as it might have been invalidated by subsequent off-chain transactions). In such a case, the party that didn't attempt to close the channel has this timeout available to withdraw all the funds in a punishment transaction, using the revocation private key that she learned when the channel state was invalidated.
+
+```
+contract ToLocal(
+  localDelayedPubKey: PublicKey,
+  revocationPubKey: PublicKey,
+  toSelfDelay: Duration,
+  val: Value
+) {
+  clause reveal(revocationSig: Signature) {
+    verify checkSig(revocationPubKey, revocationSig)
+    unlock val
+  }
+  clause timeout(localDelayedSig: Signature) {
+    verify checkSig(localDelayedPubKey, localDelayedSig)
+    verify older(toSelfDelay)
+    unlock val
+  }
+}
+```
 
 ## EscrowWithDelay
 
