@@ -19,10 +19,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.json$/,
-        use: ["json-loader"]
-      },
-      {
         test: /\.pegjs$/,
         use: ["pegjs-loader"]
       },
