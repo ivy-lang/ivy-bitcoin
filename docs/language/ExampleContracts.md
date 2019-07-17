@@ -11,6 +11,7 @@ Below are some examples of contract templates written in Ivy. You can try out th
 * [LockUntil](#lockuntil)
 * [LockDelay](#lockdelay)
 * [TransferWithTimeout](#transferwithtimeout)
+* [ToLocal](#tolocal)
 * [EscrowWithDelay](#escrowwithdelay)
 * [VaultSpend](#vaultspend)
 
@@ -24,7 +25,7 @@ These contracts demonstrate the following conditions supported by Bitcoin Script
 
 * Waiting until after a specified block height or block time (see [LockUntil](#lockuntil), [TransferWithTimeout](#transferwithtimeout))
 
-* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](#lockdelay),  [EscrowWithDelay](#escrowwithdelay)), [VaultSpend](#vaultspend))
+* Waiting until the contract has been on the blockchain for longer than a specified duration (see [LockDelay](#lockdelay), [EscrowWithDelay](#escrowwithdelay), [VaultSpend](#vaultspend))
 
 
 
@@ -191,26 +192,26 @@ Alice can then send additional micropayments on this channel by creating new tra
 
 What happens if Bob disappears, or refuses to sign any transactions? That's what the `timeout` clause is for. After the channel's expiration time, Alice can call the `timeout` clause to reclaim all of the Bitcoin she used to prefund the channel. This prevents Alice's money from being locked up forever if Bob refuses to cooperate.
 
-## LightningContractForPunishmentPaymentChannel
+## ToLocal
 
-This contract can be used for creating Lightning-Network payment channels. It is similar to the previous one because it includes a timeout clause (the last one) with a single signature, however, this timeout is not for the depositor of the funds to claim them in case the other party is not cooperative, but it's a time-window left open for any disputes to be presented after one party tries to close the channel. The dispute could originate from the fact that the party that sent the on-chain transaction to close the channel could be trying to propgrate a state of the channel which is not valid anymore (as it might have been invalidated by subsequent off-chain transactions); in such a case the party that didn't attempt to close the channel has this timeout available to proof this and make a punishment transaction effective, that would make her receive all the funds in the channel via providing the preimage of the hash that was used to initially create this contract (the first clause). More info: https://blog.chainside.net/understanding-payment-channels-4ab018be79d4#2435
+This contract can be used as part of a bidirectional payment channel similar to those used in the Lightning Network, as described [here](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output). This contract would be used as an output of a commitment transaction (which represents a state that the parties agree to off-chain).
+
+It is similar to the previous contract because it includes a timeout clause (the last one) with a single signature. However, this timeout is not for the depositor of the funds to claim them in case the other party is not cooperative, but is a time window left open for any disputes to be presented after one party tries to close the channel. Such a dispute can arise if the party that sent the on-chain transaction to close the channel is trying to propagate a state of the channel which is not valid anymore (as it might have been invalidated by subsequent off-chain transactions). In such a case, the party that didn't attempt to close the channel has this timeout available to withdraw all the funds in a punishment transaction, using the revocation private key that she learned when the channel state was invalidated.
 
 ```
-contract LightningContractForPunishmentPaymentChannel(
-  channelCloserParty: PublicKey,
-  potentialPunisherParty: PublicKey,
-  channelCloserSecret: Sha256(Bytes),
-  revocationTimeWindow: Duration,
+contract ToLocal(
+  localDelayedPubKey: PublicKey,
+  revocationPubKey: PublicKey,
+  toSelfDelay: Duration,
   val: Value
 ) {
-  clause reveal(potentialPunisherPartySig: Signature, string: Bytes) {
-    verify checkSig(potentialPunisherParty, potentialPunisherPartySig)
-    verify sha256(string) == channelCloserSecret
+  clause reveal(revocationSig: Signature) {
+    verify checkSig(revocationPubKey, revocationSig)
     unlock val
   }
-  clause timeout(channelCloserPartySig: Signature) {
-    verify checkSig(channelCloserParty, channelCloserPartySig)
-    verify older(revocationTimeWindow)
+  clause timeout(localDelayedSig: Signature) {
+    verify checkSig(localDelayedPubKey, localDelayedSig)
+    verify older(toSelfDelay)
     unlock val
   }
 }
