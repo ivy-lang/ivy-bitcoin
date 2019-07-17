@@ -195,10 +195,6 @@ What happens if Bob disappears, or refuses to sign any transactions? That's what
 
 ## ToLocal
 
-This contract can be used as part of a bidirectional payment channel similar to those used in the Lightning Network, as described [here](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output). This contract would be used as an output of a commitment transaction (which represents a state that the parties agree to off-chain).
-
-It is similar to the previous contract because it includes a timeout clause (the last one) with a single signature. However, this timeout is not for the depositor of the funds to claim them in case the other party is not cooperative, but is a time window left open for any disputes to be presented after one party tries to close the channel. Such a dispute can arise if the party that sent the on-chain transaction to close the channel is trying to propagate a state of the channel which is not valid anymore (as it might have been invalidated by subsequent off-chain transactions). In such a case, the party that didn't attempt to close the channel has this timeout available to withdraw all the funds in a punishment transaction, using the revocation private key that she learned when the channel state was invalidated.
-
 ```
 contract ToLocal(
   localDelayedPubKey: PublicKey,
@@ -217,6 +213,10 @@ contract ToLocal(
   }
 }
 ```
+
+This contract can be used as part of a bidirectional payment channel similar to those used in the Lightning Network, as described [here](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output). This contract would be used as an output of a commitment transaction (which represents a state that the parties agree to off-chain).
+
+It is similar to the previous contract because it includes a timeout clause (the last one) with a single signature. However, this timeout is not for the depositor of the funds to claim them in case the other party is not cooperative, but is a time window left open for any disputes to be presented after one party tries to close the channel. Such a dispute can arise if the party that sent the on-chain transaction to close the channel is trying to propagate a state of the channel which is not valid anymore (as it might have been invalidated by subsequent off-chain transactions). In such a case, the party that didn't attempt to close the channel has this timeout available to withdraw all the funds in a punishment transaction, using the revocation private key that she learned when the channel state was invalidated.
 
 ## EscrowWithDelay
 
