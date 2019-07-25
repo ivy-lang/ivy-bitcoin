@@ -1,10 +1,10 @@
 {
   "name": "ivy-compiler",
-  "version": "0.0.18",
+  "version": "0.0.1",
   "description": "Compiler command-line tool for Ivy, Chain's smart contract language.",
-  "main": "src/main.js",
+  "main": "lib/main.js",
   "scripts": {
-    "run": "./node_modules/ts-node/dist/bin.js src/main.ts",
+    "run": "./node_modules/ts-node/dist/bin.js ./lib/main.js",
     "build": "tsc"
   },
   "repository": {
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "commander": "^2.15.1",
-    "ivy-bitcoin": "../ivy-bitcoin",
+    "ivy-bitcoin": "~0.0.34",
     "ts-node": "^6.0.0",
     "typescript": "^2.8.3"
   },
