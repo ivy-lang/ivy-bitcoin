@@ -1,6 +1,6 @@
 ## Ivy Playground for Bitcoin
 
-You can try out the Ivy Playground for Bitcoin [here](https://ivy-lang.org/bitcoin).
+You can try out the Ivy Playground for Bitcoin [here](https://ivylang.org/bitcoin).
 
 You can also run the playground locally:
 

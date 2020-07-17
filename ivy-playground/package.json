@@ -55,7 +55,7 @@
   "repository": "ivy-lang/ivy-bitcoin",
   "scripts": {
     "build": "webpack --config webpack.production.config.js",
-    "deploy": "npm run build && aws s3 cp public s3://ivy-lang.org/static --recursive",
+    "deploy": "npm run build && aws s3 cp public s3://ivylang.org/static --recursive",
     "start": "webpack-dev-server --content-base public --inline --hot",
     "test": ""
   }

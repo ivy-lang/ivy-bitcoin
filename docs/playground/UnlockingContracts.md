@@ -1,6 +1,6 @@
 ### Unlocking contracts
 
-Once you've created a contract in the playground, you can unlock it on the [Unlock](https://ivy-lang.org/bitcoin/unlock) page. 
+Once you've created a contract in the playground, you can unlock it on the [Unlock](https://ivylang.org/bitcoin/unlock) page. 
 
 This page shows you all your existing contracts, as well as showing you information about any contracts that you've previously created and unlocked. Find the contract you created and click the "Unlock" button next to it.
 

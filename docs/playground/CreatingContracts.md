@@ -1,6 +1,6 @@
 ### Creating contracts
 
-To create a contract in the playground, use the [Create Contract](https://ivy-lang.org/bitcoin/create) page.
+To create a contract in the playground, use the [Create Contract](https://ivylang.org/bitcoin/create) page.
 
 First, you have to select which contract template you want to use. Click the "Load Template" button and select the "TransferWithTimeout" template.
 
