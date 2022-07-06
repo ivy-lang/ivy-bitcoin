@@ -19,7 +19,7 @@
     "file-loader": "4.0.0",
     "ivy-bitcoin": "../ivy-bitcoin",
     "json-loader": "^0.5.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "pegjs": "^0.10.0",
     "pegjs-loader": "^0.5.5",
     "prettier": "^1.18.2",
